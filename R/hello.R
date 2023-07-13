@@ -17,16 +17,19 @@ hello <- function() {
   print("Hello, world!")
 }
 
-# I = "estimated dyx – Φ(1− α) ∗ SE"
+# L = "estimated dyx – Φ(1− α) ∗ SE"
 # Φ = cumulative of standard normal distribution, with "α" = .05, Φ(0.95)= 1.64
 # x axis is d (-2 to 2)
 # y axis is correlation (-1 to 1)
+# change this to L
 
 calculate_I <- function(effect, alpha, se){
   return(effect - qnorm((1-alpha))*se)
 }
 
 i_num <- calculate_I(.70, .05, .3162278)
+
+i_num <- 0.09
 
 library(ggplot2)
 x <- seq(from = -2, to = 2, by = .10)

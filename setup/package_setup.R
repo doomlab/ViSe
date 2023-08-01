@@ -1,6 +1,9 @@
 library(devtools)
 library(usethis)
 
+# usethis::use_build_ignore(c("setup"))
+usethis::use_build_ignore(c("LICENSE"))
+
 #usethis::build_readme()
 #usethis::use_data(mirtdata, overwrite = T)
 #usethis::use_tutorial("irt", "Item Response Theory", open = interactive())

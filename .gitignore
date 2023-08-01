@@ -1,3 +1,7 @@
+# ignore notes folder
+setup/
+.DS_Store
+
 # History files
 .Rhistory
 .Rapp.history

@@ -2,7 +2,7 @@ library(devtools)
 library(usethis)
 
 # usethis::use_build_ignore(c("setup"))
-usethis::use_build_ignore(c("LICENSE"))
+# usethis::use_build_ignore(c("LICENSE"))
 
 #usethis::build_readme()
 #usethis::use_data(mirtdata, overwrite = T)
@@ -19,8 +19,8 @@ dir.create("inst/doc")
 file.copy(dir("vignettes", full.names=TRUE), "inst/doc", overwrite=TRUE)
 
 library(pkgdown)
-usethis::use_pkgdown()
+# usethis::use_pkgdown()
 pkgdown::build_site()
-usethis::use_pkgdown_github_pages()
+# usethis::use_pkgdown_github_pages()
 
 devtools::install_github("doomlab/ViSe")

@@ -2,4 +2,7 @@
 
 export(apa)
 export(calculate_d)
+export(estimate_d)
+export(visualize_c)
+import(ggplot2)
 import(stats)

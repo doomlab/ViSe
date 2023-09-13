@@ -48,7 +48,20 @@ using the pooled standard deviation as the denominator.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calculate_d</span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span>, <span class="va">sd1</span>, <span class="va">sd2</span>, <span class="va">n1</span>, <span class="va">n2</span>, a <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calculate_d</span><span class="op">(</span></span>
+<span>  m1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  m2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sd1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sd2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  t <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  df <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  a <span class="op">=</span> <span class="fl">0.05</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -77,6 +90,30 @@ using the pooled standard deviation as the denominator.</p>
 <dd><p>sample size group two</p></dd>
 
 
+<dt>t</dt>
+<dd><p>optional, calculate d from independent t, you must
+include n1 and n2 for degrees of freedom</p></dd>
+
+
+<dt>model</dt>
+<dd><p>optional, calculate d from t.test for independent t,
+you must still include n1 and n2</p></dd>
+
+
+<dt>df</dt>
+<dd><p>optional dataframe that includes the x_col and y_col</p></dd>
+
+
+<dt>x_col</dt>
+<dd><p>name of the column that contains the factor levels OR
+a numeric vector of group 1 scores</p></dd>
+
+
+<dt>y_col</dt>
+<dd><p>name of the column that contains the dependent score OR
+a numeric vector of group 2 scores</p></dd>
+
+
 <dt>a</dt>
 <dd><p>significance level</p></dd>
 
@@ -85,7 +122,7 @@ using the pooled standard deviation as the denominator.</p>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Provides the effect size (Cohen's *t*) with associated
+<p>Provides the effect size (Cohen's *d*) with associated
 central and non-central confidence intervals,
 the *t*-statistic, the confidence intervals associated with the means of
 each group, as well as the standard deviations and standard errors
@@ -164,6 +201,12 @@ APA style for markdown printing</p></dd>
     <p>To calculate \(d_s\), mean two is subtracted from mean one and divided
 by the pooled standard deviation.
 $$d_s = \frac{M_1 - M_2}{S_{pooled}}$$</p>
+<p>You should provide one combination of the following:</p>
+<p>1: m1 through n2</p>
+<p>2: t, n1, n2</p>
+<p>3: model, n1, n2</p>
+<p>4: df, "x_col", "y_col"</p>
+<p>5: x_col, y_col as numeric vectors</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

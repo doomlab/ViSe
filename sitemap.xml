@@ -13,16 +13,34 @@
     <loc>http://www.aggieerin.com/ViSe/index.html</loc>
   </url>
   <url>
+    <loc>http://www.aggieerin.com/ViSe/reference/adjusted_coef.html</loc>
+  </url>
+  <url>
     <loc>http://www.aggieerin.com/ViSe/reference/apa.html</loc>
   </url>
   <url>
     <loc>http://www.aggieerin.com/ViSe/reference/calculate_d.html</loc>
   </url>
   <url>
+    <loc>http://www.aggieerin.com/ViSe/reference/d_to_f2.html</loc>
+  </url>
+  <url>
+    <loc>http://www.aggieerin.com/ViSe/reference/d_to_nnt.html</loc>
+  </url>
+  <url>
+    <loc>http://www.aggieerin.com/ViSe/reference/d_to_r.html</loc>
+  </url>
+  <url>
     <loc>http://www.aggieerin.com/ViSe/reference/estimate_d.html</loc>
   </url>
   <url>
     <loc>http://www.aggieerin.com/ViSe/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>http://www.aggieerin.com/ViSe/reference/probability_superiority.html</loc>
+  </url>
+  <url>
+    <loc>http://www.aggieerin.com/ViSe/reference/proportion_overlap.html</loc>
   </url>
   <url>
     <loc>http://www.aggieerin.com/ViSe/reference/visualize_c.html</loc>

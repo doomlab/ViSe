@@ -116,7 +116,7 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     # or just on x and y vectors
   } else if(!is.null(x_col) & !is.null(y_col)){
 
-    model <- t.test(x, y, var.equal = TRUE)
+    model <- t.test(x_col, y_col, var.equal = TRUE)
 
     # calculate means and confidence intervals
     m1 <- mean(x)

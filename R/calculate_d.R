@@ -119,12 +119,12 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     model <- t.test(x_col, y_col, var.equal = TRUE)
 
     # calculate means and confidence intervals
-    m1 <- mean(x)
-    m2 <- mean(y)
-    sd1 <- sd(x)
-    sd2 <- sd(y)
-    n1 <- length(x)
-    n2 <- length(y)
+    m1 <- mean(x_col)
+    m2 <- mean(y_col)
+    sd1 <- sd(x_col)
+    sd2 <- sd(y_col)
+    n1 <- length(x_col)
+    n2 <- length(y_col)
     se1 <- sd1 / sqrt(n1)
     se2 <- sd1 / sqrt(n2)
     spooled <- sqrt( ((n1 - 1) * sd1 ^ 2 + (n2 - 1) * sd2 ^ 2) / (n1 + n2 - 2))

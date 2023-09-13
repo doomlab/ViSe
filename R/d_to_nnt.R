@@ -20,7 +20,7 @@
 
 d_to_nnt <- function (d = NULL)
 {
-  if(!is.null(d)){
+  if(is.null(d)){
     stop("You must include d to translate into NNT.")
   }
 

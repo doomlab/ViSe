@@ -57,8 +57,8 @@ probability_superiority <- function(d = NULL, m1 = NULL, m2 = NULL,
     # if they include df, calculate model
   } else if(!is.null(df)){
     # deal with missing column names
-    if (missing(x_col)){stop("Be sure to include the x column of the data.")}
-    if (missing(y_col)){stop("Be sure to include the y column of the data.")}
+    if (is.null(x_col)){stop("Be sure to include the x column of the data.")}
+    if (is.null(y_col)){stop("Be sure to include the y column of the data.")}
     d <- calculate_d(df = df, x_col = x_col, y_col = y_col)$d
 
     # just x and y columns
@@ -67,28 +67,28 @@ probability_superiority <- function(d = NULL, m1 = NULL, m2 = NULL,
   } else if (!is.null(t)){
 
     # deal with missing values
-    if (missing(n1)){stop("Be sure to include the sample size n1 for the first group.")}
-    if (missing(n2)){stop("Be sure to include the sample size n2 for the second group.")}
+    if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
+    if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
     d <- calculate_d(t = t, n1 = n1, n2 = n2)$d
 
     # or just the model
   } else if (!is.null(model)){
 
     # deal with missing values
-    if (missing(n1)){stop("Be sure to include the sample size n1 for the first group.")}
-    if (missing(n2)){stop("Be sure to include the sample size n2 for the second group.")}
+    if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
+    if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
     d <- calculate_d(model = model)$d
 
     # or if they want ot give all numbers
   } else {
 
     # deal with missing values
-    if (missing(m1)){stop("Be sure to include m1 for the first mean.")}
-    if (missing(m2)){stop("Be sure to include m2 for the second mean.")}
-    if (missing(sd1)){stop("Be sure to include sd1 for the first mean.")}
-    if (missing(sd2)){stop("Be sure to include sd2 for the second mean.")}
-    if (missing(n1)){stop("Be sure to include the sample size n1 for the first group.")}
-    if (missing(n2)){stop("Be sure to include the sample size n2 for the second group.")}
+    if (is.null(m1)){stop("Be sure to include m1 for the first mean.")}
+    if (is.null(m2)){stop("Be sure to include m2 for the second mean.")}
+    if (is.null(sd1)){stop("Be sure to include sd1 for the first mean.")}
+    if (is.null(sd2)){stop("Be sure to include sd2 for the second mean.")}
+    if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
+    if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
 
     d <- calculate_d(m1 = m1, m2 = m2, sd1 = sd1, sd2 = sd2,
                      n1 = n1, n2 = n2)$d

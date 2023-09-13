@@ -4,7 +4,20 @@
 \alias{calculate_d}
 \title{\eqn{d_s} for Between Subjects with Pooled SD Denominator}
 \usage{
-calculate_d(m1, m2, sd1, sd2, n1, n2, a = 0.05)
+calculate_d(
+  m1 = NULL,
+  m2 = NULL,
+  sd1 = NULL,
+  sd2 = NULL,
+  n1 = NULL,
+  n2 = NULL,
+  t = NULL,
+  model = NULL,
+  df = NULL,
+  x_col = NULL,
+  y_col = NULL,
+  a = 0.05
+)
 }
 \arguments{
 \item{m1}{mean group one}
@@ -19,10 +32,24 @@ calculate_d(m1, m2, sd1, sd2, n1, n2, a = 0.05)
 
 \item{n2}{sample size group two}
 
+\item{t}{optional, calculate d from independent t, you must
+include n1 and n2 for degrees of freedom}
+
+\item{model}{optional, calculate d from t.test for independent t,
+you must still include n1 and n2}
+
+\item{df}{optional dataframe that includes the x_col and y_col}
+
+\item{x_col}{name of the column that contains the factor levels OR
+a numeric vector of group 1 scores}
+
+\item{y_col}{name of the column that contains the dependent score OR
+a numeric vector of group 2 scores}
+
 \item{a}{significance level}
 }
 \value{
-Provides the effect size (Cohen's *t*) with associated
+Provides the effect size (Cohen's *d*) with associated
 central and non-central confidence intervals,
 the *t*-statistic, the confidence intervals associated with the means of
 each group, as well as the standard deviations and standard errors
@@ -62,6 +89,18 @@ using the pooled standard deviation as the denominator.
 To calculate \eqn{d_s}, mean two is subtracted from mean one and divided
 by the pooled standard deviation.
 \deqn{d_s = \frac{M_1 - M_2}{S_{pooled}}}
+
+You should provide one combination of the following:
+
+1: m1 through n2
+
+2: t, n1, n2
+
+3: model, n1, n2
+
+4: df, "x_col", "y_col"
+
+5: x_col, y_col as numeric vectors
 }
 \keyword{between-subjects,}
 \keyword{deviation,}

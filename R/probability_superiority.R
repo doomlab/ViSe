@@ -77,7 +77,7 @@ probability_superiority <- function(d = NULL, m1 = NULL, m2 = NULL,
     # deal with missing values
     if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
     if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
-    d <- calculate_d(model = model)$d
+    d <- calculate_d(model = model, n1 = n1, n2 = n2)$d
 
     # or if they want ot give all numbers
   } else {

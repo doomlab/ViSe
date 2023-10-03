@@ -1,0 +1,97 @@
+---
+title: "Package Functions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Package Functions}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+
+To install the package, please use: 
+
+```
+library(devtools)
+install_github("doomlab/ViSe")
+```
+
+This installation will give you the latest version of the package, regardless of status on CRAN. 
+
+```{r setup}
+library(ViSe)
+library(flextable)
+```
+
+## Example
+
+To demonstrate the use of visual sensitivity analysis, we use a study of the effect of child maltreatment on the extent of mental health problems in terms of internalising and externalising behaviour. The study of Kisely and colleagues (2018) was based on a general population sample in Brisbane, Australia, and compared 3554 mother-child pairs without 'substantiated child maltreatment' to, for example, 73 pairs with child neglect. Note that the results vary across different types of maltreatment assessed, we choose child neglect because its results (a smaller but still considerable l after adjustment) are particularly suited to illustrating sensitivity analysis. Maltreatment was assessed 'by linkage to state child protection agency data'. Internalising and externalising behaviours were measured using the Youth Self-Report (YSR) scale at around the age of 21. The study reports unadjusted mean differences and mean differences adjusted for ‘gender, parental ethnicity, maternal age, family income, maternal relationship status, maternal education, youth income level, youth education level, youth marital status’ (e.g., likelyprobably based on ordinary least squares regression, but the paper does not specify that). To obtain the estimates and two-tailed 95% confidence intervals on the d scale, we divided the reported unadjusted and adjusted means for internalising and externalising by the respective standard deviations of the total sample (see Table \@ref(tab:table-1)) with the `calculate_d` function.
+
+See supplemental document at https://static.cambridge.org/content/id/urn:cambridge.org:id:article:S0007125018002076/resource/name/S0007125018002076sup001.docx 
+
+### Unadjusted scores
+
+```{r}
+# internalising
+internal_unadj <- 
+  calculate_d(m1 = 14.37, sd1 = 10.716, n1 = 71, 
+            m2 = 10.69, sd2 = 8.219, n2 = 3653, 
+            a = .05, lower = FALSE)
+
+# externalising
+external_unadj <- 
+  calculate_d(m1 = 13.14, sd1 = 8.066, n1 = 71, 
+            m2 = 9.42, sd1 = 6.764, n2 = 3653, 
+            a = .05, lower = FALSE)
+```
+
+Note, you can also calculate directly from a t-test output in *R*, a *t*-value, or the dataframe of scores. 
+
+
+Internalising score
+
+
+Externalising score
+
+
+Unadjusted
+Adjusted
+SD
+
+
+Unadjusted
+Adjusted
+SD
+Reported (raw difference)
+3.68 (1.73-5.62)
+2.73 (0.77-4.69)
+8.29
+
+
+3.72 (2.13-5.32)
+3.10 (1.49-4.71)
+6.81
+Transformed* (standardized difference, d)
+
+
+
+
+0.44 (0.20-0.68)
+0.33 (0.09-0.57)
+1
+
+
+0.55 (0.31-0.79)
+0.46 (0.21-0.70)
+1
+* Note that the boundaries of the confidence intervals are conservatively rounded. The left boundaries are rounded down, the right boundaries are rounded up (the point estimates are rounded numerically). 
+

@@ -7,7 +7,7 @@ library(usethis)
 #usethis::build_readme()
 #usethis::use_data(mirtdata, overwrite = T)
 #usethis::use_tutorial("irt", "Item Response Theory", open = interactive())
-
+usethis::use_vignette("Package_Functions")
 
 library(roxygen2)
 roxygenize()

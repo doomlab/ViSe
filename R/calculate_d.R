@@ -36,6 +36,10 @@
 #' a numeric vector of group 1 scores
 #' @param y_col name of the column that contains the dependent score OR
 #' a numeric vector of group 2 scores
+#' @param lower Use this to indicate if you want the lower or upper bound
+#' of d for one sided confidence intervals. If d is positive, you generally
+#' want \code{lower = TRUE}, while negative d values should enter
+#' \code{lower = FALSE} for the upper bound that is closer to zero.
 #'
 #' @return Provides the effect size (Cohen's *d*) with associated
 #' central and non-central confidence intervals,
@@ -70,6 +74,12 @@
 #'
 #' @keywords effect size, independent t, between-subjects, pooled
 #' standard deviation, pooled sd
+#'
+#' @examples
+#' calculate_d(m1 = 10.69, sd1 = 8.219, n1 = 3653,
+#'  m2 = 14.37, sd1 = 10.716, n2 = 71,
+#'  a = .05)
+#'
 #' @import stats methods
 #' @export
 
@@ -78,7 +88,7 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
                          n1 = NULL, n2 = NULL, t = NULL,
                          model = NULL, df = NULL,
                          x_col = NULL, y_col = NULL,
-                         a = .05) {
+                         a = .05, lower = TRUE) {
 
   if (a < 0 || a > 1) {stop("Alpha should be between 0 and 1.")}
 
@@ -213,10 +223,18 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
   dhigh_central <- d + central_t*se
 
   # calculate lower bound only
-  ncpboth <- noncentral_t(t, (n1 - 1 + n2 - 1), alpha.lower = a, alpha.upper = a, sup.int.warns = TRUE)
-  central_t <- qt(a, (n1 - 1 + n2 - 1), lower.tail = FALSE)
-  done_low <- ncpboth$Lower.Limit / sqrt(((n1 * n2) / (n1 + n2)))
-  done_low_central <- d - central_t*se
+  if (lower == TRUE){
+    ncpboth <- noncentral_t(t, (n1 - 1 + n2 - 1), alpha.lower = a, alpha.upper = a, sup.int.warns = TRUE)
+    central_t <- qt(a, (n1 - 1 + n2 - 1), lower.tail = FALSE)
+    done_low <- ncpboth$Lower.Limit / sqrt(((n1 * n2) / (n1 + n2)))
+    done_low_central <- d - central_t*se
+  } else {
+    ncpboth <- noncentral_t(t, (n1 - 1 + n2 - 1), alpha.lower = a, alpha.upper = a, sup.int.warns = TRUE)
+    central_t <- qt(a, (n1 - 1 + n2 - 1), lower.tail = FALSE)
+    done_low <- ncpboth$Upper.Limit / sqrt(((n1 * n2) / (n1 + n2)))
+    done_low_central <- d + central_t*se
+  }
+
 
   if (p < .001) {reportp = "< .001"} else {reportp = paste("= ", apa(p,3,F), sep = "")}
 

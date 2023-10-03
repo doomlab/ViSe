@@ -40,6 +40,11 @@ This function calculates the proportion overlap from two independent
 group d effect size calculations. Cohen's u1, u2, u3 and proportion
 overlap are provided.
 }
+\examples{
+
+proportion_overlap(d = .25)
+
+}
 \keyword{effect}
 \keyword{overlap,}
 \keyword{proportion}

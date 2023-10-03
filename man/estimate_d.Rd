@@ -33,9 +33,17 @@ estimate_d(
 Returns a pretty graph
 
 \item{d}{effect size}
+\item{graph}{A graph of the distributions of the effect size}
 }
 \description{
 This function displays a visualization of effect sizes.
+}
+\examples{
+estimate_d(d = .25)
+
+estimate_d(m1 = 10, m2 = 8, sd1 = 5, sd2 = 4,
+ n1 = 100, n2 = 75)
+
 }
 \keyword{effect}
 \keyword{estimation,}

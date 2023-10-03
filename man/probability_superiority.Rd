@@ -73,6 +73,11 @@ You should provide one combination of the following:
 
 6: x_col, y_col as numeric vectors
 }
+\examples{
+
+probability_superiority(d = .25)
+
+}
 \keyword{effect}
 \keyword{of}
 \keyword{probability}

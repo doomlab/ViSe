@@ -21,6 +21,13 @@ This function calculates the adjusted effect after
 controlling for confounding effects. You can use d values or
 standardized regression coefficients.
 }
+\examples{
+
+adjusted_coef(effect_xz = .2,
+  effect_uxz = .4,
+  effect_d = .12)
+
+}
 \keyword{cohen's}
 \keyword{correlation}
 \keyword{d,}

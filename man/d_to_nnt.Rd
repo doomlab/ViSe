@@ -14,6 +14,11 @@ This function calculates the number needed to treat
 from continuous measures (Cohen's d) using Kraemer and Kupfer
 (2006) formula.
 }
+\examples{
+
+d_to_nnt(d = .25)
+
+}
 \references{
 Kraemer H.C., Kupfer D.J. (2006) Size of treatment effects and their
 importance to clinical research and practice.

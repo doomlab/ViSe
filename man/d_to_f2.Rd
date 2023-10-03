@@ -13,11 +13,16 @@ d_to_f2(d)
 Both Cohen's f and f^2 statistics
 
 \item{f}{d values translated into f}
-\item{f2}{d values translated into f^2}
+\item{f2}{d values translated into \eqn{f^2}}
 }
 \description{
 This function allows you to convert d to
-Cohen's f and f^2 statistics.
+Cohen's f and \eqn{f^2} statistics.
+}
+\examples{
+
+d_to_f2(.25)
+
 }
 \keyword{cohen's}
 \keyword{convert}

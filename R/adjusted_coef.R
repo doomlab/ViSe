@@ -12,6 +12,7 @@
 #' @keywords effect size, dependent t-test, cohen's d, paired-sample,
 #' repeated measures, correlation
 #'
+#' @include globals.R
 #' @examples
 #'
 #' adjusted_coef(effect_xz = .2,

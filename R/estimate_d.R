@@ -12,12 +12,16 @@
 #' @return Returns a pretty graph
 #'
 #' \item{d}{effect size}
+#' \item{graph}{A graph of the distributions of the effect size}
 #'
 #' @keywords effect size, estimation, visualization, ggplot
 #' @import ggplot2
 #'
 #' @examples
-#' estimate_d()
+#' estimate_d(d = .25)
+#'
+#' estimate_d(m1 = 10, m2 = 8, sd1 = 5, sd2 = 4,
+#'  n1 = 100, n2 = 75)
 #'
 #' @rdname estimate_d
 #' @export
@@ -46,15 +50,22 @@ estimate_d <- function (m1 = NULL, m2 = NULL,
                     fill = "#CC6677", alpha = 0.5, color = "black") +
       geom_vline(xintercept = m1, linetype = 3) +
       geom_vline(xintercept = m2, linetype = 3) +
-      annotate("segment", x = m1, xend = m2, y = .45, yend = .45,
-               colour = "black") +
-      annotate("text", x = m2 + sd1, y = .45,
-               colour = "black",
-               label = paste0("d = ", format(d, digits = 2, nsmall = 2))) +
       theme_classic() +
       xlim(-4,4) +
       ylab("Density") +
       xlab("Standardized Mean Scores")
+
+      ylimits <- layer_scales(graph)$y$range$range
+      yupper <- (ylimits[2] - ylimits[1])*1.1
+
+      xright <- max(c((m2 + sd2), (m1 + sd1)))
+
+      graph <- graph +
+        annotate("segment", x = m1, xend = m2, y = yupper, yend = yupper,
+                 colour = "black") +
+        annotate("text", x = xright, y = yupper,
+                 colour = "black",
+                 label = paste0("d = ", format(d, digits = 2, nsmall = 2)))
 
   } else {
 
@@ -92,16 +103,24 @@ estimate_d <- function (m1 = NULL, m2 = NULL,
                     fill = "#CC6677", alpha = 0.5, color = "black") +
       geom_vline(xintercept = m1, linetype = 3) +
       geom_vline(xintercept = m2, linetype = 3) +
-      annotate("segment", x = m1, xend = m2, y = .45, yend = .45,
-               colour = "black") +
-      annotate("text", x = m2 + sd2, y = .45,
-               colour = "black",
-               label = paste0("d = ", format(d, digits = 2, nsmall = 2))) +
       theme_classic() +
       xlim(abs(min(m1, m2))-3*abs(max(sd1,sd2)),
            abs(min(m1, m2))+3*abs(max(sd1,sd2))) +
       ylab("Density") +
       xlab("Raw Mean Scores")
+
+    ylimits <- layer_scales(graph)$y$range$range
+    yupper <- (ylimits[2] - ylimits[1])*1.1
+
+    xright <- max(c((m2 + sd2), (m1 + sd1)))
+
+    graph <- graph +
+      annotate("segment", x = m1, xend = m2, y = yupper, yend = yupper,
+               colour = "black") +
+      annotate("text", x = xright, y = yupper,
+               colour = "black",
+               label = paste0("d = ", format(d, digits = 2, nsmall = 2)))
+
 
   }
 

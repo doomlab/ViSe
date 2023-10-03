@@ -81,9 +81,14 @@
 #' standard deviation, pooled sd
 #'
 #' @examples
-#' calculate_d(m1 = 10.69, sd1 = 8.219, n1 = 3653,
-#'  m2 = 14.37, sd1 = 10.716, n2 = 71,
-#'  a = .05)
+#' calculate_d(m1 = 14.37, # neglect mean
+#'    sd1 = 10.716, # neglect sd
+#'    n1 = 71, # neglect n
+#'    m2 = 10.69, # none mean
+#'    sd2 = 8.219, # none sd
+#'    n2 = 3653, # none n
+#'    a = .05, # alpha/confidence interval
+#'    lower = TRUE) # lower or upper bound
 #'
 #' @import stats methods
 #' @export

@@ -28,6 +28,7 @@ This function creates "pretty" character vectors from numeric variables
 }
 \examples{
 apa(value = 0.54674, decimals = 3, leading = TRUE)
+
 }
 \keyword{APA,}
 \keyword{decimals,}

@@ -17,5 +17,19 @@ RoxygenNote: 7.2.3
 URL: http://www.aggieerin.com/ViSe/
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    cowplot
 VignetteBuilder: knitr
+Collate: 
+    'globals.R'
+    'adjusted_coef.R'
+    'apa.R'
+    'calculate_d.R'
+    'd_to_f2.R'
+    'd_to_nnt.R'
+    'd_to_r.R'
+    'estimate_d.R'
+    'noncentral_t.R'
+    'probability_superiority.R'
+    'proportion_overlap.R'
+    'visualize_c.R'

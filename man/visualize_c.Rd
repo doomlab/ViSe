@@ -18,6 +18,11 @@ Returns a pretty graph
 This function displays a visualization of the possible
 bias c that allows for a non-zero effect in sensitivity.
 }
+\examples{
+
+visualize_c(dlow = .25)
+
+}
 \keyword{effect}
 \keyword{estimation,}
 \keyword{ggplot}

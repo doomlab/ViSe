@@ -14,7 +14,11 @@ correlation coefficient
 }
 \description{
 This function allows you to convert d to Pearson's
-correlation coefficient
+correlation coefficient.
+}
+\examples{
+d_to_r(.25)
+
 }
 \keyword{cohen's}
 \keyword{convert,}

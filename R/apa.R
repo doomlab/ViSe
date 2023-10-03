@@ -15,8 +15,11 @@
 #'   numeric. The values will be coerced into numeric if they are characters or
 #'   logical values, but this process may result in an error if values are
 #'   truly alphabetical.
+#'
 #' @examples
 #' apa(value = 0.54674, decimals = 3, leading = TRUE)
+#'
+#' @rdname apa
 #' @export
 
 apa <- function(value, decimals = 3, leading = TRUE) {
@@ -38,5 +41,4 @@ apa <- function(value, decimals = 3, leading = TRUE) {
   return(formnumber)
   }
 
-#' @rdname apa
-#' @export
+

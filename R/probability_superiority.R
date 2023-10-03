@@ -40,10 +40,13 @@
 #' @keywords effect size, probability of superiority
 #'
 #' @import stats
-#' @export
+#'
 #' @examples
 #'
+#' probability_superiority(d = .25)
 #'
+#' @rdname probability_superiority
+#' @export
 probability_superiority <- function(d = NULL, m1 = NULL, m2 = NULL,
                                     sd1 = NULL, sd2 = NULL,
                                     n1 = NULL, n2 = NULL, a = .05,
@@ -97,8 +100,7 @@ probability_superiority <- function(d = NULL, m1 = NULL, m2 = NULL,
   return(stats::pnorm(d / sqrt(2)))
 }
 
-#' @rdname p_superiority
-#' @export
+
 
 
 

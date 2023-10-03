@@ -1,7 +1,7 @@
 #' Convert d to correlation coefficient
 #'
 #' This function allows you to convert d to Pearson's
-#' correlation coefficient
+#' correlation coefficient.
 #'
 #' @param d the effect size to convert
 #' @return correlation coefficient

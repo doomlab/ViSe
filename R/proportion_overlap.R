@@ -23,9 +23,12 @@
 #' @keywords effect size, proportion overlap, u1, u2, u3
 #' @import stats methods
 #'
-#' @export
 #' @examples
 #'
+#' proportion_overlap(d = .25)
+#'
+#' @rdname proportion_overlap
+#' @export
 proportion_overlap <- function(model = NULL, x_col = NULL,
                             y_col = NULL, df = NULL, d = NULL){
 
@@ -67,6 +70,3 @@ proportion_overlap <- function(model = NULL, x_col = NULL,
               "p_o" = p_o))
 
 }
-
-#' @rdname proportion_overlap
-#' @export

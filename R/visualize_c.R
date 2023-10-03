@@ -10,6 +10,12 @@
 #'
 #' @keywords effect size, estimation, visualization, ggplot
 #' @import ggplot2
+#'
+#' @examples
+#'
+#' visualize_c(dlow = .25)
+#'
+#' @rdname visualize_c
 #' @export
 
 
@@ -63,6 +69,3 @@ visualize_c <- function (dlow) {
 
 
 }
-
-#' @rdname visualize_c
-#' @export

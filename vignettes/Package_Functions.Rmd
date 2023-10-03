@@ -29,7 +29,6 @@ This installation will give you the latest version of the package, regardless of
 
 ```{r setup}
 library(ViSe)
-library(flextable)
 library(cowplot)
 library(ggplot2)
 ```
@@ -173,11 +172,32 @@ adjusted_coef(effect_xz = .2, # effect of x and z
     effect_d = .12) # effect size of difference score between groups 
 ```
 
-## Calculation between effect sizes
+## Visualization of d
+
+```{r}
+visual_d <- 
+  estimate_d(m1 = 14.37, # neglect mean
+          sd1 = 10.716, # neglect sd
+          n1 = 71, # neglect n
+          m2 = 10.69, # none mean
+          sd2 = 8.219, # none sd
+          n2 = 3653) # none n
+
+visual_d$d
+
+visual_d$graph
+
+estimate_d(d = .25)$graph
+```
+
+
+## Calculation between effect sizes and other numbers
 
 ```{r}
 d_to_f2(.25)
 d_to_nnt(.25)
 d_to_r(.25)
+
+probability_superiority(d = .25)
 ```
 

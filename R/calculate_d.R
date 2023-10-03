@@ -49,8 +49,13 @@
 #' is also included for sensitivity analyses.
 #'
 #' \item{d}{effect size}
-#' \item{dlow}{lower level confidence interval of d value}
-#' \item{dhigh}{upper level confidence interval of d value}
+#' \item{dlow}{noncentral lower level confidence interval of d value}
+#' \item{dhigh}{noncentral upper level confidence interval of d value}
+#' \item{dlow_central}{central lower level confidence interval of d value}
+#' \item{dhigh_central}{central upper level confidence interval of d value}
+#' \item{done_low}{noncentral lower bound of one tailed confidence interval}
+#' \item{done_low_central}{central lower bound of
+#' one tailed confidence interval}
 #' \item{M1}{mean of group one}
 #' \item{sd1}{standard deviation of group one mean}
 #' \item{se1}{standard error of group one mean}

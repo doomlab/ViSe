@@ -8,8 +8,11 @@
 #'
 #' @keywords effect size, cohen's d, convert, correlation
 #'
-#' @export
 #' @examples
+#' d_to_r(.25)
+#'
+#' @rdname d_to_r
+#' @export
 #'
 d_to_r <- function (d) {
 
@@ -21,5 +24,4 @@ d_to_r <- function (d) {
 
 }
 
-#' @rdname d_to_r
-#' @export
+

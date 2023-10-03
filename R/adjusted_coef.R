@@ -12,17 +12,23 @@
 #' @keywords effect size, dependent t-test, cohen's d, paired-sample,
 #' repeated measures, correlation
 #'
-#' @export
 #' @examples
 #'
+#' adjusted_coef(effect_xz = .2,
+#'   effect_uxz = .4,
+#'   effect_d = .12)
+#'
+#' @rdname adjusted_coef
+#' @export
 #'
 
 adjusted_coef <- function(effect_xz, effect_uxz, effect_d){
+
+  if(missing(effect_xz) | missing(effect_uxz) | missing(effect_d)){
+    stop("You must enter all three effects.")
+  }
 
   adjusted_effect <- effect_xz - effect_uxz*effect_d
 
   return(adjusted_effect)
 }
-
-#' @rdname adjusted_coef
-#' @export

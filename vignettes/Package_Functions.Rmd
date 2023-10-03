@@ -30,6 +30,8 @@ This installation will give you the latest version of the package, regardless of
 ```{r setup}
 library(ViSe)
 library(flextable)
+library(cowplot)
+library(ggplot2)
 ```
 
 ## Example
@@ -38,60 +40,144 @@ To demonstrate the use of visual sensitivity analysis, we use a study of the eff
 
 See supplemental document at https://static.cambridge.org/content/id/urn:cambridge.org:id:article:S0007125018002076/resource/name/S0007125018002076sup001.docx 
 
+## Calculate effect size 
+
 ### Unadjusted scores
 
 ```{r}
 # internalising
 internal_unadj <- 
-  calculate_d(m1 = 14.37, sd1 = 10.716, n1 = 71, 
-            m2 = 10.69, sd2 = 8.219, n2 = 3653, 
-            a = .05, lower = FALSE)
+  calculate_d(m1 = 14.37, # neglect mean
+              sd1 = 10.716, # neglect sd
+              n1 = 71, # neglect n
+              m2 = 10.69, # none mean
+              sd2 = 8.219, # none sd
+              n2 = 3653, # none n
+              a = .05, # alpha/confidence interval
+              lower = TRUE) # lower or upper bound
+
+internal_unadj$d # effect size 
+internal_unadj$dlow # non-directional non-central lower 
+internal_unadj$dlow_central # non-directional central lower 
+internal_unadj$done_low # one-tailed non-central lower
+internal_unadj$done_low_central # one-tailed central lower
 
 # externalising
 external_unadj <- 
   calculate_d(m1 = 13.14, sd1 = 8.066, n1 = 71, 
-            m2 = 9.42, sd1 = 6.764, n2 = 3653, 
-            a = .05, lower = FALSE)
+            m2 = 9.42, sd2 = 6.764, n2 = 3653, 
+            a = .05, lower = TRUE)
+
+external_unadj$d # effect size 
+external_unadj$dlow # non-directional non-central lower 
+external_unadj$dlow_central # non-directional central lower 
+external_unadj$done_low # one-tailed non-central lower
+external_unadj$done_low_central # one-tailed central lower
 ```
 
 Note, you can also calculate directly from a t-test output in *R*, a *t*-value, or the dataframe of scores. 
 
+### Adjusted scores
 
-Internalising score
+The adjusted scores are not displayed in raw score format, but rather mean difference scores. We can again use calculate_d in a different way:
 
+```{r}
+# internalising
+m_diff <- 2.73
+lower <- 0.77
+# ci is m - t_alpha*SE = lower
+SE <- (m_diff - lower)/qt(.025, # .05 / 2
+                    df = (71+3653 - 2), # n - 1 + n - 1
+                    lower.tail = FALSE) 
+SE
 
-Externalising score
+# confirm correct
+# p value is listed as .006
+pt(q = m_diff / SE, # t value
+   df = (71+3653 - 2), # df 
+   lower.tail = FALSE)*2 # upper tail * 2 for two tails 
 
+internal_adj <- 
+  calculate_d(t = m_diff/SE, # t-score
+            n1 = 71, # neglect n
+            n2 = 3653, # none n
+            a = .05,  # alpha/confidence interval
+            lower = TRUE) # lower or upper bound
 
-Unadjusted
-Adjusted
-SD
+internal_adj$d # effect size 
+internal_adj$dlow # non-directional non-central lower 
+internal_adj$dlow_central # non-directional central lower 
+internal_adj$done_low # one-tailed non-central lower
+internal_adj$done_low_central # one-tailed central lower
 
+# externalising
+m_diff <- 3.10
+lower <- 1.49
+# ci is m - t_alpha*SE = lower
+SE <- (m_diff - lower)/qt(.025, # .05 / 2
+                    df = (71+3653 - 2), # n - 1 + n - 1
+                    lower.tail = FALSE) 
+SE
 
-Unadjusted
-Adjusted
-SD
-Reported (raw difference)
-3.68 (1.73-5.62)
-2.73 (0.77-4.69)
-8.29
+# confirm correct
+# p value is listed as < .001
+pt(q = m_diff / SE, # t value
+   df = (71+3653 - 2), # df 
+   lower.tail = FALSE)*2 # upper tail * 2 for two tails 
 
+external_adj <- 
+  calculate_d(t = m_diff/SE, # t-score
+            n1 = 71, # neglect n
+            n2 = 3653, # none n
+            a = .05,  # alpha/confidence interval
+            lower = TRUE) # lower or upper bound
 
-3.72 (2.13-5.32)
-3.10 (1.49-4.71)
-6.81
-Transformed* (standardized difference, d)
+external_adj$d # effect size 
+external_adj$dlow # non-directional non-central lower 
+external_adj$dlow_central # non-directional central lower 
+external_adj$done_low # one-tailed non-central lower
+external_adj$done_low_central # one-tailed central lower
+```
 
+## Visualisation of c
 
+```{r}
+plots_1 <- visualize_c(dlow = internal_unadj$dlow_central)$graph + 
+  ggtitle("Internal Unadjusted") + 
+  annotate("text", label = paste0("l = ", round(internal_unadj$dlow_central, 2)), 
+           x = -1.5, y = -.5)
+plots_2 <- visualize_c(dlow = external_unadj$dlow_central)$graph + 
+  ggtitle("External Unadjusted") + 
+  annotate("text", label = paste0("l = ", round(external_unadj$dlow_central, 2)), 
+           x = -1.5, y = -.5)
+plots_3 <- visualize_c(dlow = internal_adj$dlow_central)$graph + 
+  ggtitle("Internal Adjusted") + 
+    annotate("text", label = paste0("l = ", round(internal_adj$dlow_central, 2)), 
+           x = -1.5, y = -.5)
+plots_4 <- visualize_c(dlow = external_adj$dlow_central)$graph + 
+  ggtitle("External Adjusted") + 
+  annotate("text", label = paste0("l = ", round(external_adj$dlow_central, 2)), 
+         x = -1.5, y = -.5)
 
+plot_grid(plots_1, plots_2, 
+          plots_3, plots_4, 
+          nrow = 2)
 
-0.44 (0.20-0.68)
-0.33 (0.09-0.57)
-1
+ggsave(filename = "visualize_c.png")
+```
+## Calculation of adjusted values
 
+```{r}
+adjusted_coef(effect_xz = .2, # effect of x and z
+    effect_uxz = .4, # effect of x, u, and z
+    effect_d = .12) # effect size of difference score between groups 
+```
 
-0.55 (0.31-0.79)
-0.46 (0.21-0.70)
-1
-* Note that the boundaries of the confidence intervals are conservatively rounded. The left boundaries are rounded down, the right boundaries are rounded up (the point estimates are rounded numerically). 
+## Calculation between effect sizes
+
+```{r}
+d_to_f2(.25)
+d_to_nnt(.25)
+d_to_r(.25)
+```
 

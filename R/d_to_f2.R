@@ -12,8 +12,11 @@
 #' @keywords effect size, cohen's d, cohen's f, f squared,
 #' convert
 #'
-#' @export
 #' @examples
+#' d_to_f2(.25)
+#' @rdname d_to_f2
+#' @export
+
 #'
 d_to_f2 <- function (d) {
 
@@ -28,5 +31,3 @@ d_to_f2 <- function (d) {
               "f2" = f2))
 }
 
-#' @rdname d_to_f2
-#' @export

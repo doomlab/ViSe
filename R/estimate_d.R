@@ -15,6 +15,11 @@
 #'
 #' @keywords effect size, estimation, visualization, ggplot
 #' @import ggplot2
+#'
+#' @examples
+#' estimate_d()
+#'
+#' @rdname estimate_d
 #' @export
 
 
@@ -106,6 +111,3 @@ estimate_d <- function (m1 = NULL, m2 = NULL,
   ))
 
 }
-
-#' @rdname estimate_d
-#' @export

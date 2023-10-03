@@ -13,9 +13,12 @@
 #' \emph{Biolological Psychiatry, 59}, 990–996.
 #' https://doi.org/10.1016/j.biopsych.2005.09.014
 #'
-#'
-#' @export
 #' @examples
+#'
+#' d_to_nnt(d = .25)
+#'
+#' @rdname d_to_nnt
+#' @export
 #'
 
 d_to_nnt <- function (d = NULL)
@@ -28,6 +31,4 @@ d_to_nnt <- function (d = NULL)
 
 }
 
-#' @rdname d_to_nnt
-#' @export
 

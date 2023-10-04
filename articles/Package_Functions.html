@@ -102,13 +102,10 @@ scale at around the age of 21. The study reports unadjusted mean
 differences and mean differences adjusted for ‘gender, parental
 ethnicity, maternal age, family income, maternal relationship status,
 maternal education, youth income level, youth education level, youth
-marital status’ (e.g., likelyprobably based on ordinary least squares
+marital status’ (e.g., likely based on ordinary least squares
 regression, but the paper does not specify that). To obtain the
 estimates and two-tailed 95% confidence intervals on the d scale, we
-divided the reported unadjusted and adjusted means for internalising and
-externalising by the respective standard deviations of the total sample
-(see Table @ref(tab:table-1)) with the <code>calculate_d</code>
-function.</p>
+used the <code>calculate_d</code> function.</p>
 <p>See supplemental document at <a href="https://static.cambridge.org/content/id/urn:cambridge.org:id:article:S0007125018002076/resource/name/S0007125018002076sup001.docx" class="external-link uri">https://static.cambridge.org/content/id/urn:cambridge.org:id:article:S0007125018002076/resource/name/S0007125018002076sup001.docx</a></p>
 </div>
 <div class="section level2">
@@ -117,6 +114,8 @@ function.</p>
 <div class="section level3">
 <h3 id="unadjusted-scores">Unadjusted scores<a class="anchor" aria-label="anchor" href="#unadjusted-scores"></a>
 </h3>
+<p>We can calculate the unadjusted scores from the supplemental material
+provided by the authors.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># internalising</span></span>
 <span><span class="va">internal_unadj</span> <span class="op">&lt;-</span> </span>
@@ -163,8 +162,8 @@ function.</p>
 <h3 id="adjusted-scores">Adjusted scores<a class="anchor" aria-label="anchor" href="#adjusted-scores"></a>
 </h3>
 <p>The adjusted scores are not displayed in raw score format, but rather
-mean difference scores. We can again use calculate_d in a different
-way:</p>
+mean difference scores. We can again use <code>calculate_d</code> in a
+different way:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># internalising</span></span>
 <span><span class="va">m_diff</span> <span class="op">&lt;-</span> <span class="fl">2.73</span></span>
@@ -240,6 +239,9 @@ way:</p>
 <div class="section level2">
 <h2 id="visualisation-of-c">Visualisation of c<a class="anchor" aria-label="anchor" href="#visualisation-of-c"></a>
 </h2>
+<p>Given these statistics, we can use <code>visualize_c</code> to
+visualize the combinations of effect size and correlation that would
+support an effect.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plots_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/visualize_c.html">visualize_c</a></span><span class="op">(</span>dlow <span class="op">=</span> <span class="va">internal_unadj</span><span class="op">$</span><span class="va">dlow_central</span><span class="op">)</span><span class="op">$</span><span class="va">graph</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Internal Unadjusted"</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -302,19 +304,30 @@ way:</p>
 <h2 id="calculation-between-effect-sizes-and-other-numbers">Calculation between effect sizes and other numbers<a class="anchor" aria-label="anchor" href="#calculation-between-effect-sizes-and-other-numbers"></a>
 </h2>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/d_to_f2.html">d_to_f2</a></span><span class="op">(</span><span class="fl">.25</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/d_to_f2.html">d_to_f2</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $f</span></span>
 <span><span class="co">#&gt; [1] 0.125</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $f2</span></span>
 <span><span class="co">#&gt; [1] 0.015625</span></span>
-<span><span class="fu"><a href="../reference/d_to_nnt.html">d_to_nnt</a></span><span class="op">(</span><span class="fl">.25</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/d_to_nnt.html">d_to_nnt</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 7.126761</span></span>
-<span><span class="fu"><a href="../reference/d_to_r.html">d_to_r</a></span><span class="op">(</span><span class="fl">.25</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/d_to_r.html">d_to_r</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.1240347</span></span>
-<span></span>
 <span><span class="fu"><a href="../reference/probability_superiority.html">probability_superiority</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.5701581</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.5701581</span></span>
+<span><span class="fu"><a href="../reference/proportion_overlap.html">proportion_overlap</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $u1</span></span>
+<span><span class="co">#&gt; [1] 0.1809524</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $u2</span></span>
+<span><span class="co">#&gt; [1] 0.5497382</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $u3</span></span>
+<span><span class="co">#&gt; [1] 0.5987063</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $p_o</span></span>
+<span><span class="co">#&gt; [1] 0.9005236</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

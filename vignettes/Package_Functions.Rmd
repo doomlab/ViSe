@@ -35,13 +35,15 @@ library(ggplot2)
 
 ## Example
 
-To demonstrate the use of visual sensitivity analysis, we use a study of the effect of child maltreatment on the extent of mental health problems in terms of internalising and externalising behaviour. The study of Kisely and colleagues (2018) was based on a general population sample in Brisbane, Australia, and compared 3554 mother-child pairs without 'substantiated child maltreatment' to, for example, 73 pairs with child neglect. Note that the results vary across different types of maltreatment assessed, we choose child neglect because its results (a smaller but still considerable l after adjustment) are particularly suited to illustrating sensitivity analysis. Maltreatment was assessed 'by linkage to state child protection agency data'. Internalising and externalising behaviours were measured using the Youth Self-Report (YSR) scale at around the age of 21. The study reports unadjusted mean differences and mean differences adjusted for ‘gender, parental ethnicity, maternal age, family income, maternal relationship status, maternal education, youth income level, youth education level, youth marital status’ (e.g., likelyprobably based on ordinary least squares regression, but the paper does not specify that). To obtain the estimates and two-tailed 95% confidence intervals on the d scale, we divided the reported unadjusted and adjusted means for internalising and externalising by the respective standard deviations of the total sample (see Table \@ref(tab:table-1)) with the `calculate_d` function.
+To demonstrate the use of visual sensitivity analysis, we use a study of the effect of child maltreatment on the extent of mental health problems in terms of internalising and externalising behaviour. The study of Kisely and colleagues (2018) was based on a general population sample in Brisbane, Australia, and compared 3554 mother-child pairs without 'substantiated child maltreatment' to, for example, 73 pairs with child neglect. Note that the results vary across different types of maltreatment assessed, we choose child neglect because its results (a smaller but still considerable l after adjustment) are particularly suited to illustrating sensitivity analysis. Maltreatment was assessed 'by linkage to state child protection agency data'. Internalising and externalising behaviours were measured using the Youth Self-Report (YSR) scale at around the age of 21. The study reports unadjusted mean differences and mean differences adjusted for ‘gender, parental ethnicity, maternal age, family income, maternal relationship status, maternal education, youth income level, youth education level, youth marital status’ (e.g., likely based on ordinary least squares regression, but the paper does not specify that). To obtain the estimates and two-tailed 95% confidence intervals on the d scale, we used the `calculate_d` function. 
 
 See supplemental document at https://static.cambridge.org/content/id/urn:cambridge.org:id:article:S0007125018002076/resource/name/S0007125018002076sup001.docx 
 
 ## Calculate effect size 
 
 ### Unadjusted scores
+
+We can calculate the unadjusted scores from the supplemental material provided by the authors. 
 
 ```{r}
 # internalising
@@ -78,7 +80,7 @@ Note, you can also calculate directly from a t-test output in *R*, a *t*-value, 
 
 ### Adjusted scores
 
-The adjusted scores are not displayed in raw score format, but rather mean difference scores. We can again use calculate_d in a different way:
+The adjusted scores are not displayed in raw score format, but rather mean difference scores. We can again use `calculate_d` in a different way:
 
 ```{r}
 # internalising
@@ -140,6 +142,8 @@ external_adj$done_low_central # one-tailed central lower
 
 ## Visualisation of c
 
+Given these statistics, we can use `visualize_c` to visualize the combinations of effect size and correlation that would support an effect. 
+
 ```{r}
 plots_1 <- visualize_c(dlow = internal_unadj$dlow_central)$graph + 
   ggtitle("Internal Unadjusted") + 
@@ -164,6 +168,7 @@ plot_grid(plots_1, plots_2,
 
 ggsave(filename = "visualize_c.png")
 ```
+
 ## Calculation of adjusted values
 
 ```{r}
@@ -194,10 +199,10 @@ estimate_d(d = .25)$graph
 ## Calculation between effect sizes and other numbers
 
 ```{r}
-d_to_f2(.25)
-d_to_nnt(.25)
-d_to_r(.25)
-
+d_to_f2(d = .25)
+d_to_nnt(d = .25)
+d_to_r(d = .25)
 probability_superiority(d = .25)
+proportion_overlap(d = .25)
 ```
 

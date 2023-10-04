@@ -6,7 +6,7 @@ Authors@R: c(person("Erin M.", "Buchanan", role = c("aut", "cre"),
                      email = "buchananlab@gmail.com",
                      comment = c(ORCID = "0000-0002-9689-4189")))
 Depends: R (>= 3.1.0)
-Imports: stats, ggplot2, methods, dplyr, tidyr, scales
+Imports: stats, ggplot2, methods, dplyr, tidyr, scales, cowplot
 Maintainer: Erin M. Buchanan <buchananlab@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
@@ -17,8 +17,7 @@ RoxygenNote: 7.2.3
 URL: http://www.aggieerin.com/ViSe/
 Suggests: 
     knitr,
-    rmarkdown,
-    cowplot
+    rmarkdown
 VignetteBuilder: knitr
 Collate: 
     'globals.R'
@@ -34,3 +33,4 @@ Collate:
     'probability_superiority.R'
     'proportion_overlap.R'
     'visualize_c.R'
+    'visualize_effects.R'

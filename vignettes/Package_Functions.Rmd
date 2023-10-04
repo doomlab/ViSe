@@ -171,6 +171,8 @@ ggsave(filename = "visualize_c.png")
 
 ## Calculation of adjusted values
 
+If you have information about regression coefficients, you can use this function to calculate the adjusted coefficient. Include $\beta_{xz}$, $\beta_{uxz}$, and $d$ to calculate the adjusted coefficient. 
+
 ```{r}
 adjusted_coef(effect_xz = .2, # effect of x and z
     effect_uxz = .4, # effect of x, u, and z
@@ -178,6 +180,8 @@ adjusted_coef(effect_xz = .2, # effect of x and z
 ```
 
 ## Visualization of d
+
+If you don't have a clue what to explect, you can create some visualizations of *d* to help determine the overlap between groups. You can create graphs with just the effect size or create a graph by entering some numbers you might expect for your study. This graph will help you visualize how much overlap two distributions have at various effect sizes. 
 
 ```{r}
 visual_d <- 
@@ -192,11 +196,20 @@ visual_d$d
 
 visual_d$graph
 
+ggsave(filename = "estimate_d.png")
+
 estimate_d(d = .25)$graph
 ```
 
-
 ## Calculation between effect sizes and other numbers
+
+You can also switch between various effect sizes for your favorite effect size. In each, you only have to enter the *d* value. 
+
+1) d_to_f2: Cohen’s f and f2 
+2) d_to_nnt: Number needed to treat 
+3) d_to_r: correlation coefficient 
+4) probability_superiority: The probability of superiority  
+5) proportion_overlap: u1 represents the proportion of non-overlap across both group distributions, u2 indicates the proportion that one group is more than the same proportion in the other group, u3 shows the proportion of one group that is smaller than the median of the other group, and p_o is the proportional overlap of groups. 
 
 ```{r}
 d_to_f2(d = .25)
@@ -205,4 +218,14 @@ d_to_r(d = .25)
 probability_superiority(d = .25)
 proportion_overlap(d = .25)
 ```
+
+## Visualization of effect sizes
+
+Using the conversion factors above, you can also make a graph of all the possible versions of effect sizes grouped together. 
+
+```{r}
+visualize_effects(d = .5)$graph
+ggsave(filename = "visualize_effects.png")
+```
+
 

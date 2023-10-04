@@ -63,7 +63,7 @@ big_number_donut_raw <- function(value, font_family, highlight_color,
     pivot_longer(cols = -x)
 
   # Create a nicely formatted big number to go in the donut hole
-  big_number_text_label <- value
+  big_number_text_label <- format(round(value, digits = 2), nsmall = 2)
 
   # Create our plot
   ggplot(df,

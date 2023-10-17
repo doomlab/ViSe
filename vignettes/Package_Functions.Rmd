@@ -83,27 +83,15 @@ Note, you can also calculate directly from a t-test output in *R*, a *t*-value, 
 The adjusted scores are not displayed in raw score format, but rather mean difference scores. We can again use `calculate_d` in a different way:
 
 ```{r}
-# internalising
-m_diff <- 2.73
-lower <- 0.77
-# ci is m - t_alpha*SE = lower
-SE <- (m_diff - lower)/qt(.025, # .05 / 2
-                    df = (71+3653 - 2), # n - 1 + n - 1
-                    lower.tail = FALSE) 
-SE
-
-# confirm correct
-# p value is listed as .006
-pt(q = m_diff / SE, # t value
-   df = (71+3653 - 2), # df 
-   lower.tail = FALSE)*2 # upper tail * 2 for two tails 
-
 internal_adj <- 
-  calculate_d(t = m_diff/SE, # t-score
-            n1 = 71, # neglect n
-            n2 = 3653, # none n
-            a = .05,  # alpha/confidence interval
-            lower = TRUE) # lower or upper bound
+  calculate_d(m1 = 2.73, # neglect mean
+              sd1 = 10.716, # neglect sd
+              n1 = 71, # neglect n
+              m2 = 0, # none mean
+              sd2 = 8.219, # none sd
+              n2 = 3653, # none n
+              a = .05, # alpha/confidence interval
+              lower = TRUE) # lower or upper bound
 
 internal_adj$d # effect size 
 internal_adj$dlow # non-directional non-central lower 

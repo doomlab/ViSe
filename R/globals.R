@@ -4,4 +4,4 @@ library(tidyr)
 library(scales)
 library(latex2exp)
 
-name <- x <- y <- NULL
+name <- x <- y <- Var1 <- Var2 <- NULL

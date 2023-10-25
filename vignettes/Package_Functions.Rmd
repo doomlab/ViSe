@@ -167,9 +167,9 @@ adjusted_coef(effect_xz = .2, # effect of x and z
     effect_d = .12) # effect size of difference score between groups 
 ```
 
-## Visualization of d
+## Visualization of d and r
 
-If you don't have a clue what to explect, you can create some visualizations of *d* to help determine the overlap between groups. You can create graphs with just the effect size or create a graph by entering some numbers you might expect for your study. This graph will help you visualize how much overlap two distributions have at various effect sizes. 
+If you don't have a clue what to explect, you can create some visualizations of *d* and or *r* to help determine the overlap between groups. You can create graphs with just the effect size or create a graph by entering some numbers you might expect for your study. This graph will help you visualize how much overlap two distributions have at various effect sizes. 
 
 ```{r}
 visual_d <- 
@@ -187,6 +187,15 @@ visual_d$graph
 ggsave(filename = "estimate_d.png")
 
 estimate_d(d = .25)$graph
+```
+
+```{r}
+visual_r <- 
+  estimate_r(r = .3)
+
+visual_r$graph
+
+ggsave(filename = "estimate_r.png")
 ```
 
 ## Calculation between effect sizes and other numbers
@@ -216,4 +225,15 @@ visualize_effects(d = .5)$graph
 ggsave(filename = "visualize_effects.png")
 ```
 
+## Combining it all together
 
+You can then use the two estimation functions to create a graph that shows you which combinations of *d* and *r* would be included in the possible effects.
+
+```{r}
+visual_c_mapped <- 
+  visualize_c_map(dlow = .25,
+                  dvalues = c(.2, .3, .8),
+                  rvalues = c(.1, .4, .3))
+
+visual_c_mapped$graph
+```

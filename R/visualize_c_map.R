@@ -68,7 +68,12 @@ visualize_c_map <- function (dlow,
 
   # make the combination of d and r values
   DF_points <- expand.grid(dvalues, rvalues)
+  DF_points2 <- expand.grid(svalues, rvalues)
 
+  #rcolorbrewer to make sure color is ok
+  #use shape and color to help distinguish
+  #plotly for hover
+  #figure out the icons package
 
   graph <- ggplot(temp, aes(x_df, y_df)) +
     theme_classic() +
@@ -80,6 +85,7 @@ visualize_c_map <- function (dlow,
     xlab("Standardized Effect Size") +
     ylab("Correlation") +
     geom_point(data = DF_points, aes(Var1, Var2)) +
+    geom_point(data = DF_points2, aes(Var1, Var2), shape = 2, color = "green") +
     geom_ribbon(aes(ymin = ymin, ymax = ymax),
                 color = "#88CCEE", fill = "#88CCEE", alpha = .5)
 

@@ -33,6 +33,7 @@ Collate:
     'noncentral_t.R'
     'probability_superiority.R'
     'proportion_overlap.R'
+    'runExample.R'
     'visualize_c.R'
     'visualize_c_map.R'
     'visualize_effects.R'

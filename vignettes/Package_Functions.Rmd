@@ -31,6 +31,7 @@ This installation will give you the latest version of the package, regardless of
 library(ViSe)
 library(cowplot)
 library(ggplot2)
+library(plotly)
 ```
 
 ## Example
@@ -154,7 +155,7 @@ plot_grid(plots_1, plots_2,
           plots_3, plots_4, 
           nrow = 2)
 
-ggsave(filename = "visualize_c.png")
+# ggsave(filename = "visualize_c.png")
 ```
 
 ## Calculation of adjusted values
@@ -184,7 +185,7 @@ visual_d$d
 
 visual_d$graph
 
-ggsave(filename = "estimate_d.png")
+# ggsave(filename = "estimate_d.png")
 
 estimate_d(d = .25)$graph
 ```
@@ -195,18 +196,18 @@ visual_r <-
 
 visual_r$graph
 
-ggsave(filename = "estimate_r.png")
+# ggsave(filename = "estimate_r.png")
 ```
 
 ## Calculation between effect sizes and other numbers
 
 You can also switch between various effect sizes for your favorite effect size. In each, you only have to enter the *d* value. 
 
-1) d_to_f2: Cohen’s f and f2 
-2) d_to_nnt: Number needed to treat 
-3) d_to_r: correlation coefficient 
-4) probability_superiority: The probability of superiority  
-5) proportion_overlap: u1 represents the proportion of non-overlap across both group distributions, u2 indicates the proportion that one group is more than the same proportion in the other group, u3 shows the proportion of one group that is smaller than the median of the other group, and p_o is the proportional overlap of groups. 
+1) `d_to_f2`: Cohen’s f and f2 
+2) `d_to_nnt`: Number needed to treat 
+3) `d_to_r`: correlation coefficient 
+4) `probability_superiority`: The probability of superiority  
+5) `proportion_overlap`: u1 represents the proportion of non-overlap across both group distributions, u2 indicates the proportion that one group is more than the same proportion in the other group, u3 shows the proportion of one group that is smaller than the median of the other group, and p_o is the proportional overlap of groups. 
 
 ```{r}
 d_to_f2(d = .25)
@@ -222,12 +223,14 @@ Using the conversion factors above, you can also make a graph of all the possibl
 
 ```{r}
 visualize_effects(d = .5)$graph
-ggsave(filename = "visualize_effects.png")
+# ggsave(filename = "visualize_effects.png")
 ```
 
 ## Combining it all together
 
-You can then use the two estimation functions to create a graph that shows you which combinations of *d* and *r* would be included in the possible effects.
+You can then use the two estimation functions to create a graph that shows you which combinations of *d* and *r* would be included in the possible effects. You can use the `plotly` library to hover over those dots to see their values (also embedded in our shiny app). 
+
+*Note*: Not run to make this package CRAN compatible (plotly makes html files large). 
 
 ```{r}
 visual_c_mapped <- 
@@ -236,4 +239,8 @@ visual_c_mapped <-
                   rvalues = c(.1, .4, .3))
 
 visual_c_mapped$graph
+
+# ggsave(filename = "visualize_c_map.png")
+
+# ggplotly(visual_c_mapped$graph)
 ```

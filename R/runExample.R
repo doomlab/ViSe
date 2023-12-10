@@ -1,3 +1,8 @@
+#' Run Shiny App
+#'
+#' This function is a convenience function to help
+#' you easily run the shiny app for the package.
+#'
 #' @rdname runExample
 #' @export
 runExample <- function() {

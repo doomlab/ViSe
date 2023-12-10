@@ -36,7 +36,7 @@ visualize_c_map <- function (dlow,
     stop("All three values must be included.")
   }
 
-  x_df <- y_df <- ymax <- ymin <- NULL
+  x_df <- y_df <- ymax <- ymin <- d <- r <- NULL
 
   x <- seq(from = -2, to = 2, by = .01)
   y <- seq(from = -1, to = 1, by = .01)
@@ -68,8 +68,9 @@ visualize_c_map <- function (dlow,
 
   # make the combination of d and r values
   DF_points <- expand.grid(dvalues, rvalues)
-  DF_points2 <- expand.grid(svalues, rvalues)
+  DF_points2 <- expand.grid(dvalues, rvalues)
 
+  colnames(DF_points) <- colnames(DF_points2) <- c("d", "r")
   #rcolorbrewer to make sure color is ok
   #use shape and color to help distinguish
   #plotly for hover
@@ -84,8 +85,8 @@ visualize_c_map <- function (dlow,
     # ends at y = i_num, x = upper x
     xlab("Standardized Effect Size") +
     ylab("Correlation") +
-    geom_point(data = DF_points, aes(Var1, Var2)) +
-    geom_point(data = DF_points2, aes(Var1, Var2), shape = 2, color = "green") +
+    geom_point(data = DF_points, aes(d, r), color = "#172808", size = 2) +
+    geom_point(data = DF_points2, aes(d, r), shape = 2, color = "#172808", size = 3) +
     geom_ribbon(aes(ymin = ymin, ymax = ymax),
                 color = "#88CCEE", fill = "#88CCEE", alpha = .5)
 

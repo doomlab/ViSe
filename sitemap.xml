@@ -40,6 +40,9 @@
     <loc>http://www.aggieerin.com/ViSe/reference/estimate_d.html</loc>
   </url>
   <url>
+    <loc>http://www.aggieerin.com/ViSe/reference/estimate_r.html</loc>
+  </url>
+  <url>
     <loc>http://www.aggieerin.com/ViSe/reference/index.html</loc>
   </url>
   <url>
@@ -49,6 +52,15 @@
     <loc>http://www.aggieerin.com/ViSe/reference/proportion_overlap.html</loc>
   </url>
   <url>
+    <loc>http://www.aggieerin.com/ViSe/reference/runExample.html</loc>
+  </url>
+  <url>
     <loc>http://www.aggieerin.com/ViSe/reference/visualize_c.html</loc>
+  </url>
+  <url>
+    <loc>http://www.aggieerin.com/ViSe/reference/visualize_c_map.html</loc>
+  </url>
+  <url>
+    <loc>http://www.aggieerin.com/ViSe/reference/visualize_effects.html</loc>
   </url>
 </urlset>

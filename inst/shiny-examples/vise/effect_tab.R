@@ -90,7 +90,7 @@ effect_tab <-
             textInput(inputId = "r_values_effect",
                       label = "Enter r values",
                       value = ""),
-            plotOutput("visual_c_map_effect")
+            plotlyOutput("visual_c_map_effect")
           ) #box
 
 

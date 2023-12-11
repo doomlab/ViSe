@@ -89,6 +89,9 @@ data_tab <-
               p(""),
               p("We can use ", strong("visualize_c()"), " to visualize the combinations of
                 effect size and correlation that would support an effect. "),
+              p(""),
+              h3(strong(textOutput("visualize_c_data_warning"),
+                   style = "color:red; font-size:20px; font-family:arial; font-style:italic;")),
               plotOutput("visualize_c_data")
             ), #box
 
@@ -148,13 +151,16 @@ data_tab <-
             p("We can use ", strong("visualize_c_map()"), "what values might show
               an effect. After using the two plots above, values for ",
               em("d"), " and ,", em("r"), "below ", strong("separated by commas.")),
+            p(""),
+            h3(strong(textOutput("visualize_c_map_data_warning"),
+                      style = "color:red; font-size:20px; font-family:arial; font-style:italic;")),
             textInput(inputId = "d_values_data",
                       label = "Enter d values",
                       value = ""),
             textInput(inputId = "r_values_data",
                       label = "Enter r values",
                       value = ""),
-            plotOutput("visual_c_map_data")
+            plotlyOutput("visual_c_map_data")
           ), #box
 
 

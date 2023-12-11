@@ -10,11 +10,18 @@ library(dplyr)
 library(ViSe)
 library(shinyWidgets)
 library(rio)
+library(tidyr)
+library(plotly)
+library(ggplot2)
+library(scales)
+library(cowplot)
 
 # Load Pages --------------------------------------------------------------
 source("data_tab.R")
 source("effect_tab.R")
 source("stats_tab.R")
+
+options(shiny.reactlog=TRUE)
 
 # User Interface ----------------------------------------------------------
 ui <- dashboardPage(skin = "blue",
@@ -81,8 +88,30 @@ server <- function(input, output, session) {
     visualize_effects(d = data_effect_size()$d)$graph
   })
   # visualize_c_data plot
+  output$visualize_c_data_warning <- renderText({
+    if (prod(data_effect_size()$dhigh, data_effect_size()$dlow) < 0){
+      warnstuff <- "Warning: Your effect size confidence interval includes zero.
+      No combination of effects would support an effect with this result. "
+    } else {
+      warnstuff <- ""
+    }
+
+      paste0(warnstuff, "Your result: d = ",
+             format(round(data_effect_size()$d, digits = 2), nsmall = 2),
+             " 95% CI[",
+             format(round(data_effect_size()$dlow, digits = 2), nsmall = 2),
+             ", ",
+             format(round(data_effect_size()$dhigh, digits = 2), nsmall = 2),
+             "]")
+
+  })
   output$visualize_c_data <- renderPlot({
-    visualize_c(d = data_effect_size()$dlow)$graph
+    if (data_effect_size()$d < 0){
+      visualize_c(d = data_effect_size()$dhigh)$graph
+    } else {
+      visualize_c(d = data_effect_size()$dlow)$graph
+    }
+
   })
   # estimate_d_data plot
   output$estimate_d_data <- renderPlot({
@@ -93,11 +122,36 @@ server <- function(input, output, session) {
     estimate_r(r = input$enter_r_data)$graph
   })
   # visual_c_map_data plot
-  output$visual_c_map_data <- renderPlot({
-    visualize_c_map(d = data_effect_size()$dlow,
-                    dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_data, ",")))),
-                    rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_data, ","))))
-                    )$graph
+  output$visualize_c_map_data_warning <- renderText({
+    if (prod(data_effect_size()$dhigh, data_effect_size()$dlow) < 0){
+      warnstuff <- "Warning: Your effect size confidence interval includes zero.
+      No combination of effects would support an effect with this result. "
+    } else {
+      warnstuff <- ""
+    }
+      paste0(warnstuff, "Your result: d = ",
+             format(round(data_effect_size()$d, digits = 2), nsmall = 2),
+             " 95% CI[",
+             format(round(data_effect_size()$dlow, digits = 2), nsmall = 2),
+             ", ",
+             format(round(data_effect_size()$dhigh, digits = 2), nsmall = 2),
+             "]")
+  })
+  output$visual_c_map_data <- renderPlotly({
+
+    if (data_effect_size()$d < 0){
+      ggplotly(visualize_c_map(d = data_effect_size()$dhigh,
+                      dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_data, ",")))),
+                      rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_data, ","))))
+      )$graph)
+    } else {
+      ggplotly(visualize_c_map(d = data_effect_size()$dlow,
+                      dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_data, ",")))),
+                      rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_data, ","))))
+      )$graph)
+    }
+
+
   })
 
   # Effect Tab --------------------------------------------------------------
@@ -111,16 +165,53 @@ server <- function(input, output, session) {
   output$estimate_r_effect <- renderPlot({
     estimate_r(r = input$enter_r_effect)$graph
   })
-  output$visual_c_map_effect <- renderPlot({
-    visualize_c_map(d = input$enter_d_effect,
+  output$visual_c_map_effect <- renderPlotly({
+    ggplotly(visualize_c_map(d = input$enter_d_effect,
                     dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_effect, ",")))),
                     rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_effect, ","))))
-    )$graph
+    )$graph)
   })
 
-  # stats tab ---------------------------------------------------------------
+  # Stats tab ---------------------------------------------------------------
+
+  output$visualize_c_stats_warning <- renderText({
+
+    if (!isTruthy(input$enter_t)) {
+      t_enter <- NULL
+    } else { t_enter <- input$enter_t}
+
+    d_calc <- calculate_d(
+      m1 = input$enter_m1,
+      m2 = input$enter_m2,
+      sd1 = input$enter_sd1,
+      sd2 = input$enter_sd2,
+      n1 = input$enter_n1,
+      n2 = input$enter_n2,
+      a = input$enter_alpha,
+      t = t_enter
+    )
+
+    if (prod(d_calc$dhigh, d_calc$dlow) < 0){
+      warnstuff <- "Warning: Your effect size confidence interval includes zero.
+      No combination of effects would support an effect with this result. "
+    } else {
+      warnstuff <- ""
+    }
+    paste0(warnstuff, "Your result: d = ",
+           format(round(d_calc$d, digits = 2), nsmall = 2),
+           " 95% CI[",
+           format(round(d_calc$dlow, digits = 2), nsmall = 2),
+           ", ",
+           format(round(d_calc$dhigh, digits = 2), nsmall = 2),
+           "]")
+  })
 
   output$visualize_c_stats <- renderPlot({
+
+    if (!isTruthy(input$enter_t)) {
+      t_enter <- NULL
+    } else { t_enter <- input$enter_t}
+
     d_calc <- calculate_d(
       m1 = input$enter_m1,
       m2 = input$enter_m2,
@@ -129,13 +220,23 @@ server <- function(input, output, session) {
       n1 = input$enter_n1,
       n2 = input$enter_n2,
       a = input$enter_alpha,
-      lower = input$enter_lower,
-      t = input$enter_t
+      t = t_enter
     )
 
-    visualize_c(dlow = d_calc$dlow)$graph
+    if (d_calc$d < 0){
+      visualize_c(dlow = d_calc$dhigh)$graph
+    } else {
+      visualize_c(dlow = d_calc$dlow)$graph
+    }
+
   })
+
   output$convert_d_stats <- renderPlot({
+
+    if (!isTruthy(input$enter_t)) {
+      t_enter <- NULL
+    } else { t_enter <- input$enter_t}
+
     d_calc <- calculate_d(
       m1 = input$enter_m1,
       m2 = input$enter_m2,
@@ -144,23 +245,114 @@ server <- function(input, output, session) {
       n1 = input$enter_n1,
       n2 = input$enter_n2,
       a = input$enter_alpha,
-      lower = input$enter_lower,
-      t = input$enter_t
+      t = t_enter
     )
+
     visualize_effects(d = d_calc$d)$graph
   })
 
   output$estimate_d_stats <- renderPlot({
     estimate_d(d = input$enter_d_stats)$graph
   })
+
   output$estimate_r_stats <- renderPlot({
     estimate_r(r = input$enter_r_stats)$graph
   })
-  output$visual_c_map_stats <- renderPlot({
-    visualize_c_map(d = input$enter_d_stats,
-                    dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_stats, ",")))),
-                    rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_stats, ","))))
-    )$graph
+
+  output$visualize_c_map_stats_warning <- renderText({
+
+    if (!isTruthy(input$enter_t)) {
+      t_enter <- NULL
+    } else { t_enter <- input$enter_t}
+
+    d_calc <- calculate_d(
+      m1 = input$enter_m1,
+      m2 = input$enter_m2,
+      sd1 = input$enter_sd1,
+      sd2 = input$enter_sd2,
+      n1 = input$enter_n1,
+      n2 = input$enter_n2,
+      a = input$enter_alpha,
+      t = t_enter
+    )
+
+    if (prod(d_calc$dhigh, d_calc$dlow) < 0){
+      warnstuff <- "Warning: Your effect size confidence interval includes zero.
+      No combination of effects would support an effect with this result. "
+    } else {
+      warnstuff <- ""
+    }
+    paste0(warnstuff, "Your result: d = ",
+           format(round(d_calc$d, digits = 2), nsmall = 2),
+           " 95% CI[",
+           format(round(d_calc$dlow, digits = 2), nsmall = 2),
+           ", ",
+           format(round(d_calc$dhigh, digits = 2), nsmall = 2),
+           "]")
+  })
+
+    output$visualize_c_stats_warning <- renderText({
+
+      if (!isTruthy(input$enter_t)) {
+        t_enter <- NULL
+      } else { t_enter <- input$enter_t}
+
+      d_calc <- calculate_d(
+        m1 = input$enter_m1,
+        m2 = input$enter_m2,
+        sd1 = input$enter_sd1,
+        sd2 = input$enter_sd2,
+        n1 = input$enter_n1,
+        n2 = input$enter_n2,
+        a = input$enter_alpha,
+        t = t_enter
+      )
+
+    if (prod(d_calc$dhigh, d_calc$dlow) < 0){
+      warnstuff <- "Warning: Your effect size confidence interval includes zero.
+      No combination of effects would support an effect with this result. "
+    } else {
+      warnstuff <- ""
+    }
+    paste0(warnstuff, "Your result: d = ",
+           format(round(d_calc$d, digits = 2), nsmall = 2),
+           " 95% CI[",
+           format(round(d_calc$dlow, digits = 2), nsmall = 2),
+           ", ",
+           format(round(d_calc$dhigh, digits = 2), nsmall = 2),
+           "]")
+  })
+
+  output$visual_c_map_stats <- renderPlotly({
+
+    if (!isTruthy(input$enter_t)) {
+      t_enter <- NULL
+    } else { t_enter <- input$enter_t}
+
+    d_calc <- calculate_d(
+      m1 = input$enter_m1,
+      m2 = input$enter_m2,
+      sd1 = input$enter_sd1,
+      sd2 = input$enter_sd2,
+      n1 = input$enter_n1,
+      n2 = input$enter_n2,
+      a = input$enter_alpha,
+      t = t_enter
+    )
+
+    if (d_calc$d < 0){
+      ggplotly(visualize_c_map(d = d_calc$dhigh,
+                      dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_stats, ",")))),
+                      rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_stats, ","))))
+      )$graph)
+    } else {
+      ggplotly(visualize_c_map(d = d_calc$dlow,
+                      dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_stats, ",")))),
+                      rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_stats, ","))))
+      )$graph)
+    }
+
+
   })
 
 
@@ -169,5 +361,3 @@ server <- function(input, output, session) {
 
 # Run the Application -----------------------------------------------------
 shinyApp(ui = ui, server = server)
-
-

@@ -42,7 +42,6 @@ visualize_c <- function (dlow) {
 
   temp <- subset(temp, abs(c) <= 1)
 
-
   if (dlow >= 0){
     temp$ymin <- ifelse(temp$x_df < 0, temp$c, -1)
     temp$ymax <- ifelse(temp$x_df > 0, temp$c, 1)

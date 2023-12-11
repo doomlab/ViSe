@@ -43,12 +43,6 @@ stats_tab <-
                 step = .01,
                 width = NULL
               ),
-              selectInput(
-                inputId = "enter_lower",
-                label = "Do you expect d to be negative?",
-                selected = "FALSE",
-                choices = c("TRUE", "FALSE")
-              ),
               p("Enter Summary Statistics (see below if you only have ",
                 em("t"), " values)."),
               numericInput(
@@ -79,7 +73,7 @@ stats_tab <-
                 width = NULL
               ),
               numericInput(
-                inputId = "enter_sd1",
+                inputId = "enter_sd2",
                 label = "Group 2 Standard Deviation:",
                 value = NULL,
                 min = 0.0000000001,
@@ -132,6 +126,9 @@ stats_tab <-
               p(""),
               p("We can use ", strong("visualize_c()"), " to visualize the combinations of
                 effect size and correlation that would support an effect. "),
+              p(""),
+              h3(strong(textOutput("visualize_c_stats_warning"),
+                        style = "color:red; font-size:20px; font-family:arial; font-style:italic;")),
               plotOutput("visualize_c_stats")
             ), #box
 
@@ -189,13 +186,16 @@ stats_tab <-
             p("We can use ", strong("visualize_c_map()"), "what values might show
               an effect. After using the two plots above, values for ",
               em("d"), " and ,", em("r"), "below ", strong("separated by commas.")),
+            p(""),
+            h3(strong(textOutput("visualize_c_map_stats_warning"),
+                      style = "color:red; font-size:20px; font-family:arial; font-style:italic;")),
             textInput(inputId = "d_values_stats",
                       label = "Enter d values",
                       value = ""),
             textInput(inputId = "r_values_stats",
                       label = "Enter r values",
                       value = ""),
-            plotOutput("visual_c_map_stats")
+            plotlyOutput("visual_c_map_stats")
           ) #box
 
       ) #fluidrow

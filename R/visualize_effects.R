@@ -30,7 +30,7 @@ visualize_effects <- function (d) {
   prop <- proportion_overlap(d = d)
 
   d_graph <- big_number_donut_raw(
-    value = abs(d),
+    value = d,
     font_family = "Times",
     highlight_color = "blue",
     upper = 3

@@ -10,4 +10,4 @@ install_github("doomlab/ViSe")
 
 # Information
 
-See package vignette for function explanations. 
+See package vignette for function explanations or check out our website. 

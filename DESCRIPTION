@@ -32,6 +32,7 @@ Collate:
     'estimate_d.R'
     'estimate_r.R'
     'noncentral_t.R'
+    'other_to_d.R'
     'probability_superiority.R'
     'proportion_overlap.R'
     'runExample.R'

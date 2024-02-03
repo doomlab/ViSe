@@ -18,9 +18,6 @@ calculate_tab <-
                      <li>
                       Box 2: From summary statistics output or a research paper
                      </li>
-                     <li>
-                      Box 3: From the effect size and sample sizes
-                     </li>
                      </ul>"),
                 "You would only need to use one of the following boxes based on
                 what type of data you have. You can close these boxes to help keep
@@ -67,6 +64,22 @@ calculate_tab <-
                 data = NULL,
                 selected = NULL,
                 multiple = FALSE
+              ),
+              numericInput(
+                inputId = "data_enter_alpha",
+                label = "Alpha:",
+                value = .05,
+                min = 0,
+                max = 1,
+                step = .01,
+                width = NULL
+              ),
+              selectInput(
+                inputId = "data_enter_lower",
+                label = "Should the effect size be positive:",
+                choices = c(TRUE, FALSE),
+                selected = TRUE,
+                width = NULL
               ),
               actionBttn(
                 inputId = "calculate_d_data",
@@ -116,7 +129,7 @@ calculate_tab <-
               p("This box helps you calculate the effect size ", em("d"),
                 "using summary statistics from your output or a research paper.
                 Please note that we assume that you are entering numbers for two
-                groups using a between subjects comparison.")
+                groups using a between subjects comparison."),
 
               p("You must enter at least the group sample sizes, an alpha value
               for confidence interval
@@ -241,6 +254,8 @@ calculate_tab <-
                 The non-centralized versions assumes that effect sizes are skewed and uses
                 non-centralized t-distribution to calculate the confidence interval.
                 At larger sample sizes, these two values get closer together. "),
+              p("You will see an error here until you enter enough of the required
+                information."),
               valueBoxOutput("summary_d"),
               valueBoxOutput("summary_d_low_one_central"),
               valueBoxOutput("summary_d_low_two_central"),

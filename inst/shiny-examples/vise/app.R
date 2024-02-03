@@ -201,7 +201,9 @@ server <- function(input, output, session) {
       temp <- DF()
       d <- calculate_d(df = temp,
                        x_col = as.character(input$label_column),
-                       y_col = as.character(input$dependent_column))
+                       y_col = as.character(input$dependent_column),
+                       a = input$data_enter_alpha,
+                       lower = input$data_enter_lower)
       d
     })
 

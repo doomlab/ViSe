@@ -16,6 +16,7 @@ calculate_d(
   df = NULL,
   x_col = NULL,
   y_col = NULL,
+  d = NULL,
   a = 0.05,
   lower = TRUE
 )
@@ -46,6 +47,8 @@ a numeric vector of group 1 scores}
 
 \item{y_col}{name of the column that contains the dependent score OR
 a numeric vector of group 2 scores}
+
+\item{d}{a previously calculated d value from a study}
 
 \item{a}{significance level}
 
@@ -112,6 +115,11 @@ You should provide one combination of the following:
 4: df, "x_col", "y_col"
 
 5: x_col, y_col as numeric vectors
+
+6: d, n1, n2
+
+You must provide alpha and lower to ensure the right confidence
+interval is provided for you.
 }
 \examples{
 calculate_d(m1 = 14.37, # neglect mean

@@ -17,9 +17,9 @@ library(scales)
 library(cowplot)
 
 # Load Pages --------------------------------------------------------------
-source("data_tab.R")
-source("effect_tab.R")
-source("stats_tab.R")
+source("calculate_tab.R")
+source("convert_tab.R")
+source("visualize_tab.R")
 
 options(shiny.reactlog=TRUE)
 
@@ -28,22 +28,22 @@ ui <- dashboardPage(skin = "blue",
                     dashboardHeader(title = "Visualizing Sensitivity"),
                     dashboardSidebar(
                         sidebarMenu(
-                            menuItem("From Data",
-                                     tabName = "data_tab",
+                            menuItem("Calculate Effects",
+                                     tabName = "calculate_tab",
                                      icon = icon("table")),
-                            menuItem("From Summary Statistics",
+                            menuItem("Convert Effects",
                                      tabName = "stats_tab",
-                                     icon = icon("bar-chart")),
-                            menuItem("From Effect Size",
+                                     icon = icon("gears")),
+                            menuItem("Visualize Effects",
                                      tabName = "effect_tab",
-                                     icon = icon("gears"))
+                                     icon = icon("bar-chart"))
                         ) #close menu
                     ), #close sidebar
                     dashboardBody(
                       tabItems(
-                             data_tab,
-                             stats_tab,
-                             effect_tab
+                             calculate_tab,
+                             convert_tab,
+                             visualize_tab
                             ) #close tabs
                         ) #close body
                     ) #close dashboard
@@ -52,246 +52,10 @@ ui <- dashboardPage(skin = "blue",
 
 server <- function(input, output, session) {
 
+  # calculate tab ----
 
-  # Data Tab ----------------------------------------------------------------
-
-  # upload the data
-  DF <- reactive({
-    inFile <- input$upload_file
-    if (is.null(inFile))
-      return(NULL)
-    master <- import(inFile$datapath)
-    master
-  })
-
-  output$file_view <- renderDataTable({
-    datatable(DF())
-  })
-
-  # calculate d function
-  data_effect_size <- eventReactive(input$calculate_d_data, {
-    temp <- DF()
-    d <- calculate_d(df = temp,
-                     x_col = as.character(input$label_column),
-                     y_col = as.character(input$dependent_column))
-    d
-  })
-
-  # update columns
-  observeEvent(DF(), {
-    updateVarSelectInput(session, "label_column", data = DF())
-    updateVarSelectInput(session, "dependent_column", data = DF())
-  })
-
-  # convert_d_data plot
-  output$convert_d_data <- renderPlot({
-    visualize_effects(d = data_effect_size()$d)$graph
-  })
-  # visualize_c_data plot
-  output$visualize_c_data_warning <- renderText({
-    if (prod(data_effect_size()$dhigh, data_effect_size()$dlow) < 0){
-      warnstuff <- "Warning: Your effect size confidence interval includes zero.
-      No combination of effects would support an effect with this result. "
-    } else {
-      warnstuff <- ""
-    }
-
-      paste0(warnstuff, "Your result: d = ",
-             format(round(data_effect_size()$d, digits = 2), nsmall = 2),
-             " 95% CI[",
-             format(round(data_effect_size()$dlow, digits = 2), nsmall = 2),
-             ", ",
-             format(round(data_effect_size()$dhigh, digits = 2), nsmall = 2),
-             "]")
-
-  })
-  output$visualize_c_data <- renderPlot({
-    if (data_effect_size()$d < 0){
-      visualize_c(d = data_effect_size()$dhigh)$graph
-    } else {
-      visualize_c(d = data_effect_size()$dlow)$graph
-    }
-
-  })
-  # estimate_d_data plot
-  output$estimate_d_data <- renderPlot({
-    estimate_d(d = input$enter_d_data)$graph
-  })
-  # estimate_r_data plot
-  output$estimate_r_data <- renderPlot({
-    estimate_r(r = input$enter_r_data)$graph
-  })
-  # visual_c_map_data plot
-  output$visualize_c_map_data_warning <- renderText({
-    if (prod(data_effect_size()$dhigh, data_effect_size()$dlow) < 0){
-      warnstuff <- "Warning: Your effect size confidence interval includes zero.
-      No combination of effects would support an effect with this result. "
-    } else {
-      warnstuff <- ""
-    }
-      paste0(warnstuff, "Your result: d = ",
-             format(round(data_effect_size()$d, digits = 2), nsmall = 2),
-             " 95% CI[",
-             format(round(data_effect_size()$dlow, digits = 2), nsmall = 2),
-             ", ",
-             format(round(data_effect_size()$dhigh, digits = 2), nsmall = 2),
-             "]")
-  })
-  output$visual_c_map_data <- renderPlotly({
-
-    if (data_effect_size()$d < 0){
-      ggplotly(visualize_c_map(d = data_effect_size()$dhigh,
-                      dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_data, ",")))),
-                      rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_data, ","))))
-      )$graph)
-    } else {
-      ggplotly(visualize_c_map(d = data_effect_size()$dlow,
-                      dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_data, ",")))),
-                      rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_data, ","))))
-      )$graph)
-    }
-
-
-  })
-
-  # Effect Tab --------------------------------------------------------------
-
-  output$estimate_d_effect <- renderPlot({
-    estimate_d(d = input$enter_d_effect)$graph
-  })
-  output$convert_d_effect <- renderPlot({
-    visualize_effects(d = input$enter_d_effect)$graph
-  })
-  output$estimate_r_effect <- renderPlot({
-    estimate_r(r = input$enter_r_effect)$graph
-  })
-  output$visual_c_map_effect <- renderPlotly({
-    ggplotly(visualize_c_map(d = input$enter_d_effect,
-                    dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_effect, ",")))),
-                    rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_effect, ","))))
-    )$graph)
-  })
-
-  # Stats tab ---------------------------------------------------------------
-
-  output$visualize_c_stats_warning <- renderText({
-
-    if (!isTruthy(input$enter_t)) {
-      t_enter <- NULL
-    } else { t_enter <- input$enter_t}
-
-    d_calc <- calculate_d(
-      m1 = input$enter_m1,
-      m2 = input$enter_m2,
-      sd1 = input$enter_sd1,
-      sd2 = input$enter_sd2,
-      n1 = input$enter_n1,
-      n2 = input$enter_n2,
-      a = input$enter_alpha,
-      t = t_enter
-    )
-
-    if (prod(d_calc$dhigh, d_calc$dlow) < 0){
-      warnstuff <- "Warning: Your effect size confidence interval includes zero.
-      No combination of effects would support an effect with this result. "
-    } else {
-      warnstuff <- ""
-    }
-    paste0(warnstuff, "Your result: d = ",
-           format(round(d_calc$d, digits = 2), nsmall = 2),
-           " 95% CI[",
-           format(round(d_calc$dlow, digits = 2), nsmall = 2),
-           ", ",
-           format(round(d_calc$dhigh, digits = 2), nsmall = 2),
-           "]")
-  })
-
-  output$visualize_c_stats <- renderPlot({
-
-    if (!isTruthy(input$enter_t)) {
-      t_enter <- NULL
-    } else { t_enter <- input$enter_t}
-
-    d_calc <- calculate_d(
-      m1 = input$enter_m1,
-      m2 = input$enter_m2,
-      sd1 = input$enter_sd1,
-      sd2 = input$enter_sd2,
-      n1 = input$enter_n1,
-      n2 = input$enter_n2,
-      a = input$enter_alpha,
-      t = t_enter
-    )
-
-    if (d_calc$d < 0){
-      visualize_c(dlow = d_calc$dhigh)$graph
-    } else {
-      visualize_c(dlow = d_calc$dlow)$graph
-    }
-
-  })
-
-  output$convert_d_stats <- renderPlot({
-
-    if (!isTruthy(input$enter_t)) {
-      t_enter <- NULL
-    } else { t_enter <- input$enter_t}
-
-    d_calc <- calculate_d(
-      m1 = input$enter_m1,
-      m2 = input$enter_m2,
-      sd1 = input$enter_sd1,
-      sd2 = input$enter_sd2,
-      n1 = input$enter_n1,
-      n2 = input$enter_n2,
-      a = input$enter_alpha,
-      t = t_enter
-    )
-
-    visualize_effects(d = d_calc$d)$graph
-  })
-
-  output$estimate_d_stats <- renderPlot({
-    estimate_d(d = input$enter_d_stats)$graph
-  })
-
-  output$estimate_r_stats <- renderPlot({
-    estimate_r(r = input$enter_r_stats)$graph
-  })
-
-  output$visualize_c_map_stats_warning <- renderText({
-
-    if (!isTruthy(input$enter_t)) {
-      t_enter <- NULL
-    } else { t_enter <- input$enter_t}
-
-    d_calc <- calculate_d(
-      m1 = input$enter_m1,
-      m2 = input$enter_m2,
-      sd1 = input$enter_sd1,
-      sd2 = input$enter_sd2,
-      n1 = input$enter_n1,
-      n2 = input$enter_n2,
-      a = input$enter_alpha,
-      t = t_enter
-    )
-
-    if (prod(d_calc$dhigh, d_calc$dlow) < 0){
-      warnstuff <- "Warning: Your effect size confidence interval includes zero.
-      No combination of effects would support an effect with this result. "
-    } else {
-      warnstuff <- ""
-    }
-    paste0(warnstuff, "Your result: d = ",
-           format(round(d_calc$d, digits = 2), nsmall = 2),
-           " 95% CI[",
-           format(round(d_calc$dlow, digits = 2), nsmall = 2),
-           ", ",
-           format(round(d_calc$dhigh, digits = 2), nsmall = 2),
-           "]")
-  })
-
-    output$visualize_c_stats_warning <- renderText({
+    # calculate summary ----
+    output$summary_d <- renderValueBox({
 
       if (!isTruthy(input$enter_t)) {
         t_enter <- NULL
@@ -305,55 +69,208 @@ server <- function(input, output, session) {
         n1 = input$enter_n1,
         n2 = input$enter_n2,
         a = input$enter_alpha,
+        lower = input$enter_lower,
         t = t_enter
       )
 
-    if (prod(d_calc$dhigh, d_calc$dlow) < 0){
-      warnstuff <- "Warning: Your effect size confidence interval includes zero.
-      No combination of effects would support an effect with this result. "
-    } else {
-      warnstuff <- ""
-    }
-    paste0(warnstuff, "Your result: d = ",
-           format(round(d_calc$d, digits = 2), nsmall = 2),
-           " 95% CI[",
-           format(round(d_calc$dlow, digits = 2), nsmall = 2),
-           ", ",
-           format(round(d_calc$dhigh, digits = 2), nsmall = 2),
-           "]")
-  })
+      valueBox(
+        paste0(format(round(d_calc$d, 2), nsmall = 2)),
+        "d",
+        color = "green"
+      )
+    })
 
-  output$visual_c_map_stats <- renderPlotly({
+    output$summary_d_low_one_central <- renderValueBox({
+      if (!isTruthy(input$enter_t)) {
+        t_enter <- NULL
+      } else { t_enter <- input$enter_t}
 
-    if (!isTruthy(input$enter_t)) {
-      t_enter <- NULL
-    } else { t_enter <- input$enter_t}
+      d_calc <- calculate_d(
+        m1 = input$enter_m1,
+        m2 = input$enter_m2,
+        sd1 = input$enter_sd1,
+        sd2 = input$enter_sd2,
+        n1 = input$enter_n1,
+        n2 = input$enter_n2,
+        a = input$enter_alpha,
+        lower = input$enter_lower,
+        t = t_enter
+      )
 
-    d_calc <- calculate_d(
-      m1 = input$enter_m1,
-      m2 = input$enter_m2,
-      sd1 = input$enter_sd1,
-      sd2 = input$enter_sd2,
-      n1 = input$enter_n1,
-      n2 = input$enter_n2,
-      a = input$enter_alpha,
-      t = t_enter
-    )
+      valueBox(
+        paste0(format(round(d_calc$done_low_central, 2), nsmall = 2)),
+        "d Lower One Tail Central",
+        color = "green"
+      )
+    })
 
-    if (d_calc$d < 0){
-      ggplotly(visualize_c_map(d = d_calc$dhigh,
-                      dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_stats, ",")))),
-                      rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_stats, ","))))
-      )$graph)
-    } else {
-      ggplotly(visualize_c_map(d = d_calc$dlow,
-                      dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_stats, ",")))),
-                      rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_stats, ","))))
-      )$graph)
-    }
+    output$summary_d_low_two_central <- renderValueBox({
+      if (!isTruthy(input$enter_t)) {
+        t_enter <- NULL
+      } else { t_enter <- input$enter_t}
+
+      d_calc <- calculate_d(
+        m1 = input$enter_m1,
+        m2 = input$enter_m2,
+        sd1 = input$enter_sd1,
+        sd2 = input$enter_sd2,
+        n1 = input$enter_n1,
+        n2 = input$enter_n2,
+        a = input$enter_alpha,
+        lower = input$enter_lower,
+        t = t_enter
+      )
+
+      valueBox(
+        paste0(format(round(d_calc$dlow_central, 2), nsmall = 2)),
+        "d Lower Two Tail Central",
+        color = "green"
+      )
+    })
+
+    output$summary_d_low_one_non <- renderValueBox({
+      if (!isTruthy(input$enter_t)) {
+        t_enter <- NULL
+      } else { t_enter <- input$enter_t}
+
+      d_calc <- calculate_d(
+        m1 = input$enter_m1,
+        m2 = input$enter_m2,
+        sd1 = input$enter_sd1,
+        sd2 = input$enter_sd2,
+        n1 = input$enter_n1,
+        n2 = input$enter_n2,
+        a = input$enter_alpha,
+        lower = input$enter_lower,
+        t = t_enter
+      )
+
+      valueBox(
+        paste0(format(round(d_calc$done_low, 2), nsmall = 2)),
+        "d Lower One Tail Non-Central",
+        color = "green"
+      )
+    })
+
+    output$summary_d_low_two_non <- renderValueBox({
+      if (!isTruthy(input$enter_t)) {
+        t_enter <- NULL
+      } else { t_enter <- input$enter_t}
+
+      d_calc <- calculate_d(
+        m1 = input$enter_m1,
+        m2 = input$enter_m2,
+        sd1 = input$enter_sd1,
+        sd2 = input$enter_sd2,
+        n1 = input$enter_n1,
+        n2 = input$enter_n2,
+        a = input$enter_alpha,
+        lower = input$enter_lower,
+        t = t_enter
+      )
+
+      valueBox(
+        paste0(format(round(d_calc$dlow, 2), nsmall = 2)),
+        "d Lower Two Tail Non-Central",
+        color = "green"
+      )
+    })
+
+    # calculate data ----
+    # get data
+    DF <- reactive({
+      inFile <- input$upload_file
+      if (is.null(inFile))
+        return(NULL)
+      master <- import(inFile$datapath)
+      master
+    })
+
+    # view data
+    output$file_view <- renderDataTable({
+      datatable(DF())
+    })
+
+    # calculate d function
+    data_effect_size <- eventReactive(input$calculate_d_data, {
+      temp <- DF()
+      d <- calculate_d(df = temp,
+                       x_col = as.character(input$label_column),
+                       y_col = as.character(input$dependent_column))
+      d
+    })
+
+    # update columns
+    observeEvent(DF(), {
+      updateVarSelectInput(session, "label_column", data = DF())
+      updateVarSelectInput(session, "dependent_column", data = DF())
+    })
+
+    output$data_d <- renderValueBox({
+      valueBox(
+        paste0(format(round(data_effect_size()$d, 2), nsmall = 2)),
+        "d",
+        color = "green"
+      )
+    })
+
+    output$data_d_low_one_central <- renderValueBox({
+      valueBox(
+        paste0(format(round(data_effect_size()$done_low_central, 2), nsmall = 2)),
+        "d Lower One Tail Central",
+        color = "green"
+      )
+    })
+
+    output$data_d_low_two_central <- renderValueBox({
+      valueBox(
+        paste0(format(round(data_effect_size()$dlow_central, 2), nsmall = 2)),
+        "d Lower Two Tail Central",
+        color = "green"
+      )
+    })
+
+    output$data_d_low_one_non <- renderValueBox({
+      valueBox(
+        paste0(format(round(data_effect_size()$done_low, 2), nsmall = 2)),
+        "d Lower One Tail Non-Central",
+        color = "green"
+      )
+    })
+
+    output$data_d_low_two_non <- renderValueBox({
+      valueBox(
+        paste0(format(round(data_effect_size()$dlow, 2), nsmall = 2)),
+        "d Lower Two Tail Non-Central",
+        color = "green"
+      )
+    })
 
 
-  })
+    ### input: observed d and sample sizes n1 n2
+    d_obs = 0.1
+    n1 = 5
+    n2 = 5
+
+    ### computing scale factor n and degrees of freedom
+    n  = n1*n2/(n1+n2)
+    nu = n1+n2-2
+
+
+    ### a suitable grid 'ds' for a grid search
+    ### based on
+    var_est <- n^-1 + d_obs^2/2/nu
+    ds <- seq(d_obs-4*var_est^0.5,d_obs+4*var_est^0.5,var_est^0.5/10^4)
+
+
+    ### boundaries based on limits of t-distributions with ncp parameter
+    ### for which the observed d will be in the 2.5% left or right tail
+    upper <- min(ds[which(pt(d_obs*sqrt(n),nu,ds*sqrt(n))<0.025)])*sqrt(n)    # t-distribution boundary
+    upper/sqrt(n)                                                             # scaled boundary
+    lower <- max(ds[which(pt(d_obs*sqrt(n),nu,ds*sqrt(n))>0.975)])*sqrt(n)
+    lower/sqrt(n)
+
+
 
 
 }

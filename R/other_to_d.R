@@ -42,8 +42,8 @@ other_to_d <- function (f = NULL,
   if(!is.null(nnt)) {
 
     save_d <- data.frame(
-      d_value = seq(from = .001, to = 3.00, by = .001),
-      NNT_value = 1:length(seq(from = .001, to = 3.00, by = .001))
+      d_value = seq(from = -3.00, to = 3.00, by = .001),
+      NNT_value = 1:length(seq(from = -3.00, to = 3.00, by = .001))
     )
 
     for (i in 1:nrow(save_d)) {
@@ -61,28 +61,28 @@ other_to_d <- function (f = NULL,
   if(!is.null(prob)) {
 
     save_d <- data.frame(
-      d_value = seq(from = .001, to = 3.00, by = .001),
-      prob_value = 1:length(seq(from = .001, to = 3.00, by = .001))
+      d_value = seq(from = -3.00, to = 3.00, by = .001),
+      prob_value = 1:length(seq(from = -3.00, to = 3.00, by = .001))
     )
 
     for (i in 1:nrow(save_d)) {
       save_d$prob_value[i] <- probability_superiority(d = save_d$d_value[i])
     }
 
-    save_d$prob_value <- save_d$prob_value - prob
+    save_d$prob_diff <- save_d$prob_value - prob
 
-    d <- save_d$d_value[which.min(abs(save_d$prob_value))]
+    d <- save_d$d_value[which.min(abs(save_d$prob_diff))]
 
   }
 
   if(!is.null(prop_u1) | !is.null(prop_u2) | !is.null(prop_u3) | !is.null(prop_overlap)) {
 
     save_d <- data.frame(
-      d_value = seq(from = .001, to = 3.00, by = .001),
-      u1 = 1:length(seq(from = .001, to = 3.00, by = .001)),
-      u2 = 1:length(seq(from = .001, to = 3.00, by = .001)),
-      u3 = 1:length(seq(from = .001, to = 3.00, by = .001)),
-      prop_over = 1:length(seq(from = .001, to = 3.00, by = .001))
+      d_value = seq(from = -3.00, to = 3.00, by = .001),
+      u1 = 1:length(seq(from = -3.00, to = 3.00, by = .001)),
+      u2 = 1:length(seq(from = -3.00, to = 3.00, by = .001)),
+      u3 = 1:length(seq(from = -3.00, to = 3.00, by = .001)),
+      prop_over = 1:length(seq(from = -3.00, to = 3.00, by = .001))
     )
 
     for (i in 1:nrow(save_d)) {
@@ -95,29 +95,29 @@ other_to_d <- function (f = NULL,
 
     if(!is.null(prop_u1)){
 
-      save_d$prob_value <- save_d$prob_value - prop_u1
-      d <- save_d$d_value[which.min(abs(save_d$prob_value))]
+      save_d$u1_value <- save_d$u1 - prop_u1
+      d <- save_d$d_value[which.min(abs(save_d$u1_value))]
 
     }
 
     if(!is.null(prop_u2)){
 
-      save_d$prob_value <- save_d$prob_value - prop_u2
-      d <- save_d$d_value[which.min(abs(save_d$prob_value))]
+      save_d$u2_value <- save_d$u2 - prop_u2
+      d <- save_d$d_value[which.min(abs(save_d$u2_value))]
 
     }
 
     if(!is.null(prop_u3)){
 
-      save_d$prob_value <- save_d$prob_value - prop_u3
-      d <- save_d$d_value[which.min(abs(save_d$prob_value))]
+      save_d$u3_value <- save_d$u3 - prop_u3
+      d <- save_d$d_value[which.min(abs(save_d$u3_value))]
 
     }
 
     if(!is.null(prop_overlap)){
 
-      save_d$prob_value <- save_d$prob_value - prop_overlap
-      d <- save_d$d_value[which.min(abs(save_d$prob_value))]
+      save_d$prop_value <- save_d$prop_over - prop_overlap
+      d <- save_d$d_value[which.min(abs(save_d$prop_value))]
 
     }
 

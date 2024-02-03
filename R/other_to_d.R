@@ -37,7 +37,7 @@ other_to_d <- function (f = NULL,
 
   if(!is.null(f)) { d <- f*2 }
 
-  if(!is.null(f2)) { d <- sqrt(f)*2 }
+  if(!is.null(f2)) { d <- sqrt(f2)*2 }
 
   if(!is.null(nnt)) {
 

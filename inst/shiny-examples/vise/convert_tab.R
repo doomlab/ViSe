@@ -21,9 +21,9 @@ convert_tab <-
                 bounds."),
               numericInput(
                 inputId = "convert_enter_effect",
-                label = "Group 1 N:",
+                label = "Effect Size:",
                 value = 0,
-                min = 0,
+                min = NA,
                 max = NA,
                 step = NA,
                 width = NULL
@@ -41,7 +41,8 @@ convert_tab <-
                             "Proportional Overlap of Distributions"),
                 selected = NULL,
                 width = NULL
-              )
+              ),
+              plotOutput("visualize_conversion")
             ) # close box
           ) # fluid row
         ) #close page

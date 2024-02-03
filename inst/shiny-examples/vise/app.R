@@ -32,10 +32,10 @@ ui <- dashboardPage(skin = "blue",
                                      tabName = "calculate_tab",
                                      icon = icon("table")),
                             menuItem("Convert Effects",
-                                     tabName = "stats_tab",
+                                     tabName = "convert_tab",
                                      icon = icon("gears")),
                             menuItem("Visualize Effects",
-                                     tabName = "effect_tab",
+                                     tabName = "visualize_tab",
                                      icon = icon("bar-chart"))
                         ) #close menu
                     ), #close sidebar
@@ -251,6 +251,53 @@ server <- function(input, output, session) {
         "d Lower Two Tail Non-Central",
         color = "green"
       )
+    })
+
+    # visualization of convert tab
+    output$visualize_conversion <- renderPlot({
+
+      if(input$convert_select_effect == "d"){
+        d <- input$convert_enter_effect
+      }
+
+      if(input$convert_select_effect == "f"){
+        d <- other_to_d(f = input$convert_enter_effect)
+      }
+
+      if(input$convert_select_effect == "f squared"){
+        d <- other_to_d(f2 = input$convert_enter_effect)
+      }
+
+      if(input$convert_select_effect == "Number Needed to Treat nnt"){
+        d <- other_to_d(nnt = input$convert_enter_effect)
+      }
+
+      if(input$convert_select_effect == "Correlation Coefficient r"){
+        d <- other_to_d(r = input$convert_enter_effect)
+      }
+
+      if(input$convert_select_effect == "Probability of Superiority"){
+        d <- other_to_d(prob = input$convert_enter_effect)
+      }
+
+      if(input$convert_select_effect == "Proportion Overlap U1"){
+        d <- other_to_d(prop_u1 = input$convert_enter_effect)
+      }
+
+      if(input$convert_select_effect == "Proportion Overlap U2"){
+        d <- other_to_d(prop_u2 = input$convert_enter_effect)
+      }
+
+      if(input$convert_select_effect == "Proportion Overlap U3"){
+        d <- other_to_d(prop_u3 = input$convert_enter_effect)
+      }
+
+      if(input$convert_select_effect == "Proportional Overlap of Distributions"){
+        d <- other_to_d(prop_overlap = input$convert_enter_effect)
+      }
+
+      visualize_effects(d = d)$graph
+
     })
 
 }

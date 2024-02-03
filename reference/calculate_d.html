@@ -66,6 +66,7 @@ using the pooled standard deviation as the denominator.</p>
 <span>  df <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  x_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  d <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  a <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  lower <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -119,6 +120,10 @@ a numeric vector of group 1 scores</p></dd>
 <dt>y_col</dt>
 <dd><p>name of the column that contains the dependent score OR
 a numeric vector of group 2 scores</p></dd>
+
+
+<dt>d</dt>
+<dd><p>a previously calculated d value from a study</p></dd>
 
 
 <dt>a</dt>
@@ -234,6 +239,9 @@ $$d_s = \frac{M_1 - M_2}{S_{pooled}}$$</p>
 <p>3: model, n1, n2</p>
 <p>4: df, "x_col", "y_col"</p>
 <p>5: x_col, y_col as numeric vectors</p>
+<p>6: d, n1, n2</p>
+<p>You must provide alpha and lower to ensure the right confidence
+interval is provided for you.</p>
     </div>
 
     <div class="section level2">

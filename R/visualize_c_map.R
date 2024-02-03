@@ -22,75 +22,71 @@
 #'
 #' visualize_c_map(dlow = .25,
 #'   dvalues = c(.2, .3, .8),
-#'   rvalues = c(.1, .4, .3))
+#'   rvalues = c(.1, .4, .3),
+#'   lower = TRUE)
 #'
 #' @rdname visualize_c_map
 #' @export
 
 
 visualize_c_map <- function (dlow,
-                             dvalues,
-                             rvalues) {
+                             r_values,
+                             d_values = NULL,
+                             f_values = NULL,
+                             f2_values = NULL,
+                             nnt_values = NULL,
+                             prob_values = NULL,
+                             propu1_values = NULL,
+                             propu2_values = NULL,
+                             propu3_values = NULL,
+                             propover_values = NULL,
+                             lower = TRUE) {
 
-  if(missing(dlow) | missing(dvalues) | missing(rvalues)){
-    stop("All three values must be included.")
+  if(missing(dlow) | missing(r_values)){
+    stop("You must have dlow and r_values included.")
   }
 
-  x_df <- y_df <- ymax <- ymin <- d <- r <- NULL
-
-  x <- seq(from = -2, to = 2, by = .01)
-  y <- seq(from = -1, to = 1, by = .01)
-
-  temp <- data.frame(
-    x_df = rep(x, length(y)),
-    y_df = rep(y, length(x))
-  )
-
-  #dlow <- d*corr
-  #dlow/d <- corr
-
-  temp$c <- ifelse(
-    temp$x_df != 0,
-    dlow / temp$x_df,
-    0
-  )
-
-  temp <- subset(temp, abs(c) <= 1)
+  # make the plot
+  graph <- visualize_c(dlow = dlow, lower = lower)$graph
 
 
-  if (dlow >= 0){
-    temp$ymin <- ifelse(temp$x_df < 0, temp$c, -1)
-    temp$ymax <- ifelse(temp$x_df > 0, temp$c, 1)
-  } else {
-    temp$ymin <- ifelse(temp$x_df <= 0, -1, temp$c)
-    temp$ymax <- ifelse(temp$x_df >= 0, 1, temp$c)
+  if(!is.null(d_values)){
+    # make the combination of d and r values
+    DF_points <- expand.grid(d_values, r_values)
+    DF_points2 <- expand.grid(d_values, r_values)
+    colnames(DF_points) <- colnames(DF_points2) <- c("d", "r")
+    DF_points$label <- DF_points2$label <- paste0("d = ", DF_points$d)
+
   }
 
-  # make the combination of d and r values
-  DF_points <- expand.grid(dvalues, rvalues)
-  DF_points2 <- expand.grid(dvalues, rvalues)
+  if(!is.null(f_values)){
+    # make the combination of d and r values
+    d_values <- 1:length(f_values)
+    for (i in 1:length(f_values)){
+      d_values[i] <- other_to_d(f = f_values[i])
+    }
 
-  colnames(DF_points) <- colnames(DF_points2) <- c("d", "r")
-  #rcolorbrewer to make sure color is ok
-  #use shape and color to help distinguish
-  #plotly for hover
-  #figure out the icons package
+    DF_points_temp <- expand.grid(d_values, r_values)
+    DF_points2_temp <- expand.grid(d_values, r_values)
+    colnames(DF_points_temp) <- colnames(DF_points2_temp) <- c("d", "r")
+    DF_points_temp$label <- DF_points2_temp$label <- paste0("f = ", f_values)
 
-  graph <- ggplot(temp, aes(x_df, y_df)) +
-    theme_classic() +
-    geom_hline(yintercept = 0, alpha = .2) +
-    geom_vline(xintercept = 0, alpha = .2) +
-    coord_cartesian(xlim = c(-2,2), ylim = c(-1,1)) +
-    # curve start a x = i_num, y = upper y
-    # ends at y = i_num, x = upper x
-    xlab("Standardized Effect Size") +
-    ylab("Correlation") +
-    geom_point(data = DF_points, aes(d, r), color = "#172808", size = 2) +
-    geom_point(data = DF_points2, aes(d, r), shape = 2, color = "#172808", size = 3) +
-    geom_ribbon(aes(ymin = ymin, ymax = ymax),
-                color = "#88CCEE", fill = "#88CCEE", alpha = .5)
+    if (exists("DF_points")){
+      DF_points <- rbind(DF_points, DF_points_temp)
+      DF_points2 <- rbind(DF_points2, DF_points2_temp)
+    } else {
+        DF_points <- DF_points_temp
+        DF_points2 <- DF_points2_temp
+      }
+  }
 
-  return(list("graph" = graph))
+  graph2 <- graph +
+    geom_point(data = DF_points, aes(d, r, color = DF_points$label), size = 2) +
+    geom_point(data = DF_points2, aes(d, r, color = DF_points2$label,), shape = 2, size = 3) +
+    scale_color_discrete(name = "")
+
+
+  return(list("graph" = graph2))
 
 
 }

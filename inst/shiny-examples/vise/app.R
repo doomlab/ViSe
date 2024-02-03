@@ -300,6 +300,22 @@ server <- function(input, output, session) {
 
     })
 
+    # visualization page ----
+    output$estimate_d_effect <- renderPlot({
+      estimate_d(d = input$enter_d_effect)$graph
+    })
+
+    output$estimate_r_effect <- renderPlot({
+      estimate_r(r = input$enter_r_effect)$graph
+    })
+
+    output$visual_c_map_effect <- renderPlotly({
+      ggplotly(visualize_c_map(d = input$enter_d_effect,
+                               dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_effect, ",")))),
+                               rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_effect, ","))))
+      )$graph)
+    })
+
 }
 
 

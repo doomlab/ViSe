@@ -86,7 +86,7 @@ other_to_d <- function (f = NULL,
     )
 
     for (i in 1:nrow(save_d)) {
-      temp <- proportion_overlap(d = d)
+      temp <- proportion_overlap(d = save_d$d_value[i])
       save_d$u1[i] <- temp$u1
       save_d$u2[i] <- temp$u2
       save_d$u3[i] <- temp$u3

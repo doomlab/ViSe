@@ -70,7 +70,8 @@ server <- function(input, output, session) {
         n2 = input$enter_n2,
         a = input$enter_alpha,
         lower = input$enter_lower,
-        t = t_enter
+        t = t_enter,
+        d = input$enter_d
       )
 
       valueBox(
@@ -94,7 +95,8 @@ server <- function(input, output, session) {
         n2 = input$enter_n2,
         a = input$enter_alpha,
         lower = input$enter_lower,
-        t = t_enter
+        t = t_enter,
+        d = input$enter_d
       )
 
       valueBox(
@@ -102,7 +104,7 @@ server <- function(input, output, session) {
         "d Lower One Tail Central",
         color = "green"
       )
-    })
+  })
 
     output$summary_d_low_two_central <- renderValueBox({
       if (!isTruthy(input$enter_t)) {
@@ -118,7 +120,8 @@ server <- function(input, output, session) {
         n2 = input$enter_n2,
         a = input$enter_alpha,
         lower = input$enter_lower,
-        t = t_enter
+        t = t_enter,
+        d = input$enter_d
       )
 
       valueBox(
@@ -126,7 +129,7 @@ server <- function(input, output, session) {
         "d Lower Two Tail Central",
         color = "green"
       )
-    })
+  })
 
     output$summary_d_low_one_non <- renderValueBox({
       if (!isTruthy(input$enter_t)) {
@@ -142,7 +145,8 @@ server <- function(input, output, session) {
         n2 = input$enter_n2,
         a = input$enter_alpha,
         lower = input$enter_lower,
-        t = t_enter
+        t = t_enter,
+        d = input$enter_d
       )
 
       valueBox(
@@ -150,7 +154,7 @@ server <- function(input, output, session) {
         "d Lower One Tail Non-Central",
         color = "green"
       )
-    })
+  })
 
     output$summary_d_low_two_non <- renderValueBox({
       if (!isTruthy(input$enter_t)) {
@@ -166,7 +170,8 @@ server <- function(input, output, session) {
         n2 = input$enter_n2,
         a = input$enter_alpha,
         lower = input$enter_lower,
-        t = t_enter
+        t = t_enter,
+        d = input$enter_d
       )
 
       valueBox(
@@ -174,7 +179,7 @@ server <- function(input, output, session) {
         "d Lower Two Tail Non-Central",
         color = "green"
       )
-    })
+  })
 
     # calculate data ----
     # get data
@@ -245,33 +250,6 @@ server <- function(input, output, session) {
         color = "green"
       )
     })
-
-
-    ### input: observed d and sample sizes n1 n2
-    d_obs = 0.1
-    n1 = 5
-    n2 = 5
-
-    ### computing scale factor n and degrees of freedom
-    n  = n1*n2/(n1+n2)
-    nu = n1+n2-2
-
-
-    ### a suitable grid 'ds' for a grid search
-    ### based on
-    var_est <- n^-1 + d_obs^2/2/nu
-    ds <- seq(d_obs-4*var_est^0.5,d_obs+4*var_est^0.5,var_est^0.5/10^4)
-
-
-    ### boundaries based on limits of t-distributions with ncp parameter
-    ### for which the observed d will be in the 2.5% left or right tail
-    upper <- min(ds[which(pt(d_obs*sqrt(n),nu,ds*sqrt(n))<0.025)])*sqrt(n)    # t-distribution boundary
-    upper/sqrt(n)                                                             # scaled boundary
-    lower <- max(ds[which(pt(d_obs*sqrt(n),nu,ds*sqrt(n))>0.975)])*sqrt(n)
-    lower/sqrt(n)
-
-
-
 
 }
 

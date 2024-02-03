@@ -111,9 +111,9 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
 
   # if they include df, calculate model
   if (!is.null(df)){
-    # deal with missing column names
-    if (missing(x_col)){stop("Be sure to include the x column of the data.")}
-    if (missing(y_col)){stop("Be sure to include the y column of the data.")}
+    # deal with is.null column names
+    if (is.null(x_col)){stop("Be sure to include the x column of the data.")}
+    if (is.null(y_col)){stop("Be sure to include the y column of the data.")}
 
     # calculate model
     df <- as.data.frame(na.omit(df[ , c(x_col, y_col)]))
@@ -141,7 +141,7 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     # model will then go to other calculations
 
     # or just on x and y vectors
-  } else if(!is.null(x_col) & !is.null(y_col)){
+  } else if (!is.null(x_col) & !is.null(y_col)){
 
     model <- t.test(x_col, y_col, var.equal = TRUE)
 
@@ -167,9 +167,9 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
   # if they include t or model or d
   if (!is.null(t)){
 
-    # deal with missing values
-    if (missing(n1)){stop("Be sure to include the sample size n1 for the first group.")}
-    if (missing(n2)){stop("Be sure to include the sample size n2 for the second group.")}
+    # deal with is.null values
+    if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
+    if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
 
     # calculate from t value here
     d <- 2 * t/sqrt(n1 + n2 - 2)
@@ -181,9 +181,9 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     # or else they include the model already
   } else if (!is.null(model)){
 
-    # deal with missing values
-    if (missing(n1)){stop("Be sure to include the sample size n1 for the first group.")}
-    if (missing(n2)){stop("Be sure to include the sample size n2 for the second group.")}
+    # deal with is.null values
+    if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
+    if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
 
     # calculate from t-test model
     if(is(model, "htest")){
@@ -200,9 +200,9 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
 
   } else if (!is.null(d)) {
 
-    # deal with missing values
-    if (missing(n1)){stop("Be sure to include the sample size n1 for the first group.")}
-    if (missing(n2)){stop("Be sure to include the sample size n2 for the second group.")}
+    # deal with is.null values
+    if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
+    if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
 
     df <- (n1 - 1 + n2 - 1)
     M1 <- sd1 <- se1 <- M1low <- M1high <- M2 <- sd2 <-
@@ -214,13 +214,13 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     # or just get all the numbers
   } else {
 
-    # deal with missing values
-    if (missing(m1)){stop("Be sure to include m1 for the first mean.")}
-    if (missing(m2)){stop("Be sure to include m2 for the second mean.")}
-    if (missing(sd1)){stop("Be sure to include sd1 for the first mean.")}
-    if (missing(sd2)){stop("Be sure to include sd2 for the second mean.")}
-    if (missing(n1)){stop("Be sure to include the sample size n1 for the first group.")}
-    if (missing(n2)){stop("Be sure to include the sample size n2 for the second group.")}
+    # deal with is.null values
+    if (is.null(m1)){stop("Be sure to include m1 for the first mean.")}
+    if (is.null(m2)){stop("Be sure to include m2 for the second mean.")}
+    if (is.null(sd1)){stop("Be sure to include sd1 for the first mean.")}
+    if (is.null(sd2)){stop("Be sure to include sd2 for the second mean.")}
+    if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
+    if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
 
     # calculate d
     spooled <- sqrt( ((n1 - 1) * sd1 ^ 2 + (n2 - 1) * sd2 ^ 2) / (n1 + n2 - 2))

@@ -4,19 +4,63 @@
 \alias{visualize_c_map}
 \title{Visualization for Estimating c Bias + Estimates}
 \usage{
-visualize_c_map(dlow, dvalues, rvalues)
+visualize_c_map(
+  dlow,
+  r_values,
+  d_values = NULL,
+  f_values = NULL,
+  f2_values = NULL,
+  nnt_values = NULL,
+  prob_values = NULL,
+  prop_u1_values = NULL,
+  prop_u2_values = NULL,
+  prop_u3_values = NULL,
+  prop_overlap_values = NULL,
+  lower = TRUE
+)
 }
 \arguments{
-\item{dlow}{The lower limit of the possible effect size}
+\item{dlow}{The lower limit of the possible effect size (required).}
 
-\item{dvalues}{A vector of effect size values that are
+\item{r_values}{A vector of correlation values that are
+possible (required).}
+
+\item{d_values}{A vector of effect size values that are
 possible.}
 
-\item{rvalues}{A vector of correlation values that are
+\item{f_values}{A vector of f effect size values that are
 possible.}
+
+\item{f2_values}{A vector of f2 effect size values that are
+possible.}
+
+\item{nnt_values}{A vector of number needed to treat
+effect size values that are possible.}
+
+\item{prob_values}{A vector of probability of superiority
+effect size values that are possible.}
+
+\item{prop_u1_values}{A vector of proportion of overlap u1
+effect size values that are possible.}
+
+\item{prop_u2_values}{A vector of proportion of overlap u2
+effect size values that are possible.}
+
+\item{prop_u3_values}{A vector of proportion of overlap u3
+effect size values that are possible.}
+
+\item{prop_overlap_values}{A vector of proportion of
+distribution overlap effect size values that are possible.}
+
+\item{lower}{Use this to indicate if you want the lower or upper bound
+of d for one sided confidence intervals. If d is positive, you generally
+want \code{lower = TRUE}, while negative d values should enter
+\code{lower = FALSE} for the upper bound that is closer to zero (required).}
 }
 \value{
-Returns a pretty graph
+Returns a pretty graph of the possible effect size
+and correlation combinations with the region of effect colored in.
+Note that all effect sizes are converted to d for the graph.
 
 \item{graph}{The graph of possible values for c}
 }
@@ -30,8 +74,9 @@ the proposed c value.
 \examples{
 
 visualize_c_map(dlow = .25,
-  dvalues = c(.2, .3, .8),
-  rvalues = c(.1, .4, .3))
+  d_values = c(.2, .3, .8),
+  r_values = c(.1, .4, .3),
+  lower = TRUE)
 
 }
 \keyword{effect}

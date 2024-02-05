@@ -1,9 +1,8 @@
 pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
-articles:
-  Package_Functions: Package_Functions.html
-last_built: 2024-02-03T19:20Z
+articles: {}
+last_built: 2024-02-05T01:10Z
 urls:
   reference: http://www.aggieerin.com/ViSe/reference
   article: http://www.aggieerin.com/ViSe/articles

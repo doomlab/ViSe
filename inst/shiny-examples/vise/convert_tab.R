@@ -19,20 +19,25 @@ convert_tab <-
                 Some effect sizes do not have bounds (i.e., no real upper or
                 lower limit), so the plot uses common sense upper and lower
                 bounds."),
-              p("We can use ", strong("visualize_effects()"), " to visualize the relationship
+              p("We can use ",
+              strong("visualize_effects()"),
+              HTML(" to visualize the relationship
               between the same effect size in different metrics. These are calculated
-              from functions you can use in the package:"),
-              br("1) d_to_f2: Cohen’s f and f2"),
-              br("2) d_to_nnt: Number needed to treat"),
-              br("3) d_to_r: correlation coefficient"),
-              br("4) probability_superiority: The probability of superiority"),
-              br("5) proportion_overlap: u1 represents the proportion of non-overlap
-            across both group distributions, u2 indicates the proportion that one
-            group is more than the same proportion in the other group, u3 shows
-            the proportion of one group that is smaller than the median of the
-            other group, and p_o is the proportional overlap of groups."),
-              br("6) other_to_d: A function to convert from other effect sizes
-                  to d."),
+              from functions you can use in the package:
+                <ul>
+                <li><b>d_to_f2()</b>: Cohen’s f and f2</li>
+                <li><b>d_to_nnt()</b>: Number needed to treat</li>
+                <li><b>d_to_r()</b>: correlation coefficient</li>
+                <li><b>probability_superiority()</b>: The probability of superiority</li>
+                <li><b>proportion_overlap()</b>: u1 represents the proportion of non-overlap
+                across both group distributions, u2 indicates the proportion that one
+                group is more than the same proportion in the other group, u3 shows
+                the proportion of one group that is smaller than the median of the
+                other group, and p_o is the proportional overlap of groups.</li>
+                <li><b>other_to_d()</b>: A function to convert from other effect sizes
+                to d.</li>
+                </ul>")),
+              p(""),
               numericInput(
                 inputId = "convert_enter_effect",
                 label = "Effect Size:",

@@ -9,7 +9,7 @@ calculate_tab <-
               status = "primary",
               width = 12,
               p(""),
-              p("On this tabe, we give you three options to calculate your
+              p("On this tabe, we give you two options to calculate your
                 effect size and the lower confidence interval bound. ",
                 HTML("<ul>
                      <li>
@@ -20,7 +20,9 @@ calculate_tab <-
                      </li>
                      </ul>"),
                 "You would only need to use one of the following boxes based on
-                what type of data you have. You can close these boxes to help keep
+                what type of data you have.",
+                "In each of these scenarios, the ", strong("calculate_d()"),
+                "function. ", "You can close these boxes to help keep
                 all the information on one page. "),
 
               p("If you need to switch between effect sizes, please use the
@@ -183,7 +185,7 @@ calculate_tab <-
                 width = NULL
               ),
               p("Enter Summary Statistics (see below if you only have ",
-                em("t"), " values)."),
+                em("t"), " or ", em("d"), " values)."),
               numericInput(
                 inputId = "enter_m1",
                 label = "Group 1 Mean:",
@@ -230,6 +232,7 @@ calculate_tab <-
                 step = NA,
                 width = NULL
               ),
+              p("Enter ", em("d"), "effect size (optional)."),
               numericInput(
                 inputId = "enter_d",
                 label = "Effect size (d):",
@@ -254,8 +257,8 @@ calculate_tab <-
                 The non-centralized versions assumes that effect sizes are skewed and uses
                 non-centralized t-distribution to calculate the confidence interval.
                 At larger sample sizes, these two values get closer together. "),
-              p("You will see an error here until you enter enough of the required
-                information."),
+              p(strong(em("You will see an error here until you enter enough of the required
+                information."))),
               valueBoxOutput("summary_d"),
               valueBoxOutput("summary_d_low_one_central"),
               valueBoxOutput("summary_d_low_two_central"),

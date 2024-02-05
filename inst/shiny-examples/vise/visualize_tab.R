@@ -9,6 +9,29 @@ visualize_tab <-
               status = "primary",
               width = 12,
               p(""),
+              p("The visualization tab includes several options for you
+                to visualize and determine the values that would indicate
+                a causal effect. ",
+                HTML("<ul><li>1) The first box includes a visualization
+                     of the overlap between two group distributions.
+                     You can use this box to help you imagine the size
+                     of the standardized group differences that may
+                     occur and what size effect size that corresponds to.
+                     </li>
+                     <li>2) The second box includes a visualization of
+                     the correlation between the outcome and potential
+                     variable to control for. You can use this visualization
+                     to imagine the amount of variance overlap between
+                     the two variables and what correlation that would
+                     correspond to. </li>
+                     <li>3) Once these values are determined, you can
+                     use the final box to create a sensitivity plot. This
+                     plot will shade the areas that indicate a combination
+                     of correlation and effect size that indicates a causal
+                     effect. You can enter different types of effect sizes,
+                     and these will be converted to d to show how they
+                     correspond to combinations that may support a causal
+                     effect.</li></ul>"))
             ), # close box
 
             # Visualize d ----
@@ -75,10 +98,21 @@ visualize_tab <-
                 variable and your outcome."),
               p("First, enter your lower bound of the effect size, which can be
                 calculated on the Calculate Effects tab."),
+              p("Second, enter the possible values of the correlation
+                between your outcome and other variables. You can visualize
+                this difference using ", strong("visualize_r()"),
+                " or using the box above."),
+              p("Last, enter the possible values of the effect size found in the
+              study. You can visualize this difference using ",
+                strong("visualize_d()"), " or using the box above.
+                You can use other effect sizes, and these will be converted
+                to d to map them onto the graph below. Each is labeled with
+                the original statistic and size. This app uses plotly to allow
+                you to hover over points to determine their exact coordinates. "),
 
               # enter here
               numericInput(
-                inputId = "enter_d_lower",
+                inputId = "visualize_d_lower",
                 label = "Lower confidence interval of d:",
                 value = 0,
                 min = -3,
@@ -104,11 +138,35 @@ visualize_tab <-
                 coefficient and at least one other effect size to see the
                 dots on the plot."),
               p(""),
-              textInput(inputId = "d_values_stats",
-                        label = "Enter d values",
+              textInput(inputId = "visualize_r_values",
+                        label = "Enter r values:",
                         value = ""),
-              textInput(inputId = "r_values_stats",
-                        label = "Enter r values",
+              textInput(inputId = "visualize_d_values",
+                        label = "Enter d values:",
+                        value = ""),
+              textInput(inputId = "visualize_f_values",
+                        label = "Enter f values:",
+                        value = ""),
+              textInput(inputId = "visualize_f2_values",
+                        label = "Enter f squared values:",
+                        value = ""),
+              textInput(inputId = "visualize_nnt_values",
+                        label = "Enter number needed to treat values:",
+                        value = ""),
+              textInput(inputId = "visualize_prob_values",
+                        label = "Enter probability of superiority values:",
+                        value = ""),
+              textInput(inputId = "visualize_u1_values",
+                        label = "Enter proportion overlap U1 values:",
+                        value = ""),
+              textInput(inputId = "visualize_u2_values",
+                        label = "Enter proportion overlap U2 values:",
+                        value = ""),
+              textInput(inputId = "visualize_u3_values",
+                        label = "Enter proportion overlap U3 values:",
+                        value = ""),
+              textInput(inputId = "visualize_overlap_values",
+                        label = "Enter proportion of distribution overlap values:",
                         value = ""),
               p(""),
               plotlyOutput("visual_c_map_stats")

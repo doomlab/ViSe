@@ -17,6 +17,7 @@ library(scales)
 library(cowplot)
 
 # Load Pages --------------------------------------------------------------
+source("example_tab.R")
 source("calculate_tab.R")
 source("convert_tab.R")
 source("visualize_tab.R")
@@ -28,6 +29,9 @@ ui <- dashboardPage(skin = "blue",
                     dashboardHeader(title = "Visualizing Sensitivity"),
                     dashboardSidebar(
                         sidebarMenu(
+                            menuItem("Example Walkthrough",
+                                   tabName = "example_tab",
+                                   icon = icon("file")),
                             menuItem("Calculate Effects",
                                      tabName = "calculate_tab",
                                      icon = icon("table")),
@@ -41,11 +45,12 @@ ui <- dashboardPage(skin = "blue",
                     ), #close sidebar
                     dashboardBody(
                       tabItems(
-                             calculate_tab,
-                             convert_tab,
-                             visualize_tab
-                            ) #close tabs
-                        ) #close body
+                        example_tab,
+                        calculate_tab,
+                        convert_tab,
+                        visualize_tab
+                        ) #close tabs
+                      ) #close body
                     ) #close dashboard
 
 # Server Logic ------------------------------------------------------------
@@ -309,11 +314,58 @@ server <- function(input, output, session) {
       estimate_r(r = input$enter_r_effect)$graph
     })
 
-    output$visual_c_map_effect <- renderPlotly({
-      ggplotly(visualize_c_map(d = input$enter_d_effect,
-                               dvalues = na.omit(as.numeric(unlist(strsplit(input$d_values_effect, ",")))),
-                               rvalues = na.omit(as.numeric(unlist(strsplit(input$r_values_effect, ","))))
-      )$graph)
+    output$visual_c_map_stats <- renderPlotly({
+
+      if (input$visualize_d_values != ""){
+        d_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_d_values, ","))))
+      } else { d_values <- NULL }
+
+      if (input$visualize_f_values != ""){
+        f_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_f_values, ","))))
+      } else { f_values <- NULL }
+
+      if (input$visualize_f2_values != ""){
+        f2_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_f2_values, ","))))
+      } else { f2_values <- NULL }
+
+      if (input$visualize_nnt_values != ""){
+        nnt_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_nnt_values, ","))))
+      } else { nnt_values <- NULL }
+
+      if (input$visualize_prob_values != ""){
+        prob_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_prob_values, ","))))
+      } else { prob_values <- NULL }
+
+      if (input$visualize_u1_values != ""){
+        prop_u1_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_u1_values, ","))))
+      } else { prop_u1_values <- NULL }
+
+      if (input$visualize_u2_values != ""){
+        prop_u2_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_u2_values, ","))))
+      } else { prop_u2_values <- NULL }
+
+      if (input$visualize_u3_values != ""){
+        prop_u3_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_u3_values, ","))))
+      } else { prop_u3_values <- NULL }
+
+      if (input$visualize_overlap_values != ""){
+        prop_overlap_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_overlap_values, ","))))
+      } else { prop_overlap_values <- NULL }
+
+
+      ggplotly(visualize_c_map(
+         dlow = input$visualize_d_lower,
+         lower = input$visualize_enter_lower,
+         r_values = na.omit(as.numeric(unlist(strsplit(input$visualize_r_values, ",")))),
+         d_values = d_values,
+         f_values = f_values,
+         f2_values = f2_values,
+         nnt_values = nnt_values,
+         prob_values = prob_values,
+         prop_u1_values = prop_u1_values,
+         prop_u2_values = prop_u2_values,
+         prop_u3_values = prop_u3_values,
+         prop_overlap_values = prop_overlap_values)$graph)
     })
 
 }

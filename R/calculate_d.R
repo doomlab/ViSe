@@ -121,7 +121,10 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     groups <- unique(df[ , x_col])
     x <- df[ df[ , x_col] == groups[1] , y_col]
     y <- df[ df[ , x_col] == groups[2] , y_col]
-    model <- t.test(x, y, var.equal = TRUE)
+    model_calc <- t.test(x, y, var.equal = TRUE)
+    t <- model_calc$statistic
+    d <- 2 * t/sqrt(model_calc$parameter)
+    p <- model_calc$p.value
 
     # calculate means and confidence intervals
     m1 <- mean(x)
@@ -143,7 +146,10 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     # or just on x and y vectors
   } else if (!is.null(x_col) & !is.null(y_col)){
 
-    model <- t.test(x_col, y_col, var.equal = TRUE)
+    model_calc <- t.test(x_col, y_col, var.equal = TRUE)
+    t <- model_calc$statistic
+    d <- 2 * t/sqrt(model_calc$parameter)
+    p <- model_calc$p.value
 
     # calculate means and confidence intervals
     m1 <- mean(x_col)

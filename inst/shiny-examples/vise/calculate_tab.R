@@ -13,16 +13,18 @@ calculate_tab <-
                 effect size and the lower confidence interval bound. ",
                 HTML("<ul>
                      <li>
-                      Box 1: From an uploaded dataset
+                      Box 1: From an uploaded dataset.
                      </li>
                      <li>
-                      Box 2: From summary statistics output or a research paper
+                      Box 2: From summary statistics output or a research paper:
+                      including descriptive statistics only, the t-test statistic,
+                      or the effect size with sample size.
                      </li>
                      </ul>"),
                 "You would only need to use one of the following boxes based on
                 what type of data you have.",
-                "In each of these scenarios, the ", strong("calculate_d()"),
-                "function. ", "You can close these boxes to help keep
+                "In each of these scenarios, we can use the ", strong("calculate_d()"),
+                "function to calculate these values. ", "You can close these boxes to help keep
                 all the information on one page. "),
 
               p("If you need to switch between effect sizes, please use the
@@ -52,10 +54,15 @@ calculate_tab <-
                                    ".gz", ".feather",
                                    ".json", ".mat", ".xml")),
               tags$hr(style="border-color: blue;"),
-              p("Select the columns that your labels and dependent variables are in."),
+              p("Once you have uploaded your dataset, please select the column
+              with the group labels (i.e., the independent variable). This column
+              can be a character, numeric, or factor column. Only two group labels
+              or categories should be present in this column. Then select the
+              dependent variable column. This column should be numeric.
+                "),
               varSelectInput(
                 inputId = "label_column",
-                label = "Select label column:",
+                label = "Select indepedent variable column:",
                 data = NULL,
                 selected = NULL,
                 multiple = FALSE
@@ -156,7 +163,7 @@ calculate_tab <-
                 value = 0,
                 min = 0,
                 max = NA,
-                step = NA,
+                step = 1,
                 width = NULL
               ),
               numericInput(
@@ -165,7 +172,7 @@ calculate_tab <-
                 value = 0,
                 min = 0,
                 max = NA,
-                step = NA,
+                step = 1,
                 width = NULL
               ),
               numericInput(
@@ -236,8 +243,8 @@ calculate_tab <-
               numericInput(
                 inputId = "enter_d",
                 label = "Effect size (d):",
-                value = 0,
-                min = 0,
+                value = NULL,
+                min = NA,
                 max = NA,
                 step = NA,
                 width = NULL

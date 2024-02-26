@@ -32,13 +32,16 @@ ui <- dashboardPage(skin = "blue",
                             menuItem("Example Walkthrough",
                                    tabName = "example_tab",
                                    icon = icon("file")),
-                            menuItem("Calculate Effects",
+                            menuItem(HTML("Calculate standardized <br/>
+                                          group difference"),
                                      tabName = "calculate_tab",
                                      icon = icon("table")),
-                            menuItem("Convert Effects",
+                            menuItem(HTML("Convert between effect <br />
+                                          size measures"),
                                      tabName = "convert_tab",
                                      icon = icon("gears")),
-                            menuItem("Visualize Effects",
+                            menuItem(HTML("Visualize sensitivity of <br/>
+                                          effect size to bias"),
                                      tabName = "visualize_tab",
                                      icon = icon("bar-chart"))
                         ) #close menu
@@ -64,7 +67,11 @@ server <- function(input, output, session) {
 
       if (!isTruthy(input$enter_t)) {
         t_enter <- NULL
-      } else { t_enter <- input$enter_t}
+      }  else { t_enter <- input$enter_t}
+
+      if (!isTruthy(input$enter_d)) {
+        d_enter <- NULL
+      }  else { d_enter <- input$enter_d}
 
       d_calc <- calculate_d(
         m1 = input$enter_m1,
@@ -76,7 +83,7 @@ server <- function(input, output, session) {
         a = input$enter_alpha,
         lower = input$enter_lower,
         t = t_enter,
-        d = input$enter_d
+        d = d_enter
       )
 
       valueBox(
@@ -89,7 +96,11 @@ server <- function(input, output, session) {
     output$summary_d_low_one_central <- renderValueBox({
       if (!isTruthy(input$enter_t)) {
         t_enter <- NULL
-      } else { t_enter <- input$enter_t}
+      }  else { t_enter <- input$enter_t}
+
+      if (!isTruthy(input$enter_d)) {
+        d_enter <- NULL
+      }  else { d_enter <- input$enter_d}
 
       d_calc <- calculate_d(
         m1 = input$enter_m1,
@@ -101,7 +112,7 @@ server <- function(input, output, session) {
         a = input$enter_alpha,
         lower = input$enter_lower,
         t = t_enter,
-        d = input$enter_d
+        d = d_enter
       )
 
       valueBox(
@@ -114,7 +125,11 @@ server <- function(input, output, session) {
     output$summary_d_low_two_central <- renderValueBox({
       if (!isTruthy(input$enter_t)) {
         t_enter <- NULL
-      } else { t_enter <- input$enter_t}
+      }  else { t_enter <- input$enter_t}
+
+      if (!isTruthy(input$enter_d)) {
+        d_enter <- NULL
+      }  else { d_enter <- input$enter_d}
 
       d_calc <- calculate_d(
         m1 = input$enter_m1,
@@ -126,7 +141,7 @@ server <- function(input, output, session) {
         a = input$enter_alpha,
         lower = input$enter_lower,
         t = t_enter,
-        d = input$enter_d
+        d = d_enter
       )
 
       valueBox(
@@ -139,7 +154,11 @@ server <- function(input, output, session) {
     output$summary_d_low_one_non <- renderValueBox({
       if (!isTruthy(input$enter_t)) {
         t_enter <- NULL
-      } else { t_enter <- input$enter_t}
+      }  else { t_enter <- input$enter_t}
+
+      if (!isTruthy(input$enter_d)) {
+        d_enter <- NULL
+      }  else { d_enter <- input$enter_d}
 
       d_calc <- calculate_d(
         m1 = input$enter_m1,
@@ -151,7 +170,7 @@ server <- function(input, output, session) {
         a = input$enter_alpha,
         lower = input$enter_lower,
         t = t_enter,
-        d = input$enter_d
+        d = d_enter
       )
 
       valueBox(
@@ -164,7 +183,11 @@ server <- function(input, output, session) {
     output$summary_d_low_two_non <- renderValueBox({
       if (!isTruthy(input$enter_t)) {
         t_enter <- NULL
-      } else { t_enter <- input$enter_t}
+      }  else { t_enter <- input$enter_t}
+
+      if (!isTruthy(input$enter_d)) {
+        d_enter <- NULL
+      }  else { d_enter <- input$enter_d}
 
       d_calc <- calculate_d(
         m1 = input$enter_m1,
@@ -176,7 +199,7 @@ server <- function(input, output, session) {
         a = input$enter_alpha,
         lower = input$enter_lower,
         t = t_enter,
-        d = input$enter_d
+        d = d_enter
       )
 
       valueBox(

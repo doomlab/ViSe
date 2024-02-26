@@ -9,29 +9,33 @@ visualize_tab <-
               status = "primary",
               width = 12,
               p(""),
-              p("The visualization tab includes several options for you
-                to visualize and determine the values that would indicate
-                a causal effect. ",
-                HTML("<ul><li>1) The first box includes a visualization
-                     of the overlap between two group distributions.
-                     You can use this box to help you imagine the size
-                     of the standardized group differences that may
-                     occur and what size effect size that corresponds to.
-                     </li>
-                     <li>2) The second box includes a visualization of
-                     the correlation between the outcome and potential
-                     variable to control for. You can use this visualization
-                     to imagine the amount of variance overlap between
-                     the two variables and what correlation that would
-                     correspond to. </li>
-                     <li>3) Once these values are determined, you can
-                     use the final box to create a sensitivity plot. This
-                     plot will shade the areas that indicate a combination
-                     of correlation and effect size that indicates a causal
-                     effect. You can enter different types of effect sizes,
-                     and these will be converted to d to show how they
-                     correspond to combinations that may support a causal
-                     effect.</li></ul>"))
+              p("The visualization tab provides several options for visualizing
+                and determining which combinations of two bias quantities
+                would support a causal effect.",
+                HTML("<ul><li>1) <b>First quantity:</b>
+                The first box includes a visualization of the distributions
+                of the predispositions to the outcome in both groups
+                and their overlap. You can use this box to help you
+                imagine how much non-overlap there might be and what
+                standardized effect size d that corresponds to. Or enter
+                the d that you obtained by converting another effect
+                size measure via the 'Convert between effect size measures'
+                tab.
+                 </li>
+                 <li>2) <b>Second quantity</b>: The second box includes a
+                 visualization of the correlation between the
+                 predisposition and common causes that have not
+                 been adjusted. You can use this visualization to imagine
+                 the amount of variance overlap between the two
+                 variables <i>R<sup>2</sup></i>, and what correlation would correspond to
+                 <i>R/r</i>.
+                 </li>
+                 <li>3) Once these values are determined, the final box
+                     creates a sensitivity plot for you. This plot will
+                     shade the areas that indicate a combination of <b>d</b> and
+                     correlation that supports a causal effect. You can
+                     also enter other effect size measures that will be
+                     converted to <b>d</b>.</li></ul>"))
             ), # close box
 
             # Visualize d ----
@@ -134,9 +138,10 @@ visualize_tab <-
                 correlation between outcome and another variable ",
                 em("r"), "below ", strong("separated by commas.")),
               p("Each of the entered effect sizes will appear on the graph, converted to d
-                values, so you can see how they compare. You must enter the correlation
+                values, so you can see how they compare.",
+                strong(em("You must enter the correlation
                 coefficient and at least one other effect size to see the
-                dots on the plot."),
+                dots on the plot."))),
               p(""),
               textInput(inputId = "visualize_r_values",
                         label = "Enter r values:",

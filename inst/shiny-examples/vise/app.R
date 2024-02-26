@@ -11,10 +11,12 @@ library(ViSe)
 library(shinyWidgets)
 library(rio)
 library(tidyr)
-library(plotly)
 library(ggplot2)
 library(scales)
 library(cowplot)
+# library(plotly)
+library(knitr)
+library(kableExtra)
 
 # Load Pages --------------------------------------------------------------
 source("example_tab.R")
@@ -337,7 +339,7 @@ server <- function(input, output, session) {
       estimate_r(r = input$enter_r_effect)$graph
     })
 
-    output$visual_c_map_stats <- renderPlotly({
+    output$visual_c_map_stats <- renderPlot({
 
       if (input$visualize_d_values != ""){
         d_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_d_values, ","))))
@@ -375,21 +377,41 @@ server <- function(input, output, session) {
         prop_overlap_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_overlap_values, ","))))
       } else { prop_overlap_values <- NULL }
 
+      temp <- visualize_c_map(
+        dlow = input$visualize_d_lower,
+        lower = input$visualize_enter_lower,
+        r_values = na.omit(as.numeric(unlist(strsplit(input$visualize_r_values, ",")))),
+        d_values = d_values,
+        f_values = f_values,
+        f2_values = f2_values,
+        nnt_values = nnt_values,
+        prob_values = prob_values,
+        prop_u1_values = prop_u1_values,
+        prop_u2_values = prop_u2_values,
+        prop_u3_values = prop_u3_values,
+        prop_overlap_values = prop_overlap_values)$graph
 
-      ggplotly(visualize_c_map(
-         dlow = input$visualize_d_lower,
-         lower = input$visualize_enter_lower,
-         r_values = na.omit(as.numeric(unlist(strsplit(input$visualize_r_values, ",")))),
-         d_values = d_values,
-         f_values = f_values,
-         f2_values = f2_values,
-         nnt_values = nnt_values,
-         prob_values = prob_values,
-         prop_u1_values = prop_u1_values,
-         prop_u2_values = prop_u2_values,
-         prop_u3_values = prop_u3_values,
-         prop_overlap_values = prop_overlap_values)$graph)
+      temp
     })
+
+    # example information -----------------------------------------------------
+    output$data_kable <- function() {
+      DF <- data.frame(
+        "Internalising Score Unadjusted" = c(3.68, 1.73, 5.62),
+        "Internalising Score Adjusted" = c(2.73, 0.77, 4.69),
+        "Internalising d Unadjusted" = c(0.44, 0.20, 0.68),
+        "Internalising d Adjusted" = c(0.33, 0.09, 0.57)
+
+      )
+
+      rownames(DF) <- c("Mean Difference", "Lower Bound", "Upper Bound")
+
+      DF %>%
+        knitr::kable("html") %>%
+        kable_styling("striped", full_width = F)
+    }
+
+
 
 }
 

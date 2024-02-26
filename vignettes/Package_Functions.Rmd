@@ -1,0 +1,263 @@
+---
+title: "Package Functions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Package Functions}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+
+To install the package, please use: 
+
+```
+library(devtools)
+install_github("doomlab/ViSe")
+```
+
+This installation will give you the latest version of the package, regardless of status on CRAN. 
+
+```{r setup}
+library(ViSe)
+library(cowplot)
+library(ggplot2)
+library(plotly)
+```
+
+## Example
+
+To demonstrate the use of visual sensitivity analysis, we use the effect of child maltreatment on the extent of mental health problems in terms of internalising and externalising behaviour. The study of Kisely and colleagues (Kisely et al., 2018) was based on a general population sample in Brisbane, Australia, and compared 3554 mother-child pairs without 'substantiated child maltreatment' to, for example, 73 pairs with child neglect. Note that the results vary across different types of maltreatment assessed, we choose child neglect because its results (a smaller but still considerable l after adjustment) are particularly suited to illustrating sensitivity analysis. Maltreatment was assessed 'by linkage to state child protection agency data'. Internalising and externalising behaviours were measured using the Youth Self-Report (YSR) scale (Achenbach & Rescorla, 2001) at around the age of 21. The study reports unadjusted mean differences and mean differences adjusted for ‘gender, parental ethnicity, maternal age, family income, maternal relationship status, maternal education, youth income level, youth education level, youth marital status’ (e.g., likely based on ordinary least squares regression, but the paper does not specify).
+
+See supplemental document at https://static.cambridge.org/content/id/urn:cambridge.org:id:article:S0007125018002076/resource/name/S0007125018002076sup001.docx 
+
+## Calculate effect size 
+
+To obtain the estimates and two-tailed 95% confidence intervals on the d scale (via *d* = $M_{difference}$ / $SD_{Total}$, similar to Glass' $\Delta$), we divided the reported unadjusted and adjusted mean differences for internalising and externalising by the respective standard deviations of the total sample.
+
+```{r}
+internal_unadjusted <- list(
+  mean_diff = 3.68,
+  lower_diff = 1.73,
+  upper_diff = 5.62,
+  sd = 8.29
+)
+
+internal_adjusted <- list(
+  mean_diff = 2.73,
+  lower_diff = 0.77,
+  upper_diff = 4.69,
+  sd = 8.28
+)
+
+external_unadjusted <- list(
+  mean_diff = 3.72,
+  lower_diff = 2.13,
+  upper_diff = 5.32,
+  sd = 6.81
+)
+
+external_adjusted <- list(
+  mean_diff = 3.10,
+  lower_diff = 1.49,
+  upper_diff = 4.71,
+  sd = 6.81
+)
+
+list_values <- list(internal_unadjusted, internal_adjusted, 
+                 external_unadjusted, external_adjusted)
+list_names <- c("internal_unadjusted", "internal_adjusted", 
+                 "external_unadjusted", "external_adjusted")
+names(list_values) <- list_names
+
+for (i in list_names){
+  list_values[[i]][["d"]] <- list_values[[i]][["mean_diff"]] / list_values[[i]][["sd"]]
+  list_values[[i]][["lower_d"]] <- list_values[[i]][["lower_diff"]] / list_values[[i]][["sd"]]
+  list_values[[i]][["upper_d"]] <- list_values[[i]][["upper_diff"]] / list_values[[i]][["sd"]]
+}
+
+unlist(list_values)
+```
+
+## Calculate d and Confidence Interval
+
+To visualise *l*, we must obtain the lower bound of the confidence interval for our proposed effect size. ViSe includes a function `calculate_d()` that calculates from `t.test()` output, dataframes, individual vectors of data, sample statistics (*M*, *SD*, *n* for group), *t*-test values, or a pre-calculated *d*-value. 
+
+In this example, we have our *d* value from the original research, along with sample sizes from the study which can be used to calculate the two-tailed `dlow_central` or one-tailed `done_low_central` lower confidence interval. The package vignette shows all possible ways to calculate values from data and includes the non-centralized confidence intervals for *d* as well (below). 
+
+```{r}
+internal_unadj_output <- calculate_d(
+  d = list_values$internal_unadjusted$d, # d value
+  a = .05, # alpha for confidence interval
+  lower = TRUE, # you expect d to be positive 
+  n1 = 71, # sample size group 1 
+  n2 = 3653  # sample size group 2
+)
+
+internal_unadj_output$dlow_central
+internal_unadj_output$done_low_central
+
+# note, the program also provide noncentral t confidence intervals
+# in this case, they are unusable because d has been calculated from 
+# mean difference / control rather than mean difference / spooled
+# therefore the approximation of t and the noncentral 
+# limits is not appropriate 
+```
+
+### Other Examples of `calculate_d`
+
+```{r}
+# from dataframe
+calculate_d(
+  df = mtcars,
+  x_col = "am",
+  y_col = "hp",
+  a = .05,
+  lower = TRUE
+)
+
+# from two columns
+x <- mtcars$am
+y <- mtcars$hp
+
+calculate_d(
+  x_col = x,
+  y_col = y,
+  a = .05,
+  lower = TRUE
+)
+
+# from summary statistics 
+calculate_d(m1 = 14.37, # neglect mean
+   sd1 = 10.716, # neglect sd
+   n1 = 71, # neglect n
+   m2 = 10.69, # none mean
+   sd2 = 8.219, # none sd
+   n2 = 3653, # none n
+   a = .05, # alpha/confidence interval
+   lower = TRUE) # lower or upper bound
+
+# from t-test model
+output <- t.test(mtcars$hp ~ mtcars$am, var.equal = TRUE)
+n_values <- tapply(mtcars$hp, mtcars$am, length)
+calculate_d(
+  model = output, 
+  n1 = unname(n_values[1]),
+  n2 = unname(n_values[2]),
+  a = .05, 
+  lower = TRUE
+)
+
+# from t-values 
+calculate_d(
+  t = 1.37,
+  n1 = unname(n_values[1]),
+  n2 = unname(n_values[2]),
+  a = .05, 
+  lower = TRUE
+)
+
+```
+
+## Convert between effect sizes (specification plot)
+
+Not all research studies use *d* as the effect size of interest, and `ViSe` provides functionality to convert between effect sizes. The `other_to_d()` function can be used to convert *f*, $f^2$, NNT, *r*, probability of superiority, U1, U2, U3, and proportional overlap into *d*. 
+
+```{r}
+other_to_d(nnt = 35)
+```
+
+All options of `other_to_d()`: 
+
+```
+f = NULL,
+f2 = NULL,
+nnt = NULL,
+r = NULL,
+prob = NULL,
+prop_u1 = NULL,
+prop_u2 = NULL,
+prop_u3 = NULL,
+prop_overlap = NULL
+```
+
+The *d* value can then be used to visualize all effects and their conversions at once in the `visualize_effects()` function. 
+
+```{r}
+visualize_effects(d = list_values$internal_unadjusted$d)
+```
+
+This package uses the following conversion functions that can be implemented separately as well:
+
+```{r}
+d_to_r(d = list_values$internal_unadjusted$d)
+d_to_f2(d = list_values$internal_unadjusted$d)
+d_to_nnt(d = list_values$internal_unadjusted$d)
+probability_superiority(d = list_values$internal_unadjusted$d)
+proportion_overlap(d = list_values$internal_unadjusted$d)
+```
+
+## Visualization of sensitivity of effect size to bias
+
+Now that we have an idea of our *d* value, the lower confidence limit _l_, and other potential effect sizes, we can create a sensitivity plot of the effect size to bias. To visualize different *d* values and their representation of the distribution overlap, use `estimate_d()` to examine different effect sizes:
+
+```{r}
+estimate_d(d = .11)$graph
+```
+
+Similarly, `estimate_r()` shows a scatterplot of the entered correlation coefficient to visualize the relation between two variables:
+
+```{r}
+estimate_r(r = .30)$graph
+```
+
+You can then use the two estimation functions to create a graph that shows you which combinations of effect size and *r* would indicate a causal effect. You can enter any effect size from our conversion options, and these will be converted to *d* with labels for inspection. The shaded area represents an area that would be considered the effect, and the points represent the entered combination of r and effect size. Points in the shaded area would be considered sensitive to bias. 
+
+You can use the `plotly` library to hover over those dots to see their values (also embedded in our shiny app). *Note*: Not run to make this package CRAN compatible (plotly makes html files large). 
+
+```{r}
+visual_c_mapped <-
+  # your lower confidence limit required
+  visualize_c_map(dlow = list_values$internal_unadjusted$lower_d, 
+                  # correlation values required
+                  r_values = c(.1, .4, .3),
+                  # other effect sizes you want to plot
+                  d_values = c(.2, .3, .8),
+                  nnt_values = c(10, 20, 30),
+                  # if you think d will be positive 
+                  lower = TRUE)
+
+visual_c_mapped$graph
+
+# ggsave(filename = "visualize_c_map.png")
+
+# ggplotly(visual_c_mapped$graph)
+```
+
+All options for the graph:
+
+```
+visualize_c_map(
+  dlow,
+  r_values,
+  d_values = NULL,
+  f_values = NULL,
+  f2_values = NULL,
+  nnt_values = NULL,
+  prob_values = NULL,
+  prop_u1_values = NULL,
+  prop_u2_values = NULL,
+  prop_u3_values = NULL,
+  prop_overlap_values = NULL,
+  lower = TRUE
+)
+```

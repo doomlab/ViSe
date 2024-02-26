@@ -174,7 +174,7 @@ visualize_tab <-
                         label = "Enter proportion of distribution overlap values:",
                         value = ""),
               p(""),
-              plotlyOutput("visual_c_map_stats")
+              plotOutput("visual_c_map_stats")
             ) # close box
           ) # fluid row
         ) #close page

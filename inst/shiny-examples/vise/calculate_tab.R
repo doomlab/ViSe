@@ -264,6 +264,13 @@ calculate_tab <-
                 The non-centralized versions assumes that effect sizes are skewed and uses
                 non-centralized t-distribution to calculate the confidence interval.
                 At larger sample sizes, these two values get closer together. "),
+              p(HTML("Note: if you calculate only from a <i>d</i> value, the non-centralized
+                     confidence interval approximation may not be correct. The package
+                     converts this value to a <i>t</i> score assuming you have used the
+                     traditional formula with standard deviation pooled between groups
+                     on the bottom. If the score you entered uses a correction like Hedges'
+                     <i>g</i> or a different formula for <i>d</i>, you may have a
+                     confidence interval that does not contain the effect size.")),
               p(strong(em("You will see an error here until you enter enough of the required
                 information."))),
               valueBoxOutput("summary_d"),

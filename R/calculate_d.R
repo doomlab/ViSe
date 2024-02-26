@@ -197,8 +197,8 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
 
       # calculate from t-test model
       if(is(model, "htest")){
-        t <- model$statistic
-        d <- 2 * t/sqrt(model$parameter)
+        t <- unname(model$statistic)
+        d <- 2 * t/unname(sqrt(model$parameter))
         p <- model$p.value
 
         m1 <- m2 <- M1low <- M1high <- M2low <- M2high <-

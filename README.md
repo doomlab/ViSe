@@ -17,3 +17,12 @@ install_github("doomlab/ViSe")
 # Information
 
 See package vignette for function explanations or check out our website. 
+
+# Shiny App
+
+You can run the shiny app locally using:
+
+```
+library(ViSe)
+runExample()
+```

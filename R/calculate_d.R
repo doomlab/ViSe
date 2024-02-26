@@ -146,18 +146,23 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     # if they include x_col and y_col but not df ----
   } else if (!is.null(x_col) & !is.null(y_col) & is.null(df)) {
 
-    model_calc <- t.test(y_col ~ x_col, var.equal = TRUE)
-    t <- model_calc$statistic
-    d <- 2 * t/sqrt(model_calc$parameter)
+    df <- as.data.frame(na.omit("x_col" = x_col, "y_col" = y_col))
+    if(length(table(df[ , "x_col"])) != 2){stop("Please have only two factor levels.")}
+    groups <- unique(df[ , "x_col"])
+    x <- df[ df[ , "x_col"] == groups[1] , "y_col"]
+    y <- df[ df[ , "x_col"] == groups[2] , "y_col"]
+    model_calc <- t.test(x, y, var.equal = TRUE)
+    t <- unname(model_calc$statistic)
+    d <- 2 * t/unname(sqrt(model_calc$parameter))
     p <- model_calc$p.value
 
     # calculate means and confidence intervals
-    m1 <- mean(x_col)
-    m2 <- mean(y_col)
-    sd1 <- sd(x_col)
-    sd2 <- sd(y_col)
-    n1 <- length(x_col)
-    n2 <- length(y_col)
+    m1 <- mean(x)
+    m2 <- mean(y)
+    sd1 <- sd(x)
+    sd2 <- sd(y)
+    n1 <- length(x)
+    n2 <- length(y)
     se1 <- sd1 / sqrt(n1)
     se2 <- sd1 / sqrt(n2)
     spooled <- sqrt( ((n1 - 1) * sd1 ^ 2 + (n2 - 1) * sd2 ^ 2) / (n1 + n2 - 2))

@@ -146,7 +146,8 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     # if they include x_col and y_col but not df ----
   } else if (!is.null(x_col) & !is.null(y_col) & is.null(df)) {
 
-    df <- na.omit(data.frame("x_col" = x_col, "y_col" = y_col))
+    df <- data.frame("x_col" = x_col, "y_col" = y_col)
+    df <- na.omit(df)
     if(length(table(df[ , "x_col"])) != 2){stop("Please have only two factor levels.")}
     groups <- unique(df[ , "x_col"])
     x <- df[ df[ , "x_col"] == groups[1] , "y_col"]

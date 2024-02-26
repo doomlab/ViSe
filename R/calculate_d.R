@@ -122,7 +122,7 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     x <- df[ df[ , x_col] == groups[1] , y_col]
     y <- df[ df[ , x_col] == groups[2] , y_col]
     model_calc <- t.test(x, y, var.equal = TRUE)
-    t <- model_calc$statistic
+    t <- unname(model_calc$statistic)
     d <- 2 * t/sqrt(model_calc$parameter)
     p <- model_calc$p.value
 

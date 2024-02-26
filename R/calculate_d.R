@@ -109,7 +109,7 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
 
   if (a < 0 || a > 1) { stop("Alpha should be between 0 and 1.") }
 
-  # if they include df, calculate model
+  # if they include df, calculate model ----
   if (!is.null(df)){
     # deal with is.null column names
     if (is.null(x_col)){stop("Be sure to include the x column of the data.")}
@@ -143,8 +143,8 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     M2high <- m2 + se2 * qt(a / 2, n2 - 1, lower.tail = FALSE)
     # model will then go to other calculations
 
-    # or just on x and y vectors
-  } else if (!is.null(x_col) & !is.null(y_col)){
+    # if they include x_col and y_col but not df ----
+  } else if (!is.null(x_col) & !is.null(y_col) & is.null(df)) {
 
     model_calc <- t.test(x_col, y_col, var.equal = TRUE)
     t <- model_calc$statistic
@@ -168,84 +168,82 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     M2high <- m2 + se2 * qt(a / 2, n2 - 1, lower.tail = FALSE)
     # model will then go to other calculations
 
-  }
+    # if they include t only ----
+    } else if (!is.null(t)){
 
-  # if they include t or model or d
-  if (!is.null(t)){
+      # deal with is.null values
+      if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
+      if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
 
-    # deal with is.null values
-    if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
-    if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
-
-    # calculate from t value here
-    d <- 2 * t/sqrt(n1 + n2 - 2)
-    p <- pt(abs(t), (n1 - 1 + n2 - 1), lower.tail = F) * 2
-
-    m1 <- m2 <- M1low <- M1high <- M2low <- M2high <-
-      sd1 <- sd2 <- se1 <- se2 <- sepooled <- spooled <- NULL
-
-    # or else they include the model already
-  } else if (!is.null(model)){
-
-    # deal with is.null values
-    if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
-    if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
-
-    # calculate from t-test model
-    if(is(model, "htest")){
-      t <- model$statistic
-      d <- 2 * t/sqrt(model$parameter)
-      p <- model$p.value
+      # calculate from t value here
+      d <- 2 * t/sqrt(n1 + n2 - 2)
+      p <- pt(abs(t), (n1 - 1 + n2 - 1), lower.tail = F) * 2
 
       m1 <- m2 <- M1low <- M1high <- M2low <- M2high <-
         sd1 <- sd2 <- se1 <- se2 <- sepooled <- spooled <- NULL
 
+      # if they include the t-test model ----
+    } else if (!is.null(model)){
+
+      # deal with is.null values
+      if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
+      if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
+
+      # calculate from t-test model
+      if(is(model, "htest")){
+        t <- model$statistic
+        d <- 2 * t/sqrt(model$parameter)
+        p <- model$p.value
+
+        m1 <- m2 <- M1low <- M1high <- M2low <- M2high <-
+          sd1 <- sd2 <- se1 <- se2 <- sepooled <- spooled <- NULL
+
+      } else {
+        stop("Only t-tests are calculated at the moment.")
+      }
+
+      # if they include d values ----
+    } else if (!is.null(d)) {
+
+      # deal with is.null values
+      if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
+      if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
+
+      df <- (n1 - 1 + n2 - 1)
+      M1 <- sd1 <- se1 <- M1low <- M1high <- M2 <- sd2 <-
+        se2 <- M2low <- M2high <- spooled <- sepooled <-
+        NULL
+      t <- (d/2)*sqrt(n1 + n2 - 2)
+      p <- pt(abs(t), (n1 - 1 + n2 - 1), lower.tail = F) * 2
+
+      # if they don't have any of the above ----
     } else {
-      stop("Only t-tests are calculated at the moment.")
+      # deal with is.null values
+      if (is.null(m1)){stop("Be sure to include m1 for the first mean.")}
+      if (is.null(m2)){stop("Be sure to include m2 for the second mean.")}
+      if (is.null(sd1)){stop("Be sure to include sd1 for the first mean.")}
+      if (is.null(sd2)){stop("Be sure to include sd2 for the second mean.")}
+      if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
+      if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
+
+      # calculate d
+      spooled <- sqrt( ((n1 - 1) * sd1 ^ 2 + (n2 - 1) * sd2 ^ 2) / (n1 + n2 - 2))
+      d <- (m1 - m2) / spooled
+
+      # calculate t
+      se1 <- sd1 / sqrt(n1)
+      se2 <- sd2 / sqrt(n2)
+      sepooled <- sqrt((spooled ^ 2 / n1 + spooled ^ 2 / n2))
+      t <- (m1 - m2) / sepooled
+
+      # calculate means and confidence intervals
+      M1low <- m1 - se1 * qt(a / 2, n1 - 1, lower.tail = FALSE)
+      M1high <- m1 + se1 * qt(a / 2, n1 - 1, lower.tail = FALSE)
+      M2low <- m2 - se2 * qt(a / 2, n2 - 1, lower.tail = FALSE)
+      M2high <- m2 + se2 * qt(a / 2, n2 - 1, lower.tail = FALSE)
+      p <- pt(abs(t), (n1 - 1 + n2 - 1), lower.tail = F) * 2
+
     }
-
-  } else if (!is.null(d)) {
-
-    # deal with is.null values
-    if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
-    if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
-
-    df <- (n1 - 1 + n2 - 1)
-    M1 <- sd1 <- se1 <- M1low <- M1high <- M2 <- sd2 <-
-      se2 <- M2low <- M2high <- spooled <- sepooled <-
-      NULL
-    t <- (d/2)*sqrt(n1 + n2 - 2)
-    p <- pt(abs(t), (n1 - 1 + n2 - 1), lower.tail = F) * 2
-
-    # or just get all the numbers
-  } else {
-
-    # deal with is.null values
-    if (is.null(m1)){stop("Be sure to include m1 for the first mean.")}
-    if (is.null(m2)){stop("Be sure to include m2 for the second mean.")}
-    if (is.null(sd1)){stop("Be sure to include sd1 for the first mean.")}
-    if (is.null(sd2)){stop("Be sure to include sd2 for the second mean.")}
-    if (is.null(n1)){stop("Be sure to include the sample size n1 for the first group.")}
-    if (is.null(n2)){stop("Be sure to include the sample size n2 for the second group.")}
-
-    # calculate d
-    spooled <- sqrt( ((n1 - 1) * sd1 ^ 2 + (n2 - 1) * sd2 ^ 2) / (n1 + n2 - 2))
-    d <- (m1 - m2) / spooled
-
-    # calculate t
-    se1 <- sd1 / sqrt(n1)
-    se2 <- sd2 / sqrt(n2)
-    sepooled <- sqrt((spooled ^ 2 / n1 + spooled ^ 2 / n2))
-    t <- (m1 - m2) / sepooled
-
-    # calculate means and confidence intervals
-    M1low <- m1 - se1 * qt(a / 2, n1 - 1, lower.tail = FALSE)
-    M1high <- m1 + se1 * qt(a / 2, n1 - 1, lower.tail = FALSE)
-    M2low <- m2 - se2 * qt(a / 2, n2 - 1, lower.tail = FALSE)
-    M2high <- m2 + se2 * qt(a / 2, n2 - 1, lower.tail = FALSE)
-    p <- pt(abs(t), (n1 - 1 + n2 - 1), lower.tail = F) * 2
-
-  }
 
   # calculate noncentral ci
   ncpboth <- noncentral_t(t, (n1 - 1 + n2 - 1), conf.level = (1 - a), sup.int.warns = TRUE)
@@ -259,7 +257,7 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
   dhigh_central <- d + central_t*se
 
   # calculate lower bound only
-  if (lower == TRUE){
+  if (lower == TRUE) {
     ncpboth <- noncentral_t(t, (n1 - 1 + n2 - 1), alpha.lower = a, alpha.upper = a, sup.int.warns = TRUE)
     central_t <- qt(a, (n1 - 1 + n2 - 1), lower.tail = FALSE)
     done_low <- ncpboth$Lower.Limit / sqrt(((n1 * n2) / (n1 + n2)))

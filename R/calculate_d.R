@@ -146,7 +146,7 @@ calculate_d <- function (m1 = NULL, m2 = NULL,
     # if they include x_col and y_col but not df ----
   } else if (!is.null(x_col) & !is.null(y_col) & is.null(df)) {
 
-    model_calc <- t.test(x_col, y_col, var.equal = TRUE)
+    model_calc <- t.test(y_col ~ x_col, var.equal = TRUE)
     t <- model_calc$statistic
     d <- 2 * t/sqrt(model_calc$parameter)
     p <- model_calc$p.value

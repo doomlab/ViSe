@@ -49,6 +49,10 @@ ui <- dashboardPage(skin = "blue",
                         ) #close menu
                     ), #close sidebar
                     dashboardBody(
+                      tags$style(type="text/css",
+                                 ".shiny-output-error { visibility: hidden; }",
+                                 ".shiny-output-error:before { visibility: hidden; }"
+                      ),
                       tabItems(
                         example_tab,
                         calculate_tab,

@@ -24,7 +24,7 @@ visualize_tab <-
                  </li>
                  <li>2) <b>Second quantity</b>: The second box includes a
                  visualization of the correlation between the
-                 predisposition and common causes that have not
+                 predispositions that have not
                  been adjusted. You can use this visualization to imagine
                  the amount of variance overlap between the two
                  variables <i>R<sup>2</sup></i>, and what correlation would correspond to

@@ -271,7 +271,7 @@ calculate_tab <-
                      on the bottom. If the score you entered uses a correction like Hedges'
                      <i>g</i> or a different formula for <i>d</i>, you may have a
                      confidence interval that does not contain the effect size.")),
-              p(strong(em("You will see an error here until you enter enough of the required
+              p(strong(em("You will not see anything here until you enter enough of the required
                 information."))),
               valueBoxOutput("summary_d"),
               valueBoxOutput("summary_d_low_one_central"),

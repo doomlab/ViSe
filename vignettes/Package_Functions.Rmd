@@ -96,7 +96,7 @@ In this example, we have our *d* value from the original research, along with sa
 
 ```{r}
 internal_unadj_output <- calculate_d(
-  d = list_values$internal_unadjusted$d, # d value
+  d = list_values$internal_adjusted$d, # d value
   a = .05, # alpha for confidence interval
   lower = TRUE, # you expect d to be positive 
   n1 = 71, # sample size group 1 
@@ -193,17 +193,17 @@ prop_overlap = NULL
 The *d* value can then be used to visualize all effects and their conversions at once in the `visualize_effects()` function. 
 
 ```{r}
-visualize_effects(d = list_values$internal_unadjusted$d)
+visualize_effects(d = list_values$internal_adjusted$d)
 ```
 
 This package uses the following conversion functions that can be implemented separately as well:
 
 ```{r}
-d_to_r(d = list_values$internal_unadjusted$d)
-d_to_f2(d = list_values$internal_unadjusted$d)
-d_to_nnt(d = list_values$internal_unadjusted$d)
-probability_superiority(d = list_values$internal_unadjusted$d)
-proportion_overlap(d = list_values$internal_unadjusted$d)
+d_to_r(d = list_values$internal_adjusted$d)
+d_to_f2(d = list_values$internal_adjusted$d)
+d_to_nnt(d = list_values$internal_adjusted$d)
+probability_superiority(d = list_values$internal_adjusted$d)
+proportion_overlap(d = list_values$internal_adjusted$d)
 ```
 
 ## Visualization of sensitivity of effect size to bias
@@ -211,7 +211,7 @@ proportion_overlap(d = list_values$internal_unadjusted$d)
 Now that we have an idea of our *d* value, the lower confidence limit _l_, and other potential effect sizes, we can create a sensitivity plot of the effect size to bias. To visualize different *d* values and their representation of the distribution overlap, use `estimate_d()` to examine different effect sizes:
 
 ```{r}
-estimate_d(d = .11)$graph
+estimate_d(d = .09)$graph
 ```
 
 Similarly, `estimate_r()` shows a scatterplot of the entered correlation coefficient to visualize the relation between two variables:
@@ -227,7 +227,7 @@ You can use the `plotly` library to hover over those dots to see their values (a
 ```{r}
 visual_c_mapped <-
   # your lower confidence limit required
-  visualize_c_map(dlow = list_values$internal_unadjusted$lower_d, 
+  visualize_c_map(dlow = list_values$internal_adjusted$lower_d, 
                   # correlation values required
                   r_values = c(.1, .4, .3),
                   # other effect sizes you want to plot

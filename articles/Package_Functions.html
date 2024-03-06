@@ -215,7 +215,7 @@ includes the non-centralized confidence intervals for <em>d</em> as well
 (below).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">internal_unadj_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_d.html">calculate_d</a></span><span class="op">(</span></span>
-<span>  d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_unadjusted</span><span class="op">$</span><span class="va">d</span>, <span class="co"># d value</span></span>
+<span>  d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_adjusted</span><span class="op">$</span><span class="va">d</span>, <span class="co"># d value</span></span>
 <span>  a <span class="op">=</span> <span class="fl">.05</span>, <span class="co"># alpha for confidence interval</span></span>
 <span>  lower <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># you expect d to be positive </span></span>
 <span>  n1 <span class="op">=</span> <span class="fl">71</span>, <span class="co"># sample size group 1 </span></span>
@@ -223,9 +223,9 @@ includes the non-centralized confidence intervals for <em>d</em> as well
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">internal_unadj_output</span><span class="op">$</span><span class="va">dlow_central</span></span>
-<span><span class="co">#&gt; [1] 0.2087611</span></span>
+<span><span class="co">#&gt; [1] 0.09465985</span></span>
 <span><span class="va">internal_unadj_output</span><span class="op">$</span><span class="va">done_low_central</span></span>
-<span><span class="co">#&gt; [1] 0.2465816</span></span>
+<span><span class="co">#&gt; [1] 0.1324648</span></span>
 <span></span>
 <span><span class="co"># note, the program also provide noncentral t confidence intervals</span></span>
 <span><span class="co"># in this case, they are unusable because d has been calculated from </span></span>
@@ -698,36 +698,36 @@ prop_overlap = NULL</code></pre>
 their conversions at once in the <code><a href="../reference/visualize_effects.html">visualize_effects()</a></code>
 function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visualize_effects.html">visualize_effects</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_unadjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visualize_effects.html">visualize_effects</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_adjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $graph</span></span></code></pre></div>
 <p><img src="Package_Functions_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>This package uses the following conversion functions that can be
 implemented separately as well:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/d_to_r.html">d_to_r</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_unadjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.2166811</span></span>
-<span><span class="fu"><a href="../reference/d_to_f2.html">d_to_f2</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_unadjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/d_to_r.html">d_to_r</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_adjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.1626596</span></span>
+<span><span class="fu"><a href="../reference/d_to_f2.html">d_to_f2</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_adjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $f</span></span>
-<span><span class="co">#&gt; [1] 0.2219542</span></span>
+<span><span class="co">#&gt; [1] 0.1648551</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $f2</span></span>
-<span><span class="co">#&gt; [1] 0.04926365</span></span>
-<span><span class="fu"><a href="../reference/d_to_nnt.html">d_to_nnt</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_unadjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 4.05851</span></span>
-<span><span class="fu"><a href="../reference/probability_superiority.html">probability_superiority</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_unadjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.6231979</span></span>
-<span><span class="fu"><a href="../reference/proportion_overlap.html">proportion_overlap</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_unadjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.02717719</span></span>
+<span><span class="fu"><a href="../reference/d_to_nnt.html">d_to_nnt</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_adjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 5.424537</span></span>
+<span><span class="fu"><a href="../reference/probability_superiority.html">probability_superiority</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_adjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.5921738</span></span>
+<span><span class="fu"><a href="../reference/proportion_overlap.html">proportion_overlap</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_adjusted</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $u1</span></span>
-<span><span class="co">#&gt; [1] 0.298814</span></span>
+<span><span class="co">#&gt; [1] 0.2315626</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $u2</span></span>
-<span><span class="co">#&gt; [1] 0.5878252</span></span>
+<span><span class="co">#&gt; [1] 0.565471</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $u3</span></span>
-<span><span class="co">#&gt; [1] 0.6714456</span></span>
+<span><span class="co">#&gt; [1] 0.6291905</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $p_o</span></span>
-<span><span class="co">#&gt; [1] 0.8243496</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.8690581</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualization-of-sensitivity-of-effect-size-to-bias">Visualization of sensitivity of effect size to bias<a class="anchor" aria-label="anchor" href="#visualization-of-sensitivity-of-effect-size-to-bias"></a>
@@ -739,7 +739,7 @@ different <em>d</em> values and their representation of the distribution
 overlap, use <code><a href="../reference/estimate_d.html">estimate_d()</a></code> to examine different effect
 sizes:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/estimate_d.html">estimate_d</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">.11</span><span class="op">)</span><span class="op">$</span><span class="va">graph</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/estimate_d.html">estimate_d</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">.09</span><span class="op">)</span><span class="op">$</span><span class="va">graph</span></span></code></pre></div>
 <p><img src="Package_Functions_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Similarly, <code><a href="../reference/estimate_r.html">estimate_r()</a></code> shows a scatterplot of the
 entered correlation coefficient to visualize the relation between two
@@ -762,7 +762,7 @@ large).</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">visual_c_mapped</span> <span class="op">&lt;-</span></span>
 <span>  <span class="co"># your lower confidence limit required</span></span>
-<span>  <span class="fu"><a href="../reference/visualize_c_map.html">visualize_c_map</a></span><span class="op">(</span>dlow <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_unadjusted</span><span class="op">$</span><span class="va">lower_d</span>, </span>
+<span>  <span class="fu"><a href="../reference/visualize_c_map.html">visualize_c_map</a></span><span class="op">(</span>dlow <span class="op">=</span> <span class="va">list_values</span><span class="op">$</span><span class="va">internal_adjusted</span><span class="op">$</span><span class="va">lower_d</span>, </span>
 <span>                  <span class="co"># correlation values required</span></span>
 <span>                  r_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.1</span>, <span class="fl">.4</span>, <span class="fl">.3</span><span class="op">)</span>,</span>
 <span>                  <span class="co"># other effect sizes you want to plot</span></span>

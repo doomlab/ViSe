@@ -11,11 +11,16 @@ visualize_tab <-
               p(""),
               p("The visualization tab provides several options for visualizing
                 and determining which combinations of two bias quantities
-                would support a causal effect.",
+                would support a causal effect. The quantities are about the relation of
+                the predisposition to the outcome with 1) the factor and 2) the true
+                outcome (some variables related both to factor and outcome may have
+                already been adjusted for. In this case, the predisposition beyond
+                these variables is meant.)",
                 HTML("<ul><li>1) <b>First quantity:</b>
                 The first box includes a visualization of the distributions
                 of the predispositions to the outcome in both groups
-                and their overlap. You can use this box to help you
+                and their overlap. In a perfect experiment they would completely overlap.
+                You can use this box to help you
                 imagine how much non-overlap there might be and what
                 standardized effect size d that corresponds to. Or enter
                 the d that you obtained by converting another effect
@@ -23,12 +28,10 @@ visualize_tab <-
                 tab.
                  </li>
                  <li>2) <b>Second quantity</b>: The second box includes a
-                 visualization of the correlation between the
-                 predispositions that have not
-                 been adjusted. You can use this visualization to imagine
+                 visualization of the correlation between the predisposition
+                 and the outcome. You can use this visualization to imagine
                  the amount of variance overlap between the two
-                 variables <i>R<sup>2</sup></i>, and what correlation would correspond to
-                 <i>R/r</i>.
+                 variables, <i>R<sup>2</sup></i>.
                  </li>
                  <li>3) Once these values are determined, the final box
                      creates a sensitivity plot for you. This plot will
@@ -50,7 +53,7 @@ visualize_tab <-
               difference between two separate groups. Please note: we assume you
                 are entering a ", em("d"), " value for between subjects comparisons."),
               p("We can use ", strong("estimate_d()"), " to visualize the differences between
-                  groups if we are unsure of what the effect size might be. "),
+                  groups to narrow down plausible values of the first quantity."),
               numericInput(
                 inputId = "enter_d_effect",
                 label = "Proposed d value:",
@@ -75,7 +78,7 @@ visualize_tab <-
                 correlation between our other variables. You would enter your
                 correlation coefficient to receive a visualization of the
                 potential pattern of data in a scatterplot. You can use this
-                visualization to know what correlation to estimate for the
+                visualization to specify what correlation to enter into the
                 sensitivity calculation."),
               numericInput(
                 inputId = "enter_r_effect",
@@ -97,17 +100,17 @@ visualize_tab <-
               status = "primary",
               width = 12,
               p(""),
-              p("We can use ", strong("visualize_c_map()"), "what values might show
-                an effect after controlling for the correlation between another
-                variable and your outcome."),
-              p("First, enter your lower bound of the effect size, which can be
+              p("We can use ", strong("visualize_c_map()"), "what values support
+              an effect with the values specified for both bias quantities."),
+              p("First, enter your lower bound of the effect size found in a study,
+              which can be
                 calculated on the Calculate Effects tab."),
-              p("Second, enter the possible values of the correlation
-                between your outcome and other variables. You can visualize
+              p("Second, enter the plausible values of the correlation
+                between your outcome and the predisposition. You can visualize
                 this difference using ", strong("visualize_r()"),
                 " or using the box above."),
-              p("Last, enter the possible values of the effect size found in the
-              study. You can visualize this difference using ",
+              p("Last, enter the plausible values of the effect size between
+                the factor the predisposition. You can visualize this difference using ",
                 strong("visualize_d()"), " or using the box above.
                 You can use other effect sizes, and these will be converted
                 to d to map them onto the graph below. Each is labeled with

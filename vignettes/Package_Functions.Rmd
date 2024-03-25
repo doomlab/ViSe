@@ -231,14 +231,14 @@ visual_c_mapped <-
                   # correlation values required
                   r_values = c(.1, .4, .3),
                   # other effect sizes you want to plot
-                  d_values = c(.2, .3, .8),
-                  nnt_values = c(10, 20, 30),
+                  d_values = c(.2, .8),
+                  nnt_values = c(60),
                   # if you think d will be positive 
                   lower = TRUE)
 
 visual_c_mapped$graph
 
-# ggsave(filename = "visualize_c_map.png")
+ggsave(filename = "visualize_c_map.png", width = 8)
 
 # ggplotly(visual_c_mapped$graph)
 ```

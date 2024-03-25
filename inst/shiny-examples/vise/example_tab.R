@@ -17,8 +17,7 @@ example_tab <-
                 pairs without 'substantiated child maltreatment' to, for
                 example, 73 pairs with child neglect. Note that the results
                 vary across different types of maltreatment assessed, we choose
-                child neglect because its results (a smaller but still
-                considerable l after adjustment) are particularly suited to
+                child neglect because its results are particularly suited to
                 illustrating sensitivity analysis. Maltreatment was assessed
                 'by linkage to state child protection agency data'.
                 Internalising and externalising behaviours were measured

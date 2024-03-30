@@ -7,7 +7,7 @@
 #' @param decimals The number of decimal points desired in the output.
 #' @param leading Logical value: \code{TRUE} for leading zeroes on decimals
 #'    and \code{FALSE} for no leading zeroes on decimals. The default is \code{TRUE}.
-#' @keywords APA, decimals, formatting
+#' @keywords APA decimals formatting
 #' @details
 #'   This function creates "pretty" character vectors from numeric variables
 #'   for printing as part of a report. The value can take a single number,

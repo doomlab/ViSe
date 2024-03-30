@@ -30,11 +30,11 @@ adjusted_coef(effect_xz = .2,
 }
 \keyword{cohen's}
 \keyword{correlation}
-\keyword{d,}
+\keyword{d}
 \keyword{dependent}
 \keyword{effect}
-\keyword{measures,}
-\keyword{paired-sample,}
+\keyword{measures}
+\keyword{paired-sample}
 \keyword{repeated}
-\keyword{size,}
-\keyword{t-test,}
+\keyword{size}
+\keyword{t-test}

@@ -17,7 +17,7 @@
 #' @param prop_overlap Proportion Overlap of Distributions
 #' @return d
 #'
-#' @keywords effect size, cohen's d, convert,
+#' @keywords effect size cohen's d convert
 #'
 #' @examples
 #' other_to_d(f = .1)

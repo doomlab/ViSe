@@ -29,7 +29,7 @@ visualize_c(dlow = .25, lower = TRUE)
 
 }
 \keyword{effect}
-\keyword{estimation,}
+\keyword{estimation}
 \keyword{ggplot}
-\keyword{size,}
-\keyword{visualization,}
+\keyword{size}
+\keyword{visualization}

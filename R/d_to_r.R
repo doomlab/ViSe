@@ -6,7 +6,7 @@
 #' @param d the effect size to convert
 #' @return correlation coefficient
 #'
-#' @keywords effect size, cohen's d, convert, correlation
+#' @keywords effect size cohen's d convert correlation
 #'
 #' @examples
 #' d_to_r(.25)

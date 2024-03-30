@@ -9,7 +9,7 @@
 #'
 #' \item{graph}{ggplot object of converted effect sizes}
 #'
-#' @keywords effect size, estimation, visualization, ggplot
+#' @keywords effect size estimation visualization ggplot
 #' @import ggplot2 cowplot
 #'
 #' @examples

@@ -81,5 +81,5 @@ probability_superiority(d = .25)
 \keyword{effect}
 \keyword{of}
 \keyword{probability}
-\keyword{size,}
+\keyword{size}
 \keyword{superiority}

@@ -37,7 +37,7 @@
 #'
 #' @return The probability of superiority.
 #'
-#' @keywords effect size, probability of superiority
+#' @keywords effect size probability of superiority
 #'
 #' @import stats
 #'

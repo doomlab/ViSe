@@ -25,7 +25,7 @@ visualize_effects(d = .25)
 
 }
 \keyword{effect}
-\keyword{estimation,}
+\keyword{estimation}
 \keyword{ggplot}
-\keyword{size,}
-\keyword{visualization,}
+\keyword{size}
+\keyword{visualization}

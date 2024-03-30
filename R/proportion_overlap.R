@@ -20,7 +20,7 @@
 #' median of the other group}
 #' \item{p_o}{Proportional overlap of distributions}
 #'
-#' @keywords effect size, proportion overlap, u1, u2, u3
+#' @keywords effect size proportion overlap u1 u2 u3
 #' @import stats methods
 #'
 #' @examples

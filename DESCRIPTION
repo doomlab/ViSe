@@ -8,8 +8,22 @@ Authors@R: c(person("Erin M.", "Buchanan", role = c("aut", "cre"),
 Depends: R (>= 3.1.0)
 Imports: stats, ggplot2, methods, dplyr, tidyr, scales, cowplot, shiny
 Maintainer: Erin M. Buchanan <buchananlab@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: In non-experimental studies, causality should not be 
+    avoided. Associations are a poor proxy for causal effects if 
+    they are not properly adjusted for common causes. However, 
+    it is still possible to ask how large bias due to unadjusted 
+    common causes can be in support of a causal claim. The bias 
+    in a standardised mean difference (d) depends on how strongly 
+    the common predisposition, a summary of factors not considered, 
+    is related to the factor (convertible into several other effect 
+    size measures) and the outcome (scalable as correlation). 
+    Actually, the left boundary of the confidence interval for d 
+    must exceed the product of these two relations. We present 
+    ViSe, an R package and Shiny application that helps to 
+    visually constrain these quantities and shows which combinations 
+    of the quantities support a causal effect. Such visual sensitivity 
+    analysis can be conducted on any published results, or on simple 
+    summary or the t-statistics.
 License: LGPL-3
 Encoding: UTF-8
 LazyData: true

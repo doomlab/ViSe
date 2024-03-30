@@ -21,8 +21,8 @@ d_to_r(.25)
 
 }
 \keyword{cohen's}
-\keyword{convert,}
+\keyword{convert}
 \keyword{correlation}
-\keyword{d,}
+\keyword{d}
 \keyword{effect}
-\keyword{size,}
+\keyword{size}

@@ -46,7 +46,7 @@ estimate_d(m1 = 10, m2 = 8, sd1 = 5, sd2 = 4,
 
 }
 \keyword{effect}
-\keyword{estimation,}
+\keyword{estimation}
 \keyword{ggplot}
-\keyword{size,}
-\keyword{visualization,}
+\keyword{size}
+\keyword{visualization}

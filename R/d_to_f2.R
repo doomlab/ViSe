@@ -9,7 +9,7 @@
 #' \item{f}{d values translated into f}
 #' \item{f2}{d values translated into \eqn{f^2}}
 #'
-#' @keywords effect size, cohen's d, cohen's f, f squared,
+#' @keywords effect size cohen's d cohen's f f squared
 #' convert
 #'
 #' @examples

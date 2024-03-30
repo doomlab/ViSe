@@ -110,7 +110,8 @@ visualize_tab <-
                 this difference using ", strong("visualize_r()"),
                 " or using the box above."),
               p("Last, enter the plausible values of the effect size between
-                the factor the predisposition. You can visualize this difference using ",
+                the factor and the predisposition. You can visualize this
+                difference using ",
                 strong("visualize_d()"), " or using the box above.
                 You can use other effect sizes, and these will be converted
                 to d to map them onto the graph below. Each is labeled with

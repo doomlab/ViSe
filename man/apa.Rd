@@ -30,6 +30,6 @@ This function creates "pretty" character vectors from numeric variables
 apa(value = 0.54674, decimals = 3, leading = TRUE)
 
 }
-\keyword{APA,}
-\keyword{decimals,}
+\keyword{APA}
+\keyword{decimals}
 \keyword{formatting}

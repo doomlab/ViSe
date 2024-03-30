@@ -83,8 +83,8 @@
 #' APA style for markdown printing}
 #' \item{statistic}{the t-statistic in APA style for markdown printing}
 #'
-#' @keywords effect size, independent t, between-subjects, pooled
-#' standard deviation, pooled sd
+#' @keywords effect size independent t between-subjects pooled
+#' standard deviation pooled sd
 #'
 #' @examples
 #' calculate_d(m1 = 14.37, # neglect mean

@@ -39,7 +39,7 @@
 #'
 #' \item{graph}{The graph of possible values for c}
 #'
-#' @keywords effect size, estimation, visualization, ggplot
+#' @keywords effect size estimation visualization ggplot
 #' @import ggplot2
 #'
 #' @examples

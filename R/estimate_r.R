@@ -7,7 +7,7 @@
 #'
 #' \item{graph}{A graph of the effect size}
 #'
-#' @keywords effect size, estimation, visualization, ggplot
+#' @keywords effect size estimation visualization ggplot
 #' @import ggplot2
 #'
 #' @examples

@@ -22,7 +22,7 @@ estimate_r(r = .4)
 
 }
 \keyword{effect}
-\keyword{estimation,}
+\keyword{estimation}
 \keyword{ggplot}
-\keyword{size,}
-\keyword{visualization,}
+\keyword{size}
+\keyword{visualization}

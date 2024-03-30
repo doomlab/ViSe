@@ -46,9 +46,9 @@ proportion_overlap(d = .25)
 
 }
 \keyword{effect}
-\keyword{overlap,}
+\keyword{overlap}
 \keyword{proportion}
-\keyword{size,}
-\keyword{u1,}
-\keyword{u2,}
+\keyword{size}
+\keyword{u1}
+\keyword{u2}
 \keyword{u3}

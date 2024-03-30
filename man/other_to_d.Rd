@@ -50,7 +50,7 @@ other_to_d(f = .1)
 
 }
 \keyword{cohen's}
-\keyword{convert,}
-\keyword{d,}
+\keyword{convert}
+\keyword{d}
 \keyword{effect}
-\keyword{size,}
+\keyword{size}

@@ -9,8 +9,8 @@
 #' @param effect_d Effect size difference of interest
 #'
 #' @return Adjusted effect size of x on y given u and z
-#' @keywords effect size, dependent t-test, cohen's d, paired-sample,
-#' repeated measures, correlation
+#' @keywords effect size dependent t-test cohen's d paired-sample
+#' repeated measures correlation
 #'
 #' @include globals.R
 #' @examples

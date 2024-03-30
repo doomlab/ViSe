@@ -132,12 +132,12 @@ calculate_d(m1 = 14.37, # neglect mean
    lower = TRUE) # lower or upper bound
 
 }
-\keyword{between-subjects,}
-\keyword{deviation,}
+\keyword{between-subjects}
+\keyword{deviation}
 \keyword{effect}
 \keyword{independent}
 \keyword{pooled}
 \keyword{sd}
-\keyword{size,}
+\keyword{size}
 \keyword{standard}
-\keyword{t,}
+\keyword{t}

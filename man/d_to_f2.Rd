@@ -26,9 +26,8 @@ d_to_f2(.25)
 }
 \keyword{cohen's}
 \keyword{convert}
-\keyword{d,}
+\keyword{d}
 \keyword{effect}
 \keyword{f}
-\keyword{f,}
-\keyword{size,}
-\keyword{squared,}
+\keyword{size}
+\keyword{squared}

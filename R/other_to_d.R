@@ -15,7 +15,7 @@
 #' @param prop_u2 Proportion Overlap U2
 #' @param prop_u3 Proportion Overlap U3
 #' @param prop_overlap Proportion Overlap of Distributions
-#' @return d
+#' @return d effect size
 #'
 #' @keywords effect size cohen's d convert
 #'

@@ -3,6 +3,7 @@
 #' @importFrom scales percent
 #' @importFrom dplyr mutate %>%
 #' @importFrom tidyr pivot_longer
+#' @return returns a ggplot2 object to create donut wheels
 #' @noRd
 
 big_number_donut_percent <- function(value, font_family, highlight_color) {

@@ -53,3 +53,4 @@ po/*~
 rsconnect/
 docs
 inst/doc
+.DS_Store

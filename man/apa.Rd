@@ -14,6 +14,10 @@ apa(value, decimals = 3, leading = TRUE)
 \item{leading}{Logical value: \code{TRUE} for leading zeroes on decimals
 and \code{FALSE} for no leading zeroes on decimals. The default is \code{TRUE}.}
 }
+\value{
+Returns a nicely formatted character vector for numbers for
+reporting purposes.
+}
 \description{
 A function that formats decimals and leading zeroes
 for creating reports in scientific style.

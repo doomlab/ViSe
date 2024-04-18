@@ -1,29 +1,14 @@
 Package: ViSe
 Type: Package
 Title: Visualizing Sensitivity
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(person("Erin M.", "Buchanan", role = c("aut", "cre"),
                      email = "buchananlab@gmail.com",
                      comment = c(ORCID = "0000-0002-9689-4189")))
 Depends: R (>= 3.1.0)
 Imports: stats, ggplot2, methods, dplyr, tidyr, scales, cowplot, shiny
 Maintainer: Erin M. Buchanan <buchananlab@gmail.com>
-Description: In non-experimental studies, causality should not be 
-    avoided. Associations are a poor proxy for causal effects if 
-    they are not properly adjusted for common causes. However, 
-    it is still possible to ask how large bias due to unadjusted 
-    common causes can be in support of a causal claim. The bias 
-    in a standardised mean difference (d) depends on how strongly 
-    the common predisposition, a summary of factors not considered, 
-    is related to the factor (convertible into several other effect 
-    size measures) and the outcome (scalable as correlation). 
-    Actually, the left boundary of the confidence interval for d 
-    must exceed the product of these two relations. We present 
-    ViSe, an R package and Shiny application that helps to 
-    visually constrain these quantities and shows which combinations 
-    of the quantities support a causal effect. Such visual sensitivity 
-    analysis can be conducted on any published results, or on simple 
-    summary or the t-statistics.
+Description: This package and Shiny app help the user to determine the sensitivity of an proposed causal efffect to unconsidered common causes. Users can create visualizations of sensitivity, effect sizes, and determine which pattern of effects would support a causal claim for between group differences. NNT Formula from Kraemer H.C. & Kupfer D.J. (2006) <doi:10.1016/j.biopsych.2005.09.014>.
 License: LGPL-3
 Encoding: UTF-8
 LazyData: true

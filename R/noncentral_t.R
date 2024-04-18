@@ -18,6 +18,8 @@
 #' \code{TRUE} or \code{FALSE}
 #' @param \dots allows one to potentially include parameter
 #' values for inner functions
+#' @return Returns the non-central t values for use in calculating
+#' the non-central d confidence interval
 #' @noRd
 
 noncentral_t <- function(ncp, df, conf.level = .95, alpha.lower = NULL,
@@ -37,9 +39,9 @@ noncentral_t <- function(ncp, df, conf.level = .95, alpha.lower = NULL,
   # General stop checks.
   if(df <= 0) stop("The degrees of freedom must be some positive value.", call.=FALSE)
 
-  if(abs(ncp) > 37.62) print("The observed noncentrality parameter of the noncentral t-distribution has exceeded 37.62 in magnitude (R's limitation for accurate probabilities from the noncentral t-distribution) in the function's iterative search for the appropriate value(s). The results may be fine, but they might be inaccurate; use caution.")
+  if(abs(ncp) > 37.62) warning("The observed noncentrality parameter of the noncentral t-distribution has exceeded 37.62 in magnitude (R's limitation for accurate probabilities from the noncentral t-distribution) in the function's iterative search for the appropriate value(s). The results may be fine, but they might be inaccurate; use caution.")
 
-  if(sup.int.warns==TRUE) Orig.warn <- options()$warn; options(warn=-1)
+  if(sup.int.warns==TRUE) Orig.warn <- options()$warn
 
   if(!is.null(conf.level) & is.null(alpha.lower) & !is.null(alpha.upper)) stop("You must choose either to use \'conf.level\' or define the \'lower.alpha\' and \'upper.alpha\' values; here, \'upper.alpha\' is specified but \'lower.alpha\' is not", call.=FALSE)
   if(!is.null(conf.level) & !is.null(alpha.lower) & is.null(alpha.upper)) stop("You must choose either to use \'conf.level\' or define the \'lower.alpha\' and \'upper.alpha\' values; here, \'lower.alpha\' is specified but \'upper.alpha\' is not", call.=FALSE)
@@ -54,7 +56,7 @@ noncentral_t <- function(ncp, df, conf.level = .95, alpha.lower = NULL,
   .conf.limits.nct.M1 <- function(ncp, df, conf.level=NULL, alpha.lower, alpha.upper, tol=1e-9, sup.int.warns=TRUE, ...)
   {
 
-    if(sup.int.warns==TRUE) Orig.warn <- options()$warn; options(warn=-1)
+    if(sup.int.warns==TRUE) Orig.warn <- options()$warn
 
     min.ncp=min(-150, -5*ncp)
     max.ncp=max(150, 5*ncp)

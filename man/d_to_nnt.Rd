@@ -9,6 +9,9 @@ d_to_nnt(d = NULL)
 \arguments{
 \item{d}{the effect size}
 }
+\value{
+nnt values from d
+}
 \description{
 This function calculates the number needed to treat
 from continuous measures (Cohen's d) using Kraemer and Kupfer

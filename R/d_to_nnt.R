@@ -5,6 +5,7 @@
 #' (2006) formula.
 #'
 #' @param d the effect size
+#' @return nnt values from d
 #'
 #' @references
 #'

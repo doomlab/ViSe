@@ -36,7 +36,7 @@ other_to_d(
 \item{prop_overlap}{Proportion Overlap of Distributions}
 }
 \value{
-d
+d effect size
 }
 \description{
 This function allows you to convert other effect sizes

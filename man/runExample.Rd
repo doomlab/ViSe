@@ -6,6 +6,10 @@
 \usage{
 runExample()
 }
+\value{
+Opens the shiny app version of the package to
+use interactively.
+}
 \description{
 This function is a convenience function to help
 you easily run the shiny app for the package.

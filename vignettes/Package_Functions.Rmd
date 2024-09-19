@@ -238,7 +238,8 @@ visual_c_mapped <-
 
 visual_c_mapped$graph
 
-ggsave(filename = "visualize_c_map.png", width = 8)
+ggsave(filename = "visualize_c_map.png", width = 8, 
+       height = 6, dpi = 300)
 
 # ggplotly(visual_c_mapped$graph)
 ```

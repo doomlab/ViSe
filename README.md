@@ -5,7 +5,7 @@ A package for visualizing sensitivity, calculating/converting effect sizes
 
 [![DOI](https://zenodo.org/badge/653762699.svg)](https://zenodo.org/doi/10.5281/zenodo.10698072)
 
-Buchanan, E. M. (2024). _ViSe: Visualizing sensitivity_. R package version v0.0.1. doi: 10.5281/zenodo.10698072
+Buchanan, E. M. (2024). _ViSe: Visualizing sensitivity_. R package version v0.1.3. doi: 10.5281/zenodo.10698072
 
 # Install
 

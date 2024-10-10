@@ -15,8 +15,8 @@ devtools::check()
 tools::buildVignettes(dir = ".", tangle=TRUE)
 
 #dir.create("inst")
-dir.create("inst/doc")
-file.copy(dir("vignettes", full.names=TRUE), "inst/doc", overwrite=TRUE)
+#dir.create("inst/doc")
+#file.copy(dir("vignettes", full.names=TRUE), "inst/doc", overwrite=TRUE)
 
 library(pkgdown)
 # usethis::use_pkgdown()
@@ -26,7 +26,7 @@ pkgdown::build_site()
 devtools::install_github("doomlab/ViSe")
 
 ##R CMD build .
-##R CMD check --as-cran ViSe_0.1.1.tar.gz
+##R CMD check --as-cran ViSe_0.1.3.tar.gz
 
 library(ViSe)
 ViSe::runExample()

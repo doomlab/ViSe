@@ -27,3 +27,6 @@ devtools::install_github("doomlab/ViSe")
 
 ##R CMD build .
 ##R CMD check --as-cran ViSe_0.1.1.tar.gz
+
+library(ViSe)
+ViSe::runExample()

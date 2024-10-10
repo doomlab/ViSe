@@ -330,13 +330,16 @@ server <- function(input, output, session) {
         d <- other_to_d(prop_overlap = input$convert_enter_effect)
       }
 
+      cat(str(input$convert_circle_color))
+
       visualize_effects(d = d,
                         circle_color = trimws(input$convert_circle_color),
                         circle_fill = trimws(input$convert_circle_fill),
                         percent_color = trimws(input$convert_percent_color),
-                        percent_size = trimws(input$convert_percent_size),
+                        percent_size = input$convert_percent_size,
                         text_color = trimws(input$convert_text_color),
-                        font_family = trimws(input$convert_font_family))$graph
+                        font_family = trimws(input$convert_font_family)
+                        )$graph
 
     })
 

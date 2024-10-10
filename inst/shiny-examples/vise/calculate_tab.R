@@ -251,28 +251,35 @@ calculate_tab <-
               ),
 
               p(""),
-              p("In the first box, the value of d is provided. The other four boxes
-                include the lower tail of a one or two-tailed confidence interval.
-                If you indicated that d should be positive, this value is the left-hand
-                side of the confidence interval (note: it may be negative, if d is close
-                to zero or sample size is small). If you indicated that d should be
-                negative, then it is the right-hand side of the confidence interval.
-                The 'lower' half of the confidence interval is always the one closer to
-                zero. The one- and two-tailed outputs are provided given the alpha value
-                you entered at the top. The central confidence interval assumes a normal
-                distribution of d and uses the traditional formula for confidence intervals.
-                The non-centralized versions assumes that effect sizes are skewed and uses
-                non-centralized t-distribution to calculate the confidence interval.
-                At larger sample sizes, these two values get closer together. "),
-              p(HTML("Note: if you calculate only from a <i>d</i> value, the non-centralized
-                     confidence interval approximation may not be correct. The package
-                     converts this value to a <i>t</i> score assuming you have used the
-                     traditional formula with standard deviation pooled between groups
-                     on the bottom. If the score you entered uses a correction like Hedges'
-                     <i>g</i> or a different formula for <i>d</i>, you may have a
-                     confidence interval that does not contain the effect size.")),
-              p(strong(em("You will not see anything here until you enter enough of the required
-                information."))),
+              p("In the first box, the value of the effect size d is provided.
+              The other four boxes include the lower tail of a one or
+              two-tailed confidence interval.  If you indicated that the effect
+              size d should be positive, this value is the left-hand
+              side of the confidence interval (note: it may be negative,
+              if effect size d is close to zero or sample size is small).
+              If you indicated that effect size d should be negative,
+              then it is the right-hand side of the confidence interval.
+              The 'lower' half of the confidence interval is always the
+              one closer to zero. The one- and two-tailed outputs are provided
+              given the alpha value you entered at the top. The central
+              confidence interval assumes a normal distribution of effect
+              size d and uses the traditional formula for confidence
+              intervals. The non-centralized versions assumes that effect
+              sizes are skewed and uses non-centralized t-distribution to
+              calculate the confidence interval. At larger sample sizes,
+              these two values get closer together. "),
+
+              p(HTML("Note: if you calculate only from an effect size
+              <i>d</i> value, the non-centralized confidence interval
+              approximation may not be correct. The package converts
+              this value to a <i>t</i> score assuming you have used the
+              traditional formula with standard deviation pooled between groups
+              on the bottom. If the score you entered uses a
+              correction like Hedges' <i>g</i> or a different formula
+              for effect size <i>d</i>, you may have a confidence
+              interval that does not contain the effect size.")),
+              p(strong(em("You will not see anything here until you
+              enter enough of the required information."))),
               valueBoxOutput("summary_d"),
               valueBoxOutput("summary_d_low_one_central"),
               valueBoxOutput("summary_d_low_two_central"),

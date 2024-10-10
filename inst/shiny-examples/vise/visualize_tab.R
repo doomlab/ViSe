@@ -35,7 +35,8 @@ visualize_tab <-
                  </li>
                  <li>3) Once these values are determined, the final box
                      creates a sensitivity plot for you. This plot will
-                     shade the areas that indicate a combination of <b>d</b> and
+                     shade the areas that indicate a combination of effect size
+                     <b>d</b> and
                      correlation that supports a causal effect. You can
                      also enter other effect size measures that will be
                      converted to <b>d</b>.</li></ul>"))
@@ -51,11 +52,13 @@ visualize_tab <-
               p(""),
               p("In this section, you can enter an effect size to visualize the
               difference between two separate groups. Please note: we assume you
-                are entering a ", em("d"), " value for between subjects comparisons."),
-              p("We can use ", strong("estimate_d()"), " to visualize the differences between
+                are entering an effect size of ",
+                em("d"), " value for between subjects comparisons."),
+              p("We can use ", strong("estimate_d()"),
+              " to visualize the differences between
                   groups to narrow down plausible values of the first quantity."),
               numericInput(
-                inputId = "enter_d_effect",
+                inputId = "enter_d_visualize",
                 label = "Proposed d value:",
                 value = .3,
                 min = -5,
@@ -63,7 +66,25 @@ visualize_tab <-
                 step = .01,
                 width = NULL
               ),
-              plotOutput("estimate_d_effect")
+              textInput(
+                inputId = "enter_d_visualize_fill_1",
+                label = "Fill color 1:",
+                value = "blue",
+                width = NULL
+              ),
+              textInput(
+                inputId = "enter_d_visualize_fill_2",
+                label = "Fill color 2:",
+                value = "red",
+                width = NULL
+              ),
+              textInput(
+                inputId = "enter_d_visualize_text_color",
+                label = "Text color:",
+                value = "black",
+                width = NULL
+              ),
+              plotOutput("estimate_d_visualize")
             ), # close box
 
             # Visualize r ----
@@ -138,10 +159,13 @@ visualize_tab <-
                 width = NULL
               ),
               p("Next, use the two plots above or the Convert Effects
-                tab to enter the potential effect sizes", em("d or others"), "and the
-                correlation between outcome and another variable ",
-                em("r"), "below ", strong("separated by commas.")),
-              p("Each of the entered effect sizes will appear on the graph, converted to d
+                tab to enter the potential effect sizes ",
+                em("d or others"),
+                " and the correlation between outcome and another variable ",
+                em("r"),
+                " below ", strong("separated by commas.")),
+              p("Each of the entered effect sizes will appear on the
+              graph, converted to effect size d
                 values, so you can see how they compare.",
                 strong(em("You must enter the correlation
                 coefficient and at least one other effect size to see the
@@ -177,6 +201,47 @@ visualize_tab <-
               textInput(inputId = "visualize_overlap_values",
                         label = "Enter proportion of distribution overlap values:",
                         value = ""),
+              p("This next section allows you to edit the colors,
+                shapes, and the shaded area color."),
+              textInput(inputId = "visualize_point_colors",
+                        label = "Enter a set of colors you want to use
+                        for the points, separated by commas (note: you need
+                        as many color names/codes as the largest numbers
+                        of effect sizes): ",
+                        value = "red, blue, green"),
+              textInput(inputId = "visualize_ribbon_color",
+                        label = "Enter color name you would like the shaded
+                        region to be:",
+                        value = "lightblue"),
+              numericInput(
+                inputId = "visualize_size",
+                label = "Enter the size of the shapes: ",
+                value = 1,
+                min = -3,
+                max = 3,
+                step = NA,
+                width = NULL
+              ),
+              numericInput(
+                inputId = "visualize_shape_1",
+                label = "Enter a number for the first shape size:",
+                value = 1,
+                min = 0,
+                max = 25,
+                step = 1,
+                width = NULL
+              ),
+              numericInput(
+                inputId = "visualize_shape_2",
+                label = "Enter a number for the second shape size (note:
+                we think it's easier to read if you have two shapes together.
+                If you want them to be the same, use the same number): ",
+                value = 1,
+                min = 0,
+                max = 25,
+                step = 1,
+                width = NULL
+              ),
               p(""),
               plotOutput("visual_c_map_stats")
             ) # close box

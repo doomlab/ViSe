@@ -8,6 +8,8 @@
 #' of d for one sided confidence intervals. If d is positive, you generally
 #' want \code{lower = TRUE}, while negative d values should enter
 #' \code{lower = FALSE} for the upper bound that is closer to zero.
+#' @param ribbon_color background coloring for c values that support
+#' a non-zero effect in sensitivity
 #' @return Returns a pretty graph
 #'
 #' \item{graph}{The graph of possible values for c}
@@ -24,7 +26,8 @@
 
 
 visualize_c <- function (dlow,
-                         lower = TRUE) {
+                         lower = TRUE,
+                         ribbon_color = "lightblue") {
 
   x_df <- y_df <- ymax <- ymin <- NULL
 
@@ -64,7 +67,7 @@ visualize_c <- function (dlow,
       ylab("Correlation") +
       # geom_point(aes(x_df, c)) +
       geom_ribbon(aes(ymin = ymin, ymax = ymax),
-                  color = "#88CCEE", fill = "#88CCEE", alpha = .5)
+                  color = ribbon_color, fill = ribbon_color, alpha = .5)
 
   }
 
@@ -85,7 +88,7 @@ visualize_c <- function (dlow,
       ylab("Correlation") +
       # geom_point(aes(x_df, c)) +
       geom_ribbon(aes(ymin = ymin, ymax = ymax),
-                  color = "#88CCEE", fill = "#88CCEE", alpha = .5)
+                  color = ribbon_color, fill = ribbon_color, alpha = .5)
 
   }
 
@@ -106,7 +109,7 @@ visualize_c <- function (dlow,
       ylab("Correlation") +
       # geom_point(aes(x_df, c)) +
       geom_ribbon(aes(ymin = ymin, ymax = ymax),
-                  color = "#88CCEE", fill = "#88CCEE", alpha = .5)
+                  color = ribbon_color, fill = ribbon_color, alpha = .5)
 
   }
 
@@ -127,7 +130,7 @@ visualize_c <- function (dlow,
       ylab("Correlation") +
       # geom_point(aes(x_df, c)) +
       geom_ribbon(aes(ymin = ymin, ymax = ymax),
-                  color = "#88CCEE", fill = "#88CCEE", alpha = .5)
+                  color = ribbon_color, fill = ribbon_color, alpha = .5)
 
   }
 

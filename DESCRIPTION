@@ -1,7 +1,7 @@
 Package: ViSe
 Type: Package
 Title: Visualizing Sensitivity
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(person("Erin M.", "Buchanan", role = c("aut", "cre"),
                      email = "buchananlab@gmail.com",
                      comment = c(ORCID = "0000-0002-9689-4189")))
@@ -12,7 +12,7 @@ Description: Designed to help the user to determine the sensitivity of an propos
 License: LGPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 URL: http://www.aggieerin.com/ViSe/
 Suggests: 
     knitr,

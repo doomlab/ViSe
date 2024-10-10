@@ -9,6 +9,9 @@
 #' @param n1 sample size for first group
 #' @param n2 sample size for the second group
 #' @param d estimate of the effect size
+#' @param fill_1 a color code or name to fill the first distribution
+#' @param fill_2 a color code or name to fill the second distribution
+#' @param text_color a color code or name for the graph text
 #' @return Returns a pretty graph
 #'
 #' \item{d}{effect size}
@@ -29,7 +32,10 @@
 
 estimate_d <- function (m1 = NULL, m2 = NULL,
                         sd1 = NULL, sd2 = NULL,
-                        n1 = NULL, n2 = NULL, d = NULL) {
+                        n1 = NULL, n2 = NULL, d = NULL,
+                        fill_1 = "lightblue",
+                        fill_2 = "pink",
+                        text_color = "black") {
 
   if (!is.null(d)){
 
@@ -45,9 +51,9 @@ estimate_d <- function (m1 = NULL, m2 = NULL,
 
     graph <- ggplot() +
       stat_function(fun = ~ dnorm(.x, m1, sd1), geom = "area",
-                    fill = "#88CCEE", alpha = 0.5, color = "black") +
+                    fill = fill_1, alpha = 0.5, color = text_color) +
       stat_function(fun = ~ dnorm(.x, m2, sd2), geom = "area",
-                    fill = "#CC6677", alpha = 0.5, color = "black") +
+                    fill = fill_2, alpha = 0.5, color = text_color) +
       geom_vline(xintercept = m1, linetype = 3) +
       geom_vline(xintercept = m2, linetype = 3) +
       theme_classic() +
@@ -62,9 +68,9 @@ estimate_d <- function (m1 = NULL, m2 = NULL,
 
       graph <- graph +
         annotate("segment", x = m1, xend = m2, y = yupper, yend = yupper,
-                 colour = "black") +
+                 colour = text_color) +
         annotate("text", x = xright, y = yupper,
-                 colour = "black",
+                 colour = text_color,
                  label = paste0("d = ", format(d, digits = 2, nsmall = 2)))
 
   } else {
@@ -98,9 +104,9 @@ estimate_d <- function (m1 = NULL, m2 = NULL,
 
     graph <- ggplot() +
       stat_function(fun = ~ dnorm(.x, m1, sd1), geom = "area",
-                    fill = "#88CCEE", alpha = 0.5, color = "black") +
+                    fill = fill_1, alpha = 0.5, color = text_color) +
       stat_function(fun = ~ dnorm(.x, m2, sd2), geom = "area",
-                    fill = "#CC6677", alpha = 0.5, color = "black") +
+                    fill = fill_2, alpha = 0.5, color = text_color) +
       geom_vline(xintercept = m1, linetype = 3) +
       geom_vline(xintercept = m2, linetype = 3) +
       theme_classic() +
@@ -116,9 +122,9 @@ estimate_d <- function (m1 = NULL, m2 = NULL,
 
     graph <- graph +
       annotate("segment", x = m1, xend = m2, y = yupper, yend = yupper,
-               colour = "black") +
+               colour = text_color) +
       annotate("text", x = xright, y = yupper,
-               colour = "black",
+               colour = text_color,
                label = paste0("d = ", format(d, digits = 2, nsmall = 2)))
 
 

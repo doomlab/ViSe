@@ -22,20 +22,24 @@ convert_tab <-
               p("We can use ",
               strong("visualize_effects()"),
               HTML(" to visualize the relationship
-              between the same effect size in different metrics. These are calculated
+              between the same effect size in different metrics.
+              These are calculated
               from functions you can use in the package:
                 <ul>
                 <li><b>d_to_f2()</b>: Cohen’s f and f2</li>
                 <li><b>d_to_nnt()</b>: Number needed to treat</li>
                 <li><b>d_to_r()</b>: correlation coefficient</li>
-                <li><b>probability_superiority()</b>: The probability of superiority</li>
-                <li><b>proportion_overlap()</b>: u1 represents the proportion of non-overlap
-                across both group distributions, u2 indicates the proportion that one
-                group is more than the same proportion in the other group, u3 shows
-                the proportion of one group that is smaller than the median of the
-                other group, and p_o is the proportional overlap of groups.</li>
-                <li><b>other_to_d()</b>: A function to convert from other effect sizes
-                to d.</li>
+                <li><b>probability_superiority()</b>: The probability of
+                  superiority</li>
+                <li><b>proportion_overlap()</b>: u1 represents the proportion
+                  of non-overlap across both group distributions, u2
+                  indicates the proportion that one group is more than the
+                  same proportion in the other group, u3 shows the proportion
+                  of one group that is smaller than the median of the
+                  other group, and p_o is the proportional overlap of
+                  groups.</li>
+                <li><b>other_to_d()</b>: A function to convert from other
+                effect sizes to d.</li>
                 </ul>")),
               p(""),
               numericInput(
@@ -59,6 +63,45 @@ convert_tab <-
                             "Proportion Overlap U3",
                             "Proportional Overlap of Distributions"),
                 selected = NULL,
+                width = NULL
+              ),
+              textInput(
+                inputId = "convert_circle_color",
+                label = "Color of filled area in circle:",
+                value = "lightblue",
+                width = NULL
+              ),
+              textInput(
+                inputId = "convert_circle_fill",
+                label = "Color of the rest of the circle:",
+                value = "gray",
+                width = NULL
+              ),
+              textInput(
+                inputId = "convert_percent_color",
+                label = "Color of large effect size text:",
+                value = "darkblue",
+                width = NULL
+              ),
+              numericInput(
+                inputId = "convert_percent_size",
+                label = "Size of the large effect size text:",
+                value = 12,
+                min = NA,
+                max = NA,
+                step = NA,
+                width = NULL
+              ),
+              textInput(
+                inputId = "convert_text_color",
+                label = "Color of effect size text label:",
+                value = "black",
+                width = NULL
+              ),
+              textInput(
+                inputId = "convert_font_family",
+                label = "Font family of the text:",
+                value = "Times",
                 width = NULL
               ),
               plotOutput("visualize_conversion")

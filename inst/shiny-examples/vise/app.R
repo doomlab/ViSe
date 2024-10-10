@@ -330,13 +330,29 @@ server <- function(input, output, session) {
         d <- other_to_d(prop_overlap = input$convert_enter_effect)
       }
 
-      visualize_effects(d = d)$graph
+      visualize_effects(d = d,
+                        circle_color = trimws(input$convert_circle_color),
+                        circle_fill = trimws(input$convert_circle_fill),
+                        percent_color = trimws(input$convert_percent_color),
+                        percent_size = trimws(input$convert_percent_size),
+                        text_color = trimws(input$convert_text_color),
+                        font_family = trimws(input$convert_font_family))$graph
 
     })
 
     # visualization page ----
     output$estimate_d_effect <- renderPlot({
-      estimate_d(d = input$enter_d_effect)$graph
+      estimate_d(d = input$enter_d_effect,
+                 fill_1 = trimws(input$enter_d_effect_fill_1),
+                 fill_2 = trimws(input$enter_d_effect_fill_2),
+                 text_color = trimws(input$enter_d_effect_text_color))$graph
+    })
+
+    output$estimate_d_visualize <- renderPlot({
+      estimate_d(d = input$enter_d_visualize,
+                 fill_1 = trimws(input$enter_d_visualize_fill_1),
+                 fill_2 = trimws(input$enter_d_visualize_fill_2),
+                 text_color = trimws(input$enter_d_visualize_text_color))$graph
     })
 
     output$estimate_r_effect <- renderPlot({
@@ -381,6 +397,8 @@ server <- function(input, output, session) {
         prop_overlap_values <- na.omit(as.numeric(unlist(strsplit(input$visualize_overlap_values, ","))))
       } else { prop_overlap_values <- NULL }
 
+      point_colors <- trimws(unlist(strsplit(input$visualize_point_colors, split = ",")))
+
       temp <- visualize_c_map(
         dlow = input$visualize_d_lower,
         lower = input$visualize_enter_lower,
@@ -393,7 +411,12 @@ server <- function(input, output, session) {
         prop_u1_values = prop_u1_values,
         prop_u2_values = prop_u2_values,
         prop_u3_values = prop_u3_values,
-        prop_overlap_values = prop_overlap_values)$graph
+        prop_overlap_values = prop_overlap_values,
+        point_colors = point_colors,
+        size = input$visualize_size,
+        shape_1 = input$visualize_shape_1,
+        shape_2 = input$visualize_shape_2,
+        ribbon_color = trimws(input$visualize_ribbon_color))$graph
 
       temp
     })
@@ -401,10 +424,10 @@ server <- function(input, output, session) {
     # example information -----------------------------------------------------
     output$data_kable <- function() {
       DF <- data.frame(
-        "Internalising Score Unadjusted" = c(3.68, 1.73, 5.62),
-        "Internalising Score Adjusted" = c(2.73, 0.77, 4.69),
-        "Internalising d Unadjusted" = c(0.44, 0.20, 0.68),
-        "Internalising d Adjusted" = c(0.33, 0.09, 0.57)
+        "Internalising Unadj" = c(3.68, 1.73, 5.62),
+        "Internalising Adj" = c(2.73, 0.77, 4.69),
+        "Internalising d Unadj" = c(0.44, 0.20, 0.68),
+        "Internalising d Adj" = c(0.33, 0.09, 0.57)
 
       )
 

@@ -16,6 +16,11 @@ visualize_c_map(
   prop_u2_values = NULL,
   prop_u3_values = NULL,
   prop_overlap_values = NULL,
+  point_colors = c("red", "green", "blue"),
+  size = 2,
+  shape_1 = 2,
+  shape_2 = 3,
+  ribbon_color = "lightblue",
   lower = TRUE
 )
 }
@@ -51,6 +56,23 @@ effect size values that are possible.}
 
 \item{prop_overlap_values}{A vector of proportion of
 distribution overlap effect size values that are possible.}
+
+\item{point_colors}{A vector of color names or codes to plot
+the effect sizes on the graph. You should use as many color
+names/codes as you have max of an effect size (i.e, if r has 4, d has 3,
+and prob has 5, then use 5 as the max number of colors).}
+
+\item{size}{The size of the symbols on the chart.}
+
+\item{shape_1}{a numeric value of one of the ggplot2 shapes}
+
+\item{shape_2}{a numeric value of one of the ggplot2 shapes -
+if you use different numbers, the two shapes are overlaid, as
+we found this effect made it easier to read with many effect sizes
+plotted on the same graph.}
+
+\item{ribbon_color}{a color name or code to shade the area that
+shows a non-zero effect in sensitivity.}
 
 \item{lower}{Use this to indicate if you want the lower or upper bound
 of d for one sided confidence intervals. If d is positive, you generally

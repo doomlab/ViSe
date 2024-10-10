@@ -6,7 +6,9 @@
 #' @return returns a ggplot2 object to create donut wheels
 #' @noRd
 
-big_number_donut_percent <- function(value, font_family, highlight_color) {
+big_number_donut_percent <- function(value, font_family,
+                                     highlight_color, circle_fill,
+                                     percent_color, percent_size) {
 
   # Wrangle data to get a data frame in the format we need it in to make our donut chart
   df <- data.frame(x = 1, y = value) %>%
@@ -37,7 +39,7 @@ big_number_donut_percent <- function(value, font_family, highlight_color) {
 
     # Set a color scale with the highlighted section in whatever color
     # is chosen with the highlight_color argument and the rest in a light gray
-    scale_fill_manual(values = c(highlight_color, "grey90")) +
+    scale_fill_manual(values = c(highlight_color, circle_fill)) +
 
     # Set theme_void() to remove grid lines and everything else from the plot
     theme_void() +
@@ -47,8 +49,8 @@ big_number_donut_percent <- function(value, font_family, highlight_color) {
              label = big_number_text_label,
              family = font_family,
              fontface = "bold",
-             color = highlight_color,
-             size = 12,
+             color = percent_color,
+             size = percent_size,
              x = -2,
              y = 0)
 
@@ -56,7 +58,8 @@ big_number_donut_percent <- function(value, font_family, highlight_color) {
 
 
 big_number_donut_raw <- function(value, font_family, highlight_color,
-                                 upper) {
+                                 upper, circle_fill, percent_color,
+                                 percent_size) {
 
   # Wrangle data to get a data frame in the format we need it in to make our donut chart
   df <- data.frame(x = 1, y = value) %>%
@@ -87,7 +90,7 @@ big_number_donut_raw <- function(value, font_family, highlight_color,
 
     # Set a color scale with the highlighted section in whatever color
     # is chosen with the highlight_color argument and the rest in a light gray
-    scale_fill_manual(values = c(highlight_color, "grey90")) +
+    scale_fill_manual(values = c(highlight_color, circle_fill)) +
 
     # Set theme_void() to remove grid lines and everything else from the plot
     theme_void() +
@@ -97,8 +100,8 @@ big_number_donut_raw <- function(value, font_family, highlight_color,
              label = big_number_text_label,
              family = font_family,
              fontface = "bold",
-             color = highlight_color,
-             size = 12,
+             color = percent_color,
+             size = percent_size,
              x = -2,
              y = 0)
 

@@ -4,7 +4,7 @@
 \alias{visualize_c}
 \title{Visualization for Estimating c Bias}
 \usage{
-visualize_c(dlow, lower = TRUE)
+visualize_c(dlow, lower = TRUE, ribbon_color = "lightblue")
 }
 \arguments{
 \item{dlow}{The lower limit of the possible effect size}
@@ -13,6 +13,9 @@ visualize_c(dlow, lower = TRUE)
 of d for one sided confidence intervals. If d is positive, you generally
 want \code{lower = TRUE}, while negative d values should enter
 \code{lower = FALSE} for the upper bound that is closer to zero.}
+
+\item{ribbon_color}{background coloring for c values that support
+a non-zero effect in sensitivity}
 }
 \value{
 Returns a pretty graph

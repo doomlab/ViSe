@@ -42,7 +42,7 @@ See supplemental document at https://static.cambridge.org/content/id/urn:cambrid
 
 ## Calculate effect size 
 
-To obtain the estimates and two-tailed 95% confidence intervals on the d scale (via *d* = $M_{difference}$ / $SD_{Total}$, similar to Glass' $\Delta$), we divided the reported unadjusted and adjusted mean differences for internalising and externalising by the respective standard deviations of the total sample.
+To obtain the estimates and two-tailed 95% confidence intervals on the effect size d scale (via *d* = $M_{difference}$ / $SD_{Total}$, similar to Glass' $\Delta$), we divided the reported unadjusted and adjusted mean differences for internalising and externalising by the respective standard deviations of the total sample.
 
 ```{r}
 internal_unadjusted <- list(
@@ -90,9 +90,9 @@ unlist(list_values)
 
 ## Calculate d and Confidence Interval
 
-To visualise *l*, we must obtain the lower bound of the confidence interval for our proposed effect size. ViSe includes a function `calculate_d()` that calculates from `t.test()` output, dataframes, individual vectors of data, sample statistics (*M*, *SD*, *n* for group), *t*-test values, or a pre-calculated *d*-value. 
+To visualise the lower level confidence interval *l*, we must obtain the lower bound of the confidence interval for our proposed effect size. ViSe includes a function `calculate_d()` that calculates from `t.test()` output, dataframes, individual vectors of data, sample statistics (*M*, *SD*, *n* for group), *t*-test values, or a pre-calculated *d*-value. 
 
-In this example, we have our *d* value from the original research, along with sample sizes from the study which can be used to calculate the two-tailed `dlow_central` or one-tailed `done_low_central` lower confidence interval. The package vignette shows all possible ways to calculate values from data and includes the non-centralized confidence intervals for *d* as well (below). 
+In this example, we have our *d* value from the original research, along with sample sizes from the study which can be used to calculate the two-tailed `dlow_central` or one-tailed `done_low_central` lower confidence interval. The package vignette shows all possible ways to calculate values from data and includes the non-centralized confidence intervals for effect size *d* as well (below). 
 
 ```{r}
 internal_unadj_output <- calculate_d(
@@ -170,7 +170,7 @@ calculate_d(
 
 ## Convert between effect sizes (specification plot)
 
-Not all research studies use *d* as the effect size of interest, and `ViSe` provides functionality to convert between effect sizes. The `other_to_d()` function can be used to convert *f*, $f^2$, NNT, *r*, probability of superiority, U1, U2, U3, and proportional overlap into *d*. 
+Not all research studies use *d* as the effect size of interest, and `ViSe` provides functionality to convert between effect sizes. The `other_to_d()` function can be used to convert effect sizes *f*, $f^2$, NNT, *r*, probability of superiority, U1, U2, U3, and proportional overlap into *d*. 
 
 ```{r}
 other_to_d(nnt = 35)
@@ -190,10 +190,28 @@ prop_u3 = NULL,
 prop_overlap = NULL
 ```
 
-The *d* value can then be used to visualize all effects and their conversions at once in the `visualize_effects()` function. 
+The effect size *d* value can then be used to visualize all effects and their conversions at once in the `visualize_effects()` function. You can use the percent, color, and font family options to adjust the resulting graph for readability and color scheme. 
 
 ```{r}
-visualize_effects(d = list_values$internal_adjusted$d)
+visualize_effects(d = list_values$internal_adjusted$d,
+                  circle_color = "lightblue",
+                  circle_fill = "gray",
+                  percent_color = "darkblue",
+                  percent_size = 10,
+                  text_color = "black", 
+                  font_family = "Times")
+
+# note graphs look better scaled, try saving them 
+# ggsave(filename = "visualize_effects.png")
+
+# you can make very ugly graphs if you want
+visualize_effects(d = .2, 
+                  circle_color = "green", 
+                  circle_fill = "orange", 
+                  percent_color = "pink", 
+                  percent_size = 20, 
+                  text_color = "purple",
+                  font_family = "Arial")
 ```
 
 This package uses the following conversion functions that can be implemented separately as well:
@@ -211,7 +229,10 @@ proportion_overlap(d = list_values$internal_adjusted$d)
 Now that we have an idea of our *d* value, the lower confidence limit _l_, and other potential effect sizes, we can create a sensitivity plot of the effect size to bias. To visualize different *d* values and their representation of the distribution overlap, use `estimate_d()` to examine different effect sizes:
 
 ```{r}
-estimate_d(d = .09)$graph
+estimate_d(d = .09, 
+           fill_1 = "red", 
+           fill_2 = "blue", 
+           text_color = "black")$graph
 ```
 
 Similarly, `estimate_r()` shows a scatterplot of the entered correlation coefficient to visualize the relation between two variables:
@@ -234,7 +255,20 @@ visual_c_mapped <-
                   d_values = c(.2, .8),
                   nnt_values = c(60),
                   # if you think d will be positive 
-                  lower = TRUE)
+                  lower = TRUE,
+                  # as many values as the max number effects
+                  point_colors = c("red", "green", "blue"),
+                  # a size for the shapes
+                  size = 2,
+                  # shape 1
+                  shape_1 = 2,
+                  # shape 2, make these the same number if you 
+                  # want the shapes overlapping
+                  # we think two different ones helps readability 
+                  shape_2 = 3,
+                  # color of the background highlighted area 
+                  ribbon_color = "lightblue"
+                  )
 
 visual_c_mapped$graph
 
@@ -244,7 +278,7 @@ ggsave(filename = "visualize_c_map.png", width = 8,
 # ggplotly(visual_c_mapped$graph)
 ```
 
-All options for the graph:
+All options for the graph, including their defaults:
 
 ```
 visualize_c_map(
@@ -259,6 +293,11 @@ visualize_c_map(
   prop_u2_values = NULL,
   prop_u3_values = NULL,
   prop_overlap_values = NULL,
-  lower = TRUE
+  lower = TRUE,
+  point_colors = c("red", "green", "blue"),
+  size = 2,
+  shape_1 = 2,
+  shape_2 = 3,
+  ribbon_color = "lightblue"
 )
 ```

@@ -36,30 +36,31 @@ example_tab <-
             ), # close box
 
             box(
-              title = tags$b("Calculate the Effect Size and Confidence Interval"),
+              title = tags$b("Calculate the Effect Size and
+                             Confidence Interval"),
               collapsible = TRUE,
               solidHeader = TRUE,
               status = "primary",
               width = 12,
-              p(HTML("To obtain the estimates and two-tailed 95% confidence intervals
-                     on the <i>d</i> scale
-                     (via <i>d</i> = Mdifference / SDTotal), we
-                     divided the reported unadjusted and adjusted mean differences
-                     for internalising by the respective standard
-                     deviations of the total sample (8.29 in this example). It may be preferable to
-                     use the adjusted <i>d</i> for sensitivity analysis if it
-                     already accounts for some common causes. The difference between
-                     the unadjusted and the adjusted <i>d</i> helps to narrow down
-                     how large the bias due to other common sources might be.")),
+              p(HTML("To obtain the estimates and two-tailed 95% confidence
+                intervals on the effect size <i>d</i> scale
+                (via <i>d</i> = Mdifference / SDTotal), we
+                divided the reported unadjusted and adjusted mean differences
+                for internalising by the respective standard
+                deviations of the total sample (8.29 in this example).
+                It may be preferable to use the adjusted effect size
+                <i>d</i> for sensitivity analysis if it already accounts
+                for some common causes. The difference between the unadjusted
+                and the adjusted effect size <i>d</i> helps to narrow down
+                how large the bias due to other common sources might be.")),
               tableOutput("data_kable"),
 
               p(HTML("The sensitivity plot only depends on lower bound here as the
-              reported lower confidence
-                interval <b>l</b>. However, we could also
-                     use the calculate standardized group difference tab to give
-                     us the lower limit of the effect size using a one-tailed
-                     confidence interval. Pictures of the required data entry
-                     are shown below.")),
+                reported lower confidence interval <b>l</b>. However,
+                we could also use the 'Calculate Standardized Group
+                Difference tab' to give us the lower limit of the effect
+                size using a one-tailed confidence interval. Pictures
+                of the required data entry are shown below.")),
               p("You must enter sample sizes, alpha, and if you expect the
                 effect size to be positive:"),
               img(src = "shiny_fig_1.png", width = "100%"),
@@ -71,22 +72,25 @@ example_tab <-
               ), # close box
 
             box(
-              title = tags$b("Convert between effect sizes and make a specification plot"),
+              title = tags$b("Convert between effect sizes and make
+                             a specification plot"),
               collapsible = TRUE,
               solidHeader = TRUE,
               status = "primary",
               width = 12,
-              p(HTML("The bias due to unadjusted common causes must be less than l.
-              To determine bias, two unknown quantities must be specified. The first
-              is the difference in predisposition to internalising problems between
-              individuals with and without child neglect. This quantity can also be
-              specified by <i>d</i> or several other measures of effect size. <p>
-              On the convert between effect sizes tab, you can
-                     enter different effect sizes and their names to
-                     show how different effect size values are related to
-                     each other, if you are not familar with one specific
-                     effect size. Here we can see that our effect size converts
-                     to a correlation of .16 or 6 participants for Number
+              p(HTML("The bias due to unadjusted common causes
+                must be less than the lower limit l. To determine bias,
+                two unknown quantities must be specified. The first
+                is the difference in predisposition to internalising
+                problems between individuals with and without child
+                neglect. This quantity can also be specified by an effect
+                size <i>d</i> or several other measures of effect size.
+                <p> On the 'Convert Between Effect Sizes tab', you can
+                enter different effect sizes and their names to show how
+                different effect size values are related to
+                each other, if you are not familar with one specific
+                effect size. Here we can see that our effect size converts
+                to a correlation of .16 or 6 participants for Number
                      Needed to Treat.")),
               img(src = "shiny_fig_3.png", width = "100%")
             ), # close box
@@ -97,21 +101,25 @@ example_tab <-
               solidHeader = TRUE,
               status = "primary",
               width = 12,
-              p(HTML("On the last tab we enter both quantities: 1. the above <i>d</i> (or any
-                     other measure of effect into which <i>d</i> can be converted), and 2.
-                     the correlation <i>r</i> between the predisposition to internalising
-                     problems in childhood and the internalising problems (observed at
-                     age 21). ('Bias' is simply the product <i>d</i> * <i>r</i>). Enter
-                     plausible values for both quantities to see in the final sensitivity
-                     plot which combinations of them support a causal effect of child
-                     neglect on internalising problems at age 21:")),
+              p(HTML("On the last tab we enter both quantities: 1. the
+              effect size value calculated above <i>d</i> (or any
+              other measure of effect into which <i>d</i> can be converted),
+              and 2. the correlation <i>r</i> between the predisposition
+              to internalising problems in childhood and the internalising
+              problems (observed at age 21). ('Bias' is simply the
+              product of effect size <i>d</i> times correlation <i>r</i>).
+              Enter plausible values for both quantities to see in
+              the final sensitivity plot which combinations of them support
+              a causal effect of child neglect on internalising
+              problems at age 21:")),
               img(src = "shiny_fig_4.png", width = "100%"),
-              p(HTML("Here the plot includes the intersection of <i>d</i> values and <i>r</i>
-                     values as points to determine if they are in the range of
-                     expected values that would denote a causal effect. The shaded
-                     region shows the areas that would support the effect and
-                     the points are the combinations of effect size and
-                     correlation you noted.")),
+              p(HTML("Here the plot includes the intersection of
+              effect size <i>d</i> values and correlation <i>r</i>
+              values as points to determine if they are in the range of
+              expected values that would denote a causal effect. The shaded
+              region shows the areas that would support the effect and
+              the points are the combinations of effect size and
+              correlation you noted.")),
 
               img(src = "shiny_fig_5.png", width = "100%"),
             ), # close box

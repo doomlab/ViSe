@@ -32,6 +32,19 @@
 #' effect size values that are possible.
 #' @param prop_overlap_values A vector of proportion of
 #' distribution overlap effect size values that are possible.
+#' @param point_colors A vector of color names or codes to plot
+#' the effect sizes on the graph. You should use as many color
+#' names/codes as you have max of an effect size (i.e, if r has 4, d has 3,
+#' and prob has 5, then use 5 as the max number of colors).
+#' @param size The size of the symbols on the chart.
+#' @param shape_1 a numeric value of one of the ggplot2 shapes
+#' @param shape_2 a numeric value of one of the ggplot2 shapes -
+#' if you use different numbers, the two shapes are overlaid, as
+#' we found this effect made it easier to read with many effect sizes
+#' plotted on the same graph.
+#' @param ribbon_color a color name or code to shade the area that
+#' shows a non-zero effect in sensitivity.
+#'
 #'
 #' @return Returns a pretty graph of the possible effect size
 #' and correlation combinations with the region of effect colored in.
@@ -64,6 +77,11 @@ visualize_c_map <- function (dlow,
                              prop_u2_values = NULL,
                              prop_u3_values = NULL,
                              prop_overlap_values = NULL,
+                             point_colors = c("red", "green", "blue"),
+                             size = 2,
+                             shape_1 = 2,
+                             shape_2 = 3,
+                             ribbon_color = "lightblue",
                              lower = TRUE) {
 
   if(missing(dlow) | missing(r_values)){
@@ -71,7 +89,8 @@ visualize_c_map <- function (dlow,
   }
 
   # make the plot
-  graph <- visualize_c(dlow = dlow, lower = lower)$graph
+  graph <- visualize_c(dlow = dlow, lower = lower,
+                       ribbon_color = ribbon_color)$graph
 
   d <- r <- NULL
 
@@ -252,11 +271,20 @@ visualize_c_map <- function (dlow,
     }
   }
 
+  length_colors <- length(unique(DF_points$label))
+  if (length(point_colors) != length_colors){
+    stop(paste0("You must provide ",
+                length(length_colors), " color names or numbers."))
+  }
 
   graph2 <- graph +
-    geom_point(data = DF_points, aes(d, r, color = DF_points$label), size = 2) +
-    geom_point(data = DF_points2, aes(d, r, color = DF_points2$label,), shape = 2, size = 3) +
-    scale_color_discrete(name = "")
+    geom_point(data = DF_points, aes(d, r, color = DF_points$label),
+               shape = shape_1,
+               size = size) +
+    geom_point(data = DF_points2, aes(d, r, color = DF_points2$label),
+               shape = shape_2, size = size+1) +
+    scale_color_manual(name = "",
+                         values = point_colors)
 
 
   return(list("graph" = graph2))

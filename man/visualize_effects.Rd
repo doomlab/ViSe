@@ -4,10 +4,35 @@
 \alias{visualize_effects}
 \title{Visualization for Conversions of Effect Sizes}
 \usage{
-visualize_effects(d)
+visualize_effects(
+  d,
+  circle_color = "lightblue",
+  circle_fill = "grey",
+  percent_color = "black",
+  percent_size = 12,
+  text_color = "black",
+  font_family = "Times"
+)
 }
 \arguments{
 \item{d}{d effect size to convert to other numbers}
+
+\item{circle_color}{a color name or code for the highlighted part of the
+donut circle}
+
+\item{circle_fill}{a color name or code for the rest of the circle}
+
+\item{percent_color}{a color name or code for the text of the
+effect size}
+
+\item{percent_size}{a numeric value representing the font size of the
+larger effect size text inside the circle}
+
+\item{text_color}{a color name or code that changes the color of the
+effect size text label}
+
+\item{font_family}{A font family name for the font of the effect
+size text label}
 }
 \value{
 Returns a pretty graph of all the effects

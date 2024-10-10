@@ -102,18 +102,21 @@ stats_tab <-
               status = "primary",
               width = 12,
               p(""),
-              p("We can use ", strong("visualize_effects()"), " to visualize the relationship
-              between the same effect size in different metrics. These are calculated
+              p("We can use ", strong("visualize_effects()"),
+              " to visualize the relationship
+              between the same effect size in different metrics.
+              These are calculated
               from functions you can use in the package:"),
               br("1) d_to_f2: Cohen’s f and f2"),
               br("2) d_to_nnt: Number needed to treat"),
               br("3) d_to_r: correlation coefficient"),
               br("4) probability_superiority: The probability of superiority"),
-              br("5) proportion_overlap: u1 represents the proportion of non-overlap
-            across both group distributions, u2 indicates the proportion that one
-            group is more than the same proportion in the other group, u3 shows
-            the proportion of one group that is smaller than the median of the
-            other group, and p_o is the proportional overlap of groups."),
+              br("5) proportion_overlap: u1 represents the proportion of
+              non-overlap across both group distributions, u2 indicates
+              the proportion that one group is more than the same proportion
+              in the other group, u3 shows the proportion of one group
+              that is smaller than the median of the
+              other group, and p_o is the proportional overlap of groups."),
               plotOutput("convert_d_stats")
             ), #box
             # Visualize c -------------------------------------------------------------
@@ -124,11 +127,13 @@ stats_tab <-
               status = "primary",
               width = 12,
               p(""),
-              p("We can use ", strong("visualize_c()"), " to visualize the combinations of
+              p("We can use ", strong("visualize_c()"),
+              " to visualize the combinations of
                 effect size and correlation that would support an effect. "),
               p(""),
               h3(strong(textOutput("visualize_c_stats_warning"),
-                        style = "color:red; font-size:20px; font-family:arial; font-style:italic;")),
+                        style = "color:red; font-size:20px; font-family:arial;
+                        font-style:italic;")),
               plotOutput("visualize_c_stats")
             ), #box
 
@@ -140,7 +145,8 @@ stats_tab <-
               status = "primary",
               width = 12,
               p(""),
-              p("We can use ", strong("estimate_d()"), " to visualize the differences between
+              p("We can use ", strong("estimate_d()"),
+              " to visualize the differences between
                 groups if we are unsure of what the effect size might be."),
               numericInput(
                 inputId = "enter_d_stats",
@@ -183,12 +189,15 @@ stats_tab <-
             status = "primary",
             width = 12,
             p(""),
-            p("We can use ", strong("visualize_c_map()"), "what values might show
+            p("We can use ", strong("visualize_c_map()"),
+            " what values might show
               an effect. After using the two plots above, values for ",
-              em("d"), " and ,", em("r"), "below ", strong("separated by commas.")),
+              em("d"), " and ,", em("r"),
+            " below ", strong("separated by commas.")),
             p(""),
             h3(strong(textOutput("visualize_c_map_stats_warning"),
-                      style = "color:red; font-size:20px; font-family:arial; font-style:italic;")),
+                      style = "color:red; font-size:20px; font-family:arial;
+                      font-style:italic;")),
             textInput(inputId = "d_values_stats",
                       label = "Enter d values",
                       value = ""),

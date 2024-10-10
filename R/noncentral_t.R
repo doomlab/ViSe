@@ -32,14 +32,24 @@ noncentral_t <- function(ncp, df, conf.level = .95, alpha.lower = NULL,
 
   if(missing(ncp))
   {
-    if(missing(t.value)) stop("You need to specify either 'ncp' or its alias, 't.value,' you have not specified either")
+    if(missing(t.value)) stop("You need to specify either 'ncp' or
+                              its alias, 't.value,' you have not
+                              specified either")
     ncp <- t.value
   }
 
   # General stop checks.
-  if(df <= 0) stop("The degrees of freedom must be some positive value.", call.=FALSE)
+  if(df <= 0) stop("The degrees of freedom must be some positive
+                   value.", call.=FALSE)
 
-  if(abs(ncp) > 37.62) warning("The observed noncentrality parameter of the noncentral t-distribution has exceeded 37.62 in magnitude (R's limitation for accurate probabilities from the noncentral t-distribution) in the function's iterative search for the appropriate value(s). The results may be fine, but they might be inaccurate; use caution.")
+  if(abs(ncp) > 37.62) warning("The observed noncentrality parameter
+                               of the noncentral t-distribution has
+                               exceeded 37.62 in magnitude (R's limitation
+                               for accurate probabilities from the noncentral
+                               t-distribution) in the function's iterative
+                               search for the appropriate value(s). The
+                               results may be fine, but they might be
+                               inaccurate; use caution.")
 
   if(sup.int.warns==TRUE) Orig.warn <- options()$warn
 

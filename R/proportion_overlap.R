@@ -56,7 +56,8 @@ proportion_overlap <- function(model = NULL, x_col = NULL,
   } else if(!is.null(d)){
     d_use <- d
   } else {
-    stop("You must include x and y, OR the df with x and y columns, OR the model, OR d.")
+    stop("You must include x and y, OR the df with x and y
+         columns, OR the model, OR d.")
   }
 
   u2 <- stats::pnorm(abs(d_use) / 2)

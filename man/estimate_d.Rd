@@ -11,7 +11,10 @@ estimate_d(
   sd2 = NULL,
   n1 = NULL,
   n2 = NULL,
-  d = NULL
+  d = NULL,
+  fill_1 = "lightblue",
+  fill_2 = "pink",
+  text_color = "black"
 )
 }
 \arguments{
@@ -28,6 +31,12 @@ estimate_d(
 \item{n2}{sample size for the second group}
 
 \item{d}{estimate of the effect size}
+
+\item{fill_1}{a color code or name to fill the first distribution}
+
+\item{fill_2}{a color code or name to fill the second distribution}
+
+\item{text_color}{a color code or name for the graph text}
 }
 \value{
 Returns a pretty graph

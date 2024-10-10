@@ -330,8 +330,6 @@ server <- function(input, output, session) {
         d <- other_to_d(prop_overlap = input$convert_enter_effect)
       }
 
-      cat(str(input$convert_circle_color))
-
       visualize_effects(d = d,
                         circle_color = trimws(input$convert_circle_color),
                         circle_fill = trimws(input$convert_circle_fill),
